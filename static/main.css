@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    background: url('https://wallpapercave.com/wp/wp5565660.jpg');
+}
+.custom-button{
+    background-color: black;
+    color: white;
+}
+
+.custom-font-cursive{
+    font-family: cursive;
+}
+
+.custom-background{
+    
+}
+
+.app{
+    min-height: 100vh;
+}
