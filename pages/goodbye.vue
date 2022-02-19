@@ -1,6 +1,6 @@
 <template>
   <div>
-  Good Bye
+  Good Bye 
   </div>
 </template>
 
