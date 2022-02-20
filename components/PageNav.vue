@@ -12,7 +12,7 @@
       </a>
       <div
         v-else
-        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-500 text-sm font-medium rounded-md text-gray-400 bg-gray-200 hover:bg-gray-50"
       >
         Previous
       </div>
@@ -23,12 +23,12 @@
       >
         Next
       </a>
-      <a
+      <div
         v-else
-        class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+        class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-500 text-sm font-medium rounded-md text-gray-400 bg-gray-500 hover:bg-gray-50"
       >
         Next
-      </a>
+      </div>
     </div>
     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
       <div>
