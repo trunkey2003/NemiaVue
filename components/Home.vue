@@ -3,16 +3,16 @@
     <SearchInput />
     <div class="container w-full min-h-screen bg-gray-100 rounded-t-2xl">
       <div class="flex flex-wrap p-10">
-        <NuxtLink
-          :to="`media/${media.id}`"
+        <a
+          :href="`media/${media.id}`"
           v-for="media in Page.media"
           :key="media.id"
           class="hover:bg-gray-50 cursor-pointer md:max-w-[100%] lg:max-w-[25%] lg:px-[1%] rounded overflow-hidden shadow-lg"
         >
           <img
-            class="w-full max-h-[28rem] object-fill"
+            class="w-full min-h-[28rem] max-h-[28rem] object-fill"
             v-bind:src="media.coverImage.large"
-            alt="Mountain"
+            v-bind:alt="media.title.english"
           />
           <div class="px-6 py-4">
             <div v-if="media.title.english" class="font-bold text-xl mb-2">
@@ -34,9 +34,9 @@
               >#{{ genre }}</span
             >
           </div>
-        </NuxtLink>
+        </a>
       </div>
-      <PageNav />
+      <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div>
     </div>
   </div>
 </template>
@@ -81,48 +81,54 @@ const query = gql`
 `;
 
 export default {
+  data() {
+    const vars = {
+      page: this.$route.params.page ? this.$route.params.page : 1,
+      search: this.$route.query.search,
+      searchGenre: this.$route.query.searchGenre,
+      searchMediaTag: this.$route.query.searchMediaTag,
+      searchYear: this.$route.query.searchYear,
+      searchFormat: this.$route.query.searchFormat,
+      searchStatus: this.$route.query.searchStatus,
+    };
+    Object.keys(vars).forEach((key) => {
+      if (
+        vars[key] === null ||
+        vars[key] === undefined ||
+        vars[key] === "undefined" ||
+        vars[key] === "null"
+      ) {
+        delete vars[key];
+      }
+    });
+    console.log(vars);
+    return vars;
+  },
   apollo: {
     Page: {
       query: query,
       prefetch: true,
       variables() {
         const vars = {
-          search:
-            this.$route.query.search != "null" &&
-            this.$route.query.search != "undefined"
-              ? this.$route.query.search
-              : null,
-          searchGenre:
-            this.$route.query.searchGenre != "null" &&
-            this.$route.query.searchGenre != "undefined"
-              ? this.$route.query.searchGenre
-              : null,
-          searchMediaTag:
-            this.$route.query.searchMediaTag != "null" &&
-            this.$route.query.searchMediaTag != "undefined"
-              ? this.$route.query.searchMediaTag
-              : null,
-          searchYear:
-            this.$route.query.searchYear != "null" &&
-            this.$route.query.searchYear != "undefined"
-              ? this.$route.query.searchYear
-              : null,
-          searchFormat:
-            this.$route.query.searchFormat != "null" &&
-            this.$route.query.searchFormat != "undefined"
-              ? this.$route.query.searchFormat
-              : null,
-          searchStatus:
-            this.$route.query.searchStatus != "null" &&
-            this.$route.query.searchStatus != "undefined"
-              ? this.$route.query.searchStatus
-              : null,
+          page: this.$route.params.page ? this.$route.params.page : 1,
+          search: this.$route.query.search,
+          searchGenre: this.$route.query.searchGenre,
+          searchMediaTag: this.$route.query.searchMediaTag,
+          searchYear: this.$route.query.searchYear,
+          searchFormat: this.$route.query.searchFormat,
+          searchStatus: this.$route.query.searchStatus,
         };
         Object.keys(vars).forEach((key) => {
-          if (vars[key] === null) {
+          if (
+            vars[key] === null ||
+            vars[key] === undefined ||
+            vars[key] === "undefined" ||
+            vars[key] === "null"
+          ) {
             delete vars[key];
           }
         });
+        console.log(vars);
         return vars;
       },
     },

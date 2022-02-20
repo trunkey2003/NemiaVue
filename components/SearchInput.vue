@@ -60,13 +60,16 @@
         class="w-[18%] h-10 pl-3 pr-6 mx-2 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
         placeholder="Regular input"
       >
-        <option>TV Show</option>
-        <option>Movie</option>
-        <option>TV Short</option>
-        <option>Special</option>
+        <option>TV</option>
+        <option>TV_SHORT</option>
+        <option>MOVIE</option>
+        <option>SPECIAL</option>
         <option>OVA</option>
         <option>ONA</option>
-        <option>Music</option>
+        <option>MUSIC</option>
+        <option>MANGA</option>
+        <option>NOVEL</option>
+        <option>ONE_SHOT</option>
       </select>
 
       <select

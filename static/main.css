@@ -14,8 +14,13 @@ body{
     font-family: cursive;
 }
 
-.custom-background{
+@media screen {
     
+}
+.custom-video{
+    margin: auto;
+    width: 70vw;
+    height: calc(70vw*9/16);
 }
 
 .app{
