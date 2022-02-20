@@ -20,11 +20,11 @@
       <div>
         <p class="text-sm text-gray-700">
           Showing
-          <span class="font-medium">1</span>
+          <span class="font-medium">{{20 * (pageIndex-1)}}</span>
           to
-          <span class="font-medium">10</span>
+          <span class="font-medium">{{20 * (pageIndex)}}</span>
           of
-          <span class="font-medium">97</span>
+          <span class="font-medium">{{20 * 4219}}</span>
           results
         </p>
       </div>

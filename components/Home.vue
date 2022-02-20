@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <SearchInput/>
+    <SearchInput />
     <div class="container w-full min-h-screen bg-gray-100 rounded-t-2xl">
       <div class="flex flex-wrap p-10">
         <NuxtLink
@@ -36,7 +36,7 @@
           </div>
         </NuxtLink>
       </div>
-      <PageNav/>
+      <PageNav />
     </div>
   </div>
 </template>
@@ -45,9 +45,24 @@
 import gql from "graphql-tag";
 
 const query = gql`
-  query Page($page: Int){
+  query Page(
+    $page: Int
+    $search: String
+    $searchGenre: String
+    $searchMediaTag: String
+    $searchYear: Int
+    $searchFormat: MediaFormat
+    $searchStatus: MediaStatus
+  ) {
     Page(page: $page, perPage: 20) {
-      media {
+      media(
+        search: $search
+        genre: $searchGenre
+        tag: $searchMediaTag
+        seasonYear: $searchYear
+        format: $searchFormat
+        status: $searchStatus
+      ) {
         id
         title {
           english
@@ -57,6 +72,9 @@ const query = gql`
           large
         }
         genres
+        tags {
+          name
+        }
       }
     }
   }
@@ -68,9 +86,44 @@ export default {
       query: query,
       prefetch: true,
       variables() {
-        return {
-          page: (this.$route.params.page)? this.$route.params.page : 1,
+        const vars = {
+          search:
+            this.$route.query.search != "null" &&
+            this.$route.query.search != "undefined"
+              ? this.$route.query.search
+              : null,
+          searchGenre:
+            this.$route.query.searchGenre != "null" &&
+            this.$route.query.searchGenre != "undefined"
+              ? this.$route.query.searchGenre
+              : null,
+          searchMediaTag:
+            this.$route.query.searchMediaTag != "null" &&
+            this.$route.query.searchMediaTag != "undefined"
+              ? this.$route.query.searchMediaTag
+              : null,
+          searchYear:
+            this.$route.query.searchYear != "null" &&
+            this.$route.query.searchYear != "undefined"
+              ? this.$route.query.searchYear
+              : null,
+          searchFormat:
+            this.$route.query.searchFormat != "null" &&
+            this.$route.query.searchFormat != "undefined"
+              ? this.$route.query.searchFormat
+              : null,
+          searchStatus:
+            this.$route.query.searchStatus != "null" &&
+            this.$route.query.searchStatus != "undefined"
+              ? this.$route.query.searchStatus
+              : null,
         };
+        Object.keys(vars).forEach((key) => {
+          if (vars[key] === null) {
+            delete vars[key];
+          }
+        });
+        return vars;
       },
     },
   },

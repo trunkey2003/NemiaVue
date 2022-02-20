@@ -12,7 +12,7 @@
         class="w-1/2 py-2 border-b-2 border-yellow-400 outline-none focus:border-green-400"
       />
       <a
-        :href="`/3`"
+        :href="`?search=${search}&searchGenre=${searchGenre}&searchMediaTag=${searchMediaTag}&searchYear=${searchYear}&searchFormat=${searchFormat}&searchStatus=${searchStatus}`"
         ><svg
         xmlns="http://www.w3.org/2000/svg"
         class="w-6 h-6 mx-2 text-yellow-600"
@@ -208,12 +208,12 @@ export default {
   name: "SearchInput",
   data() {
     return {
-      search: null,
-      searchGenre: null,
-      searchMediaTag: null,
-      searchYear: null,
-      searchFormat: null,
-      searchStatus: null,
+      search: (this.$route.query.search != "null" && this.$route.query.search != "undefined")? this.$route.query.search : null,
+      searchGenre: (this.$route.query.searchGenre != "null" && this.$route.query.searchGenre != "undefined")? this.$route.query.searchGenre : null,
+      searchMediaTag: (this.$route.query.searchMediaTag != "null" && this.$route.query.searchMediaTag != "undefined")? this.$route.query.searchMediaTag : null,
+      searchYear: (this.$route.query.searchYear != "null" && this.$route.query.searchYear != "undefined")? this.$route.query.searchYear : null,
+      searchFormat: (this.$route.query.searchFormat != "null" && this.$route.query.searchFormat != "undefined")? this.$route.query.searchFormat : null, 
+      searchStatus: (this.$route.query.searchStatus != "null" && this.$route.query.searchStatus != "undefined")? this.$route.query.searchStatus : null,
     };
   },
   apollo: {

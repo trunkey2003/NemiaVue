@@ -3,7 +3,7 @@
     class="bg-gray-400 border-gray-200 px-2 sm:px-4 py-0 rounded dark:bg-gray-900 opacity-80"
   >
     <div class="container custom-font-cursive flex flex-wrap justify-between items-center mx-auto">
-      <a href="#" class="flex">
+      <a href="/" class="flex">
         <svg
           class="mr-3 h-10"
           viewBox="0 0 52 72"
@@ -70,23 +70,16 @@
               href="/"
               class="block py-2 pr-4 pl-3 px-3 custom-font-cursive text-lg text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:d dark:border-gray-700"
               aria-current="page"
-              >Home</a
+              >Sign In</a
             >
           </li>
           <li>
             <a
               href="/"
               class="block py-2 pr-4 pl-3 px-3 custom-font-cursive text-lg text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:d dark:border-gray-700"
-              >Trending</a
+              >Sign Up</a
             >
-          </li>
-          <li>
-            <a
-              href="/"
-              class="block py-2 pr-4 pl-3 px-3 custom-font-cursive text-lg text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:d dark:border-gray-700"
-              >All</a
-            >
-          </li>
+          </li> 
         </ul>
       </div>
     </div>
