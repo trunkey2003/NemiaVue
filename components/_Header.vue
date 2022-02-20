@@ -31,7 +31,8 @@
       <button
         data-collapse-toggle="mobile-menu"
         type="button"
-        class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        @click="myToogle"
+        v-bind:class="`inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600`"
         aria-controls="mobile-menu-2"
         aria-expanded="false"
       >
@@ -61,7 +62,7 @@
           ></path>
         </svg>
       </button>
-      <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+      <div v-bind:class="`${classActive} w-full md:block md:w-auto`" id="mobile-menu">
         <ul
           class="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
         >
@@ -89,5 +90,16 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+    classActive: "hidden"
+  }
+  },
+  methods: {
+    myToogle: function() {
+      this.classActive = (this.classActive == "hidden")?  "" : "hidden";
+      // some code to filter users
+    }
+  }
 };
 </script>
