@@ -1,7 +1,6 @@
 <template>
   <div class="app">
     <SearchInput/>
-    <MediaFilter/>
     <div class="container w-full min-h-screen bg-gray-100 rounded-t-2xl">
       <div class="flex flex-wrap p-10">
         <NuxtLink
