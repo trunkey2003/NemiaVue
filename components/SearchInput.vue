@@ -34,6 +34,7 @@
         class="w-[18%] h-10 pl-3 pr-6 mx-2 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
         placeholder="Regular input"
       >
+        <option selected>Any</option>
         <option v-for="genre in GenreCollection">{{ genre }}</option>
       </select>
 
@@ -42,6 +43,7 @@
         class="w-[18%] h-10 pl-3 pr-6 mx-2 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
         placeholder="Regular input"
       >
+        <option selected>Any</option>
         <option v-for="mediaTag in MediaTagCollection">
           {{ mediaTag.name }}
         </option>
@@ -52,6 +54,7 @@
         class="w-[18%] h-10 pl-3 pr-6 mx-2 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
         placeholder="Regular input"
       >
+        <option selected>Any</option>
         <option v-for="index in (1, 100)">{{ 2023 - index }}</option>
       </select>
 
@@ -60,6 +63,7 @@
         class="w-[18%] h-10 pl-3 pr-6 mx-2 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
         placeholder="Regular input"
       >
+        <option selected>Any</option>
         <option>TV</option>
         <option>TV_SHORT</option>
         <option>MOVIE</option>
@@ -77,16 +81,17 @@
         class="w-[18%] h-10 pl-3 pr-6 mx-2 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
         placeholder="Regular input"
       >
-        <option>FINISHED</option>
-        <option>RELEASING</option>
-        <option>NOT_YET_RELEASED</option>
-        <option>CANCELLED</option>
-        <option>HIATUS</option>
+        <option value="Any">Any</option>
+        <option value="FINISHED">FINISHED</option>
+        <option value="RELEASING">RELEASING</option>
+        <option value="NOT_YET_RELEASED">NOT_YET_RELEASED</option>
+        <option value="CANCELLED">CANCELLED</option>
+        <option value="HIATUS">HIATUS</option>
       </select>
     </div>
     <div class="container flex justify-center items-center text-gray-700 pb-6">
       <span
-        v-if="search"
+        v-if="search != 'undefined' && search != null"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ search }}
         <svg
@@ -103,7 +108,7 @@
           /></svg
       ></span>
       <span
-        v-if="searchGenre"
+        v-if="searchGenre != 'Any' && searchGenre != 'null' && searchGenre != 'undefined'"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchGenre }}
         <svg
@@ -120,7 +125,7 @@
           /></svg
       ></span>
       <span
-        v-if="searchMediaTag"
+        v-if="searchMediaTag != 'Any' && searchMediaTag != 'null' && searchMediaTag != 'undefined'"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchMediaTag
         }}<svg
@@ -137,7 +142,7 @@
           /></svg
       ></span>
       <span
-        v-if="searchYear"
+        v-if="searchYear != 'Any' && searchYear != 'null' && searchYear != 'undefined'"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchYear }}
         <svg
@@ -154,7 +159,7 @@
           /></svg
       ></span>
       <span
-        v-if="searchFormat"
+        v-if="searchFormat != 'Any' && searchFormat != 'null' && searchFormat != 'undefined'"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchFormat }}
         <svg
@@ -171,7 +176,7 @@
           /></svg
       ></span>
       <span
-        v-if="searchStatus"
+        v-if="searchStatus != 'Any' && searchStatus != 'null' && searchStatus != 'undefined'"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchStatus
         }}<svg
@@ -211,12 +216,12 @@ export default {
   name: "SearchInput",
   data() {
     return {
-      search: (this.$route.query.search != "null" && this.$route.query.search != "undefined")? this.$route.query.search : null,
-      searchGenre: (this.$route.query.searchGenre != "null" && this.$route.query.searchGenre != "undefined")? this.$route.query.searchGenre : null,
-      searchMediaTag: (this.$route.query.searchMediaTag != "null" && this.$route.query.searchMediaTag != "undefined")? this.$route.query.searchMediaTag : null,
-      searchYear: (this.$route.query.searchYear != "null" && this.$route.query.searchYear != "undefined")? this.$route.query.searchYear : null,
-      searchFormat: (this.$route.query.searchFormat != "null" && this.$route.query.searchFormat != "undefined")? this.$route.query.searchFormat : null, 
-      searchStatus: (this.$route.query.searchStatus != "null" && this.$route.query.searchStatus != "undefined")? this.$route.query.searchStatus : null,
+      search: this.$route.query.search,
+      searchGenre: (this.$route.query.searchGenre)? this.$route.query.searchGenre : "Any",
+      searchMediaTag:(this.$route.query.searchMediaTag) ? this.$route.query.searchMediaTag : "Any",
+      searchYear: (this.$route.query.searchYear) ? this.$route.query.searchYear : "Any",
+      searchFormat: (this.$route.query.searchFormat) ? this.$route.query.searchFormat : "Any", 
+      searchStatus: (this.$route.query.searchStatus) ? this.$route.query.searchStatus : "Any",
     };
   },
   apollo: {

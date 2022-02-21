@@ -10,7 +10,7 @@
           class="hover:bg-gray-50 cursor-pointer md:max-w-[100%] lg:max-w-[25%] lg:px-[1%] rounded overflow-hidden shadow-lg"
         >
           <img
-            class="w-full min-h-[28rem] max-h-[28rem] object-fill"
+            class="min-w-full w-full min-h-[28rem] max-h-[28rem] object-fill"
             v-bind:src="media.coverImage.large"
             v-bind:alt="media.title.english"
           />
@@ -96,7 +96,8 @@ export default {
         vars[key] === null ||
         vars[key] === undefined ||
         vars[key] === "undefined" ||
-        vars[key] === "null"
+        vars[key] === "null" || 
+        vars[key] === "Any"
       ) {
         delete vars[key];
       }
@@ -123,7 +124,8 @@ export default {
             vars[key] === null ||
             vars[key] === undefined ||
             vars[key] === "undefined" ||
-            vars[key] === "null"
+            vars[key] === "null" ||
+            vars[key] === "Any"
           ) {
             delete vars[key];
           }
