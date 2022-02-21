@@ -108,11 +108,11 @@
           /></svg
       ></span>
       <span
-        v-if="searchGenre != 'Any' && searchGenre != 'null' && searchGenre != 'undefined'"
+        v-if="searchGenre != 'Any' && searchGenre != 'null' && searchGenre != 'undefined' && searchGenre != null"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchGenre }}
         <svg
-          @click="() => (searchGenre = null)"
+          @click="() => (searchGenre = 'Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -125,11 +125,11 @@
           /></svg
       ></span>
       <span
-        v-if="searchMediaTag != 'Any' && searchMediaTag != 'null' && searchMediaTag != 'undefined'"
+        v-if="searchMediaTag != 'Any' && searchMediaTag != 'null' && searchMediaTag != 'undefined'  && searchMediaTag != null"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchMediaTag
         }}<svg
-          @click="() => (searchMediaTag = null)"
+          @click="() => (searchMediaTag = 'Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -142,11 +142,11 @@
           /></svg
       ></span>
       <span
-        v-if="searchYear != 'Any' && searchYear != 'null' && searchYear != 'undefined'"
+        v-if="searchYear != 'Any' && searchYear != 'null' && searchYear != 'undefined' && searchYear != null"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchYear }}
         <svg
-          @click="() => (searchYear = null)"
+          @click="() => (searchYear = 'Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -159,11 +159,11 @@
           /></svg
       ></span>
       <span
-        v-if="searchFormat != 'Any' && searchFormat != 'null' && searchFormat != 'undefined'"
+        v-if="searchFormat != 'Any' && searchFormat != 'null' && searchFormat != 'undefined' && searchFormat != null"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchFormat }}
         <svg
-          @click="() => (searchFormat = null)"
+          @click="() => (searchFormat = 'Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -176,11 +176,11 @@
           /></svg
       ></span>
       <span
-        v-if="searchStatus != 'Any' && searchStatus != 'null' && searchStatus != 'undefined'"
+        v-if="searchStatus != 'Any' && searchStatus != 'null' && searchStatus != 'undefined' && searchStatus != null"
         class="mx-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-blue-600 rounded-full"
         >{{ searchStatus
         }}<svg
-          @click="() => (searchStatus = null)"
+          @click="() => (searchStatus = 'Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
