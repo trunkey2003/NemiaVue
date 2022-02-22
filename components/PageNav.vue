@@ -109,6 +109,12 @@
               />
             </svg>
           </div>
+          <span
+            v-if="pageIndex >= 4213"
+            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"
+          >
+            ...
+          </span>
           <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
           <div v-for="index in [0, 1, 2]" :key="index">
             <a
@@ -144,11 +150,33 @@
               {{ pageIndex + index }}
             </a>
           </div>
+
+          <!-- fix 4216 pagination -->
+          <a
+              v-if="4213 <= pageIndex && pageIndex <= 4219 && pageIndex != 4216"
+              :href="`/4216`"
+              aria-current="page"
+              class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"
+            >
+              4216
+          </a>
+
+          <a
+              v-else-if="pageIndex == 4216"
+              :href="`/4216`"
+              aria-current="page"
+              class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+            >
+              4216
+          </a>
+
           <span
+            v-else
             class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"
           >
             ...
           </span>
+
           <div v-for="index in [4217, 4218, 4219]" :key="index">
             <a
               v-if="pageIndex == index"

@@ -26,3 +26,22 @@ body{
 .app{
     min-height: 100vh;
 }
+
+.custom-capitalize {
+  text-transform: lowercase !important;
+}
+.custom-capitalize::first-line{
+  text-transform: capitalize !important;
+}
+.custom-font{
+    color: #748899;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 21px;
+    margin-top: 10px;
+    overflow: hidden;
+    transition: color .2s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}

@@ -35,7 +35,7 @@
         placeholder="Regular input"
       >
         <option selected>Any</option>
-        <option v-for="genre in GenreCollection">{{ genre }}</option>
+        <option v-for="genre in GenreCollection" v-bind:key="genre">{{ genre }}</option>
       </select>
 
       <select
@@ -44,7 +44,7 @@
         placeholder="Regular input"
       >
         <option selected>Any</option>
-        <option v-for="mediaTag in MediaTagCollection">
+        <option v-for="mediaTag in MediaTagCollection" v-bind:key="mediaTag.name">
           {{ mediaTag.name }}
         </option>
       </select>
@@ -55,7 +55,7 @@
         placeholder="Regular input"
       >
         <option selected>Any</option>
-        <option v-for="index in (1, 100)">{{ 2023 - index }}</option>
+        <option v-for="index in (1, 100)" v-bind:key="index">{{ 2023 - index }}</option>
       </select>
 
       <select
