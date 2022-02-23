@@ -1,6 +1,6 @@
 <template>
-  <!-- Banner -->
-  <div class="container w-full min-h-screen bg-gray-100 rounded-t-2xl">
+<div>
+  <div id="meida" class="container w-full min-h-screen bg-gray-100 rounded-t-2xl">
     <img v-bind:src="Media.bannerImage" />
     <div
       class="
@@ -349,10 +349,12 @@
       <div class="flex-grow border-t border-blue-400"></div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import gql from "graphql-tag";
+import PageLoading from './PageLoading.vue';
 
 const query = gql`
   query Media($id: Int) {

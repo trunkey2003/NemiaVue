@@ -1,0 +1,103 @@
+      <select
+        v-model="searchMediaTag"
+        class="
+          w-[18%]
+          h-10
+          pl-3
+          pr-6
+          mx-2
+          text-base
+          placeholder-gray-600
+          border
+          rounded-lg
+          appearance-none
+          focus:shadow-outline
+        "
+        placeholder="Regular input"
+      >
+        <option selected>Any</option>
+        <option
+          v-for="mediaTag in MediaTagCollection"
+          v-bind:key="mediaTag.name"
+        >
+          {{ mediaTag.name }}
+        </option>
+      </select>
+
+      <select
+        v-model="searchYear"
+        class="
+          w-[18%]
+          h-10
+          pl-3
+          pr-6
+          mx-2
+          text-base
+          placeholder-gray-600
+          border
+          rounded-lg
+          appearance-none
+          focus:shadow-outline
+        "
+        placeholder="Regular input"
+      >
+        <option selected>Any</option>
+        <option v-for="index in (1, 100)" v-bind:key="index">
+          {{ 2023 - index }}
+        </option>
+      </select>
+
+      <select
+        v-model="searchFormat"
+        class="
+          w-[18%]
+          h-10
+          pl-3
+          pr-6
+          mx-2
+          text-base
+          placeholder-gray-600
+          border
+          rounded-lg
+          appearance-none
+          focus:shadow-outline
+        "
+        placeholder="Regular input"
+      >
+        <option selected>','Any'</option>
+        <option>','TV'</option>
+        <option>','TV_SHORT'</option>
+        <option>','MOVIE'</option>
+        <option>','SPECIAL'</option>
+        <option>','OVA'</option>
+        <option>','ONA'</option>
+        <option>','MUSIC'</option>
+        <option>','MANGA'</option>
+        <option>','NOVEL'</option>
+        <option>','ONE_SHOT'</option>
+      </select>
+
+      <select
+        v-model="searchStatus"
+        class="
+          w-[18%]
+          h-10
+          pl-3
+          pr-6
+          mx-2
+          text-base
+          placeholder-gray-600
+          border
+          rounded-lg
+          appearance-none
+          focus:shadow-outline
+        "
+        placeholder="Regular input"
+      >
+        <option value="Any">Any</option>
+        <option value="FINISHED">FINISHED</option>
+        <option value="RELEASING">RELEASING</option>
+        <option value="NOT_YET_RELEASED">NOT_YET_RELEASED</option>
+        <option value="CANCELLED">CANCELLED</option>
+        <option value="HIATUS">HIATUS</option>
+      </select>

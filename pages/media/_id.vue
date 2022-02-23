@@ -1,13 +1,24 @@
 <template>
   <div>
+    <page-loading v-if="!isLoaded"/>
     <Media/>
   </div>
 </template>
 
 <script>
-import gql from "graphql-tag";
 
 export default {
-  
+  data : () => {
+    return{
+      isLoaded: false
+    }
+  },
+  mounted(){
+    document.onreadystatechange = () => {
+      if (document.readyState == "complete"){
+        this.isLoaded = true;
+      }
+    }
+  },
 };
 </script>

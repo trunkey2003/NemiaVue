@@ -1,11 +1,24 @@
 <template>
   <div>
+    <page-loading v-if="!isLoaded"/>
     <Home/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'IndexPage',
+  data : () => {
+    return{
+      isLoaded: false
+    }
+  },
+  mounted(){
+    document.onreadystatechange = () => {
+      if (document.readyState == "complete"){
+        this.isLoaded = true;
+      }
+    }
+  },
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <!-- <page-loading v-if="!isLoaded"/> -->
     <SearchInput />
     <div
       id="home"
@@ -11,7 +12,16 @@
           v-for="media in medias"
           :key="media.id"
           v-bind:id="media.id"
-          @mouseover="(e) => {handleMouseOver(e)}" @mouseleave="(e) => {handleMouseLeave(e)}"
+          @mouseover="
+            (e) => {
+              handleMouseOver(e);
+            }
+          "
+          @mouseleave="
+            (e) => {
+              handleMouseLeave(e);
+            }
+          "
           class="
             cursor-pointer
             md:max-w-[100%]
@@ -24,33 +34,44 @@
           <!-- v-bind:src="media.coverImage.large"
             v-bind:alt="media.title.english">  -->
           <div
-            class="h-80 hover:opacity-80 thumbnail bg-no-repeat	"
+            class="h-80 hover:opacity-80 thumbnail bg-no-repeat bg-center"
             v-bind:id="media.id"
             v-bind:style="{
               backgroundImage: 'url(' + media.coverImage.large + ')',
             }"
           ></div>
-          <div v-if="media.title.english" v-bind:id="media.id" class="custom-font">
+          <div
+            v-if="media.title.english"
+            v-bind:id="media.id"
+            class="custom-font text-center pb-2 lg:pb-0"
+          >
             {{ media.title.english }}
           </div>
-          <div v-else v-bind:id="media.id" class="custom-font">Blank Title</div>
+          <div v-else v-bind:id="media.id" class="custom-font text-center">
+            Blank Title
+          </div>
           <!-- box -->
-          <div v-bind:id="'box-'+media.id" class="absolute min-w-32 top-0 left-[110%] z-30 py-4 px-8 bg-white shadow-lg rounded-lg my-20 hidden">
+          <div
+            v-bind:id="'box-' + media.id"
+            class="
+              absolute
+              min-w-32
+              top-0
+              left-[105%]
+              z-30
+              py-4
+              px-8
+              bg-white
+              shadow-lg
+              rounded-lg
+              hidden
+            "
+          >
             <div class="px-6 py-4">
               <div v-if="media.title.english" class="font-bold text-xl mb-2">
                 {{ media.title.english }}
               </div>
               <div v-else class="font-bold text-xl mb-2">Blank Title</div>
-              <p
-                class="
-                  text-gray-700 text-base
-                  max-h-40
-                  text-ellipsis
-                  overflow-hidden
-                "
-              >
-                {{ media.description }}
-              </p>
             </div>
             <div class="px-6 pt-4 pb-2">
               <span v-for="genre in media.genres" v-bind:key="genre" class=""
@@ -59,36 +80,74 @@
             </div>
           </div>
         </a>
-      </div>
-      <div v-if="dataLoading" class="flex p-10">
         <div
-          v-for="index in (0, 4)"
+          v-for="index in (1, 6)"
           v-bind:key="index"
           class="
-            border border-blue-300
-            shadow
-            rounded-md
-            p-4
-            max-w-sm
+            hidden
+            lg:block
+            cursor-pointer
+            max-w-[15%]
+            md:max-w-[100%]
+            lg:max-w-[15%] lg:mx-[0.8%] lg:my-3
             w-full
-            mx-auto
           "
         >
-          <div class="animate-pulse flex space-x-4">
-            <div class="rounded-full bg-slate-700 h-10 w-10"></div>
-            <div class="flex-1 space-y-6 py-1">
-              <div class="h-2 bg-slate-700 rounded"></div>
-              <div class="space-y-3">
-                <div class="grid grid-cols-3 gap-4">
-                  <div class="h-2 bg-slate-700 rounded col-span-2"></div>
-                  <div class="h-2 bg-slate-700 rounded col-span-1"></div>
-                </div>
-                <div class="h-2 bg-slate-700 rounded"></div>
-              </div>
-            </div>
-          </div>
+          <div
+            v-if="dataLoading"
+            class="h-80 hover:opacity-80 bg-gray-600 animate-pulse bg-center"
+          ></div>
         </div>
+
+        <button
+          type="button"
+          class="
+            inline-flex
+            lg:hidden
+            items-center
+            mt-3
+            mx-auto
+            px-8
+            py-2
+            font-semibold
+            leading-6
+            text-sm
+            shadow
+            rounded-md
+            text-white
+            bg-blue-500
+            hover:bg-blue-800
+            transition
+            ease-in-out
+            duration-150
+            cursor-not-allowed
+          "
+          disabled=""
+        >
+          <svg
+            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          Processing...
+        </button>
       </div>
+
       <!-- <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div> -->
     </div>
   </div>
@@ -158,16 +217,16 @@ export default {
         });
       }
     },
-    handleMouseOver(e){
+    handleMouseOver(e) {
       if (!parseInt(e.target.id)) return;
       const box = document.getElementById("box-" + e.target.id);
       box.classList.remove("hidden");
     },
-    handleMouseLeave(e){
+    handleMouseLeave(e) {
       if (!parseInt(e.target.id)) return;
       const box = document.getElementById("box-" + e.target.id);
       box.classList.add("hidden");
-    }
+    },
   },
 
   beforeMount() {
@@ -184,6 +243,7 @@ export default {
 
   data() {
     const vars = {
+      isLoaded: false,
       dataLoading: false,
       medias: [],
       count: 0,
@@ -209,12 +269,20 @@ export default {
     });
     return vars;
   },
+  mounted(){
+    this.isLoaded = true;
+    // document.onreadystatechange = () => {
+    //   if (document.readyState == "complete"){
+    //     this.isLoaded = true;
+    //   }
+    // }
+  },
   apollo: {
     Page: {
       query: query,
       variables() {
         const vars = {
-          page: (this.page)? this.page : 1,
+          page: this.page ? this.page : 1,
           perPage: this.perPage,
           search: this.$route.query.search,
           searchGenre: this.$route.query.searchGenre,
@@ -229,7 +297,8 @@ export default {
             vars[key] === undefined ||
             vars[key] === "undefined" ||
             vars[key] === "null" ||
-            vars[key] === "Any"
+            vars[key] === "Any" ||
+            vars[key] === ""
           ) {
             delete vars[key];
           }
