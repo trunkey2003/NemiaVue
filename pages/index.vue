@@ -14,11 +14,7 @@ export default {
     }
   },
   mounted(){
-    document.onreadystatechange = () => {
-      if (document.readyState == "complete"){
-        this.isLoaded = true;
-      }
-    }
+    this.isLoaded = true;
   },
 }
 </script>
