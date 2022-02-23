@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <!-- <page-loading v-if="!isLoaded"/> -->
+    <page-loading v-if="!isLoaded"/>
     <SearchInput />
     <div
       id="home"
@@ -271,11 +271,6 @@ export default {
   },
   mounted(){
     this.isLoaded = true;
-    // document.onreadystatechange = () => {
-    //   if (document.readyState == "complete"){
-    //     this.isLoaded = true;
-    //   }
-    // }
   },
   apollo: {
     Page: {
