@@ -1,5 +1,8 @@
 <template>
   <div class="app">
+    <div v-show="pageIsLoading" >
+      <page-loading />
+    </div>
     <SearchInput
       :_search="search"
       :_searchGenre="searchGenre"
@@ -253,6 +256,8 @@ export default {
     },
 
     updateSearch(search) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -264,6 +269,7 @@ export default {
       this.dataLoading = true;
       this.medias = [];
       myPromise.then(() => {
+        if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
@@ -271,6 +277,8 @@ export default {
     },
 
     updateSearchGenre(searchGenre) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -282,6 +290,7 @@ export default {
       this.dataLoading = true;
       this.medias = [];
       myPromise.then(() => {
+        if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
@@ -289,6 +298,8 @@ export default {
     },
 
     updateSearchMediaTag(searchMediaTag) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -300,6 +311,7 @@ export default {
       this.dataLoading = true;
       this.medias = [];
       myPromise.then(() => {
+        if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
@@ -307,6 +319,8 @@ export default {
     },
     
     updateSearchYear(searchYear) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -318,6 +332,7 @@ export default {
       this.dataLoading = true;
       this.medias = [];
       myPromise.then(() => {
+        if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
@@ -325,6 +340,8 @@ export default {
     },
 
     updateSearchFormat(searchFormat) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -336,6 +353,7 @@ export default {
       this.dataLoading = true;
       this.medias = [];
       myPromise.then(() => {
+        if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
@@ -343,6 +361,8 @@ export default {
     },
 
     updateSearchStatus(searchStatus) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -354,6 +374,7 @@ export default {
       this.dataLoading = true;
       this.medias = [];
       myPromise.then(() => {
+        if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
@@ -362,10 +383,14 @@ export default {
   },
 
   beforeMount() {
-    this.medias = this.Page.media;
     this.count += this.perPage;
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("scroll", this.handleScroll);
+  },
+
+  mounted() {
+    this.medias = this.Page.media;
+    this.pageIsLoading = false;
   },
 
   beforeDestroy() {
@@ -375,8 +400,9 @@ export default {
   data() {
     const vars = {
       stopFetchingNewData: false,
-      myIsLoading: false,
+      pageIsLoading: true,
       dataLoading: false,
+      currentDataFlow: 0,
       medias: [],
       count: 0,
       page: 1,
@@ -417,6 +443,7 @@ export default {
           }
         });
         console.log(vars);
+        console.log(this.currentDataFlow);
         return vars;
       },
     },

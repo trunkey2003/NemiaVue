@@ -32,6 +32,8 @@ export default {
     '@nuxt/postcss8'
   ],
 
+  target: 'server',
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios

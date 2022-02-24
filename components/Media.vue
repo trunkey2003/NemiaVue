@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-show="pageIsLoading" >
+      <page-loading />
+    </div>
     <div
       id="meida"
       class="container w-full min-h-screen bg-gray-100 rounded-t-2xl"
