@@ -1,8 +1,5 @@
 <template>
   <div class="app">
-    <div v-if="myIsLoading" >
-    <page-loading />
-    </div>
     <SearchInput
       :_search="search"
       :_searchGenre="searchGenre"
@@ -369,11 +366,6 @@ export default {
     this.count += this.perPage;
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("scroll", this.handleScroll);
-  },
-
-  mounted() {
-    console.log("My Is Loading : ")
-    console.log(this.myIsLoading);
   },
 
   beforeDestroy() {
