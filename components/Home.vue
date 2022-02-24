@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <page-loading v-if="!isLoaded" />
+    <page-loading v-if="!myIsLoading" />
     <SearchInput
       :_search="search"
       :_searchGenre="searchGenre"
@@ -376,7 +376,7 @@ export default {
   data() {
     const vars = {
       stopFetchingNewData: false,
-      isLoaded: false,
+      myIsLoading: false,
       dataLoading: false,
       medias: [],
       count: 0,
@@ -392,7 +392,7 @@ export default {
     return vars;
   },
   mounted() {
-    this.isLoaded = true;
+    this.myIsLoading = true;
   },
   apollo: {
     Page: {
