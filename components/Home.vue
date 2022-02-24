@@ -1,6 +1,8 @@
 <template>
   <div class="app">
-    <page-loading v-if="!myIsLoading" />
+    <div v-if="myIsLoading" >
+    <page-loading />
+    </div>
     <SearchInput
       :_search="search"
       :_searchGenre="searchGenre"
@@ -369,6 +371,11 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
 
+  mounted() {
+    console.log("My Is Loading : ")
+    console.log(this.myIsLoading);
+  },
+
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
   },
@@ -390,9 +397,6 @@ export default {
       searchStatus: this.$route.query.searchStatus,
     };
     return vars;
-  },
-  mounted() {
-    this.myIsLoading = true;
   },
   apollo: {
     Page: {
