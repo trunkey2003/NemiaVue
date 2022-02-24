@@ -75,7 +75,7 @@
       </div>
       <div class="flex flex-wrap">
         <div
-          v-for="ranking in Media.rankings"
+          v-for="ranking in (Media.rankings)? Media.rankings : []"
           v-bind:key="ranking"
           class="w-full max-w-full lg:w-[32.5%] flex flex-wrap"
         >
@@ -166,7 +166,7 @@
       </div>
       <div class="flex flex-wrap">
         <div
-          v-for="media in Media.relations.edges"
+          v-for="media in (Media.relations.edges)? Media.relations.edges : []"
           v-bind:key="media.node.title.romaji"
           class="
             ml-2
@@ -231,7 +231,7 @@
       </div>
       <div class="flex flex-wrap w-full">
         <div
-          v-for="index in Media.characters.edges.length - 1"
+          v-for="index in (Media.characters.edge)? Media.characters.edges.length - 1 : 0"
           v-bind:key="index"
           class="
             ml-2

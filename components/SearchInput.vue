@@ -7,7 +7,7 @@
         type="text"
         name="anime"
         maxlength="100"
-        v-model="search"
+        @input="(e) => handleOnChangeSearch(e.target.value)"
         placeholder="Search Your First Favourite Anime..."
         class="
           w-1/2
@@ -61,24 +61,19 @@
         :searchTitle="`Status`" 
         :selecting="searchStatus"
         :selects="[
-          'Any',
-          'TV',
-          'TV_SHORT',
-          'MOVIE',
+          'FINISHED',
+          'RELEASING',
+          'NOT_YET_RELEASED',
+          'CANCELLED',
           'SPECIAL',
-          'OVA',
-          'ONA',
-          'MUSIC',
-          'MANGA',
-          'NOVEL',
-          'ONE_SHOT',
+          'HIATUS'
         ]"
         :handleSelectOnChange="handleOnChangeSearchStatus"
       />
     </div>
     <div class="container flex justify-center items-center text-gray-700 pb-6">
       <span
-        v-if="search != 'undefined' && search != null && search != '' && search != 'null'"
+        v-if="_search != 'undefined' && _search != null && _search != '' && _search != 'null'"
         class="
           mx-2
           inline-flex
@@ -93,9 +88,9 @@
           bg-blue-600
           rounded-full
         "
-        >{{ search }}
+        >{{ _search }}
         <svg
-          @click="() => (search = null)"
+          @click="() => handleOnChangeSearch('')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -130,7 +125,7 @@
         "
         >{{ searchGenre }}
         <svg
-          @click="() => (searchGenre = 'Any')"
+          @click="() => handleOnChangeSearchGenre('Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -165,7 +160,7 @@
         "
         >{{ searchMediaTag
         }}<svg
-          @click="() => (searchMediaTag = 'Any')"
+          @click="() => handleOnChangeSearchMediaTag('Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -200,7 +195,7 @@
         "
         >{{ searchYear }}
         <svg
-          @click="() => (searchYear = 'Any')"
+          @click="() => handleOnChangeSearchYear('Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -235,7 +230,7 @@
         "
         >{{ searchFormat }}
         <svg
-          @click="() => (searchFormat = 'Any')"
+          @click="() => handleOnChangeSearchFormat('Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -270,7 +265,7 @@
         "
         >{{ searchStatus
         }}<svg
-          @click="() => (searchStatus = 'Any')"
+          @click="() => handleOnChangeSearchStatus('Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -304,22 +299,32 @@ const MediaTagCollection = gql`
   }
 `;
 export default {
+  props: ['_search', '_searchGenre', '_searchMediaTag', '_searchYear', '_searchFormat', '_searchStatus'],
   components: { CustomSelect },
   name: "SearchInput",
   methods:{
+    handleOnChangeSearch(search){
+      this.$emit('update-search', search);
+      this.search = search;
+    },
     handleOnChangeSearchGenre(searchGenre){
+      this.$emit('update-search-genre', searchGenre);
       this.searchGenre = searchGenre;
     },
     handleOnChangeSearchMediaTag(searchMediaTag){
+      this.$emit('update-search-media-tag', searchMediaTag);
       this.searchMediaTag = searchMediaTag;
     },
     handleOnChangeSearchYear(searchYear){
+      this.$emit('update-search-year', searchYear);
       this.searchYear = searchYear;
     },
     handleOnChangeSearchFormat(searchFormat){
+      this.$emit('update-search-format', searchFormat);
       this.searchFormat = searchFormat;
     },
     handleOnChangeSearchStatus(searchStatus){
+      this.$emit('update-search-status', searchStatus);
       this.searchStatus = searchStatus;
     }
   },

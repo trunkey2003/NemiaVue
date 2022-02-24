@@ -1,7 +1,20 @@
 <template>
   <div class="app">
-    <page-loading v-if="!isLoaded"/>
-    <SearchInput />
+    <page-loading v-if="!isLoaded" />
+    <SearchInput
+      :_search="search"
+      :_searchGenre="searchGenre"
+      :_searchMediaTag="searchMediaTag"
+      :_searchYear="searchYear"
+      :_searchFormat="searchFormat"
+      :_searchStatus="searchStatus"
+      @update-search="updateSearch"
+      @update-search-genre="updateSearchGenre"
+      @update-search-media-tag="updateSearchMediaTag"
+      @update-search-year="updateSearchYear"
+      @update-search-format="updateSearchFormat"
+      @update-search-status="updateSearchStatus"
+    />
     <div
       id="home"
       class="container w-full min-h-screen bg-gray-100 rounded-t-2xl"
@@ -50,6 +63,7 @@
           <div v-else v-bind:id="media.id" class="custom-font text-center">
             Blank Title
           </div>
+
           <!-- box -->
           <div
             v-bind:id="'box-' + media.id"
@@ -82,7 +96,7 @@
         </a>
         <div
           v-for="index in (1, 6)"
-          v-bind:key="index"
+          v-bind:key="'loading-' + index"
           class="
             hidden
             lg:block
@@ -100,6 +114,7 @@
         </div>
 
         <button
+          v-if="dataLoading"
           type="button"
           class="
             inline-flex
@@ -197,41 +212,158 @@ export default {
   methods: {
     handleScroll() {
       var home = document.getElementById("home");
+      if (this.stopFetchingNewData) {
+        return;
+      }
       if (
         window.scrollY + 1000 >= home.scrollHeight &&
         this.medias.length <= this.count &&
         !this.dataLoading
       ) {
+        if (!this.dataLoading) this.page = this.page + 1;
         this.dataLoading = true;
         const myPromise = new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve();
           }, 3000);
         });
+        if (!this.Page.media.length){
+          this.page = this.page - 1;
+          this.stopFetchingNewData = true;
+          this.dataLoading = false;
+          return;
+        }
         myPromise.then(() => {
-          this.page = this.page + 1;
-          this.medias = this.medias.concat(this.Page.media);
+          if(this.medias != this.Page.media) this.medias = this.medias.concat(this.Page.media);
           this.count += 20;
           this.dataLoading = false;
-          console.log(this.page);
         });
       }
     },
+
     handleMouseOver(e) {
       if (!parseInt(e.target.id)) return;
       const box = document.getElementById("box-" + e.target.id);
       box.classList.remove("hidden");
     },
+
     handleMouseLeave(e) {
       if (!parseInt(e.target.id)) return;
       const box = document.getElementById("box-" + e.target.id);
       box.classList.add("hidden");
     },
+
+    updateSearch(search) {
+      this.stopFetchingNewData = true;
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 5000);
+      });
+      this.search = search;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      myPromise.then(() => {
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      });
+    },
+
+    updateSearchGenre(searchGenre) {
+      this.stopFetchingNewData = true;
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 5000);
+      });
+      this.searchGenre = searchGenre;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      myPromise.then(() => {
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      });
+    },
+
+    updateSearchMediaTag(searchMediaTag) {
+      this.stopFetchingNewData = true;
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 5000);
+      });
+      this.searchMediaTag = searchMediaTag;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      myPromise.then(() => {
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      });
+    },
+    
+    updateSearchYear(searchYear) {
+      this.stopFetchingNewData = true;
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 5000);
+      });
+      this.searchYear = searchYear;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      myPromise.then(() => {
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      });
+    },
+
+    updateSearchFormat(searchFormat) {
+      this.stopFetchingNewData = true;
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 5000);
+      });
+      this.searchFormat = searchFormat;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      myPromise.then(() => {
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      });
+    },
+
+    updateSearchStatus(searchStatus) {
+      this.stopFetchingNewData = true;
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 5000);
+      });
+      this.searchStatus = searchStatus;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      myPromise.then(() => {
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      });
+    },
   },
 
   beforeMount() {
     this.medias = this.Page.media;
-    this.page = 2;
     this.count += this.perPage;
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("scroll", this.handleScroll);
@@ -243,33 +375,23 @@ export default {
 
   data() {
     const vars = {
+      stopFetchingNewData: false,
       isLoaded: false,
       dataLoading: false,
       medias: [],
       count: 0,
       page: 1,
       perPage: 20,
-      search: this.$route.query.search,
+      search: null,
       searchGenre: this.$route.query.searchGenre,
       searchMediaTag: this.$route.query.searchMediaTag,
       searchYear: this.$route.query.searchYear,
       searchFormat: this.$route.query.searchFormat,
       searchStatus: this.$route.query.searchStatus,
     };
-    Object.keys(vars).forEach((key) => {
-      if (
-        vars[key] === null ||
-        vars[key] === undefined ||
-        vars[key] === "undefined" ||
-        vars[key] === "null" ||
-        vars[key] === "Any"
-      ) {
-        delete vars[key];
-      }
-    });
     return vars;
   },
-  mounted(){
+  mounted() {
     this.isLoaded = true;
   },
   apollo: {
@@ -277,14 +399,14 @@ export default {
       query: query,
       variables() {
         const vars = {
-          page: this.page ? this.page : 1,
+          page: this.page,
           perPage: this.perPage,
-          search: this.$route.query.search,
-          searchGenre: this.$route.query.searchGenre,
-          searchMediaTag: this.$route.query.searchMediaTag,
-          searchYear: this.$route.query.searchYear,
-          searchFormat: this.$route.query.searchFormat,
-          searchStatus: this.$route.query.searchStatus,
+          search: this.search,
+          searchGenre: this.searchGenre,
+          searchMediaTag: this.searchMediaTag,
+          searchYear: this.searchYear,
+          searchFormat: this.searchFormat,
+          searchStatus: this.searchStatus,
         };
         Object.keys(vars).forEach((key) => {
           if (
@@ -292,12 +414,13 @@ export default {
             vars[key] === undefined ||
             vars[key] === "undefined" ||
             vars[key] === "null" ||
-            vars[key] === "Any" ||
+            vars[key] === "Any" || 
             vars[key] === ""
           ) {
             delete vars[key];
           }
         });
+        console.log(vars);
         return vars;
       },
     },
