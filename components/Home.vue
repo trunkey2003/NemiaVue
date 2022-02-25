@@ -19,7 +19,13 @@
     />
     <div
       id="home"
-      class="container w-full min-h-screen bg-gray-100 rounded-t-2xl"
+      class="
+        container
+        w-full
+        min-h-screen
+        bg-gray-100 bg-opacity-80
+        rounded-t-2xl
+      "
     >
       <div v-if="medias.length || dataLoading" class="flex flex-wrap p-10">
         <a
@@ -71,12 +77,12 @@
             v-bind:id="'box-' + media.id"
             class="
               absolute
-              min-w-32
+              w-64
               top-0
               left-[105%]
               z-30
-              py-4
-              px-8
+              py-2
+              px-2
               bg-white
               shadow-lg
               rounded-lg
@@ -89,8 +95,25 @@
               </div>
               <div v-else class="font-bold text-xl mb-2">Blank Title</div>
             </div>
-            <div class="px-6 pt-4 pb-2">
-              <span v-for="genre in media.genres" v-bind:key="genre" class=""
+            <div class="px-6 pt-2 pb-2">
+              <span
+                class="
+                  mt-2
+                  mx-2
+                  inline-flex
+                  items-center
+                  justify-center
+                  px-2
+                  py-1
+                  text-xs
+                  font-bold
+                  leading-none
+                  text-red-100
+                  bg-blue-600
+                  rounded-full
+                "
+                v-for="genre in media.genres"
+                v-bind:key="genre"
                 >#{{ genre }}</span
               >
             </div>
@@ -183,7 +206,7 @@
                 There's no media match your filter
               </p>
               <p class="mb-8">
-                But dont worry, you can find plenty of other things 
+                But dont worry, you can find plenty of other things
               </p>
             </div>
             <div class="max-w-lg">
@@ -482,6 +505,7 @@ const query = gql`
     $searchYear: Int
     $searchFormat: MediaFormat
     $searchStatus: MediaStatus
+    $searchSort: [MediaSort]
   ) {
     Page(page: $page, perPage: $perPage) {
       media(
@@ -491,6 +515,7 @@ const query = gql`
         seasonYear: $searchYear
         format: $searchFormat
         status: $searchStatus
+        sort: $searchSort
       ) {
         id
         title {
@@ -504,6 +529,9 @@ const query = gql`
         tags {
           name
         }
+        format
+        episodes
+        averageScore
       }
     }
   }
@@ -713,6 +741,7 @@ export default {
       searchYear: this.$route.query.searchYear,
       searchFormat: this.$route.query.searchFormat,
       searchStatus: this.$route.query.searchStatus,
+      searchSort: null,
     };
     return vars;
   },
@@ -729,6 +758,7 @@ export default {
           searchYear: this.searchYear,
           searchFormat: this.searchFormat,
           searchStatus: this.searchStatus,
+          searchSort: this.searchSort,
         };
         Object.keys(vars).forEach((key) => {
           if (

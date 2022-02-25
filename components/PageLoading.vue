@@ -14,6 +14,7 @@
       li
       leading-[100%]
       text-center
+      opacity-100
     "
     style="
       background-image: url('https://img.wallpapersafari.com/desktop/1920/1080/40/69/ynAD1u.jpg');

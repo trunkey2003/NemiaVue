@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="pageIsLoading" >
+    <div v-show="pageIsLoading">
       <page-loading />
     </div>
     <div
@@ -33,7 +33,6 @@
           v-bind:style="{
             backgroundImage: 'url(' + Media.coverImage.extraLarge + ')',
           }"
-          title="Woman holding a mug"
         ></div>
         <div
           class="
@@ -78,7 +77,7 @@
       </div>
       <div class="flex flex-wrap">
         <div
-          v-for="ranking in (Media.rankings)? Media.rankings : []"
+          v-for="ranking in Media.rankings ? Media.rankings : []"
           v-bind:key="ranking"
           class="w-full max-w-full lg:w-[32.5%] flex flex-wrap"
         >
@@ -96,6 +95,7 @@
               rounded
               text-amber-600
               bg-amber-200
+              hover:bg-amber-300
               uppercase
               last:mr-0
               mr-1
@@ -134,6 +134,7 @@
               rounded
               text-red-600
               bg-red-200
+              hover:bg-red-300
               uppercase
               last:mr-0
               mr-1
@@ -169,7 +170,7 @@
       </div>
       <div class="flex flex-wrap">
         <div
-          v-for="media in (Media.relations.edges)? Media.relations.edges : []"
+          v-for="media in Media.relations.edges ? Media.relations.edges : []"
           v-bind:key="media.node.title.romaji"
           class="
             ml-2
@@ -197,7 +198,6 @@
             v-bind:style="{
               backgroundImage: 'url(' + media.node.coverImage.large + ')',
             }"
-            title="Woman holding a mug"
           ></div>
           <div
             class="
@@ -232,9 +232,9 @@
         <span class="flex-shrink mx-4 text-blue-400">Characters</span>
         <div class="flex-grow border-t border-blue-400"></div>
       </div>
-      <div class="flex flex-wrap w-full">
+      <div v-if="Media.characters.edges.length" class="flex flex-wrap w-full">
         <div
-          v-for="index in (Media.characters.edge)? Media.characters.edges.length - 1 : 0"
+          v-for="index in (0, Media.characters.edges.length - 1)"
           v-bind:key="index"
           class="
             ml-2
@@ -263,7 +263,6 @@
               backgroundImage:
                 'url(' + Media.characters.edges[index].node.image.large + ')',
             }"
-            title="Woman holding a mug"
           ></div>
           <div
             class="
@@ -282,13 +281,10 @@
           >
             <div class="max-h-full">
               <h2
-                v-if="!Media.characters.edges[index]"
                 class="text-gray-900 font-bold text-lg"
               >
                 {{
-                  Media.characters.edges[index].node
-                    ? Media.characters.edges[index].node.name.full
-                    : ""
+                  Media.characters.edges[index].node.name.full
                 }}
               </h2>
               <p class="text-center text-sm text-gray-600 my-2">
@@ -313,13 +309,10 @@
           >
             <div class="max-h-full">
               <h2
-                v-if="!Media.characters.edges[index].voiceActors"
                 class="text-gray-900 font-bold text-lg"
               >
                 {{
-                  Media.characters.edges[index].voiceActors
-                    ? Media.characters.edges[index].voiceActors[0].name.full
-                    : ""
+                  Media.characters.edges[index].voiceActors[0].name.full
                 }}
               </h2>
               <p class="text-center text-sm text-gray-600 my-2">
@@ -349,7 +342,6 @@
                   Media.characters.edges[index].voiceActors[0].image.large) +
                 ')',
             }"
-            title="Woman holding a mug"
           ></div>
         </div>
       </div>
@@ -479,9 +471,9 @@ const query = gql`
         season
       }
       trailer {
-          id
-          site
-          thumbnail
+        id
+        site
+        thumbnail
       }
     }
   }

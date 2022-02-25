@@ -15,6 +15,7 @@
           border-b-2 border-yellow-400
           outline-none
           focus:border-green-400
+          opacity-50
         "
       />
       <a
@@ -62,7 +63,6 @@
         :searchTitle="`Format`"
         :selecting="searchFormat"
         :selects="[
-          'Any',
           'TV',
           'TV_SHORT',
           'MOVIE',

@@ -1,13 +1,15 @@
 <template>
-    <div class="mt-1 relative min-w-[18%] mx-2 font-mono">
+    <div class="mt-1 relative min-w-[18%] mx-2 font-mono select z-50">
         <h1 class="text-white py-1 text-sm lg:text-md">{{searchTitle}}</h1>
         <button
+          v-bind:id="searchTitle"
           type="button"
           class="
             relative
             h-10
             w-full
             bg-white
+            opacity-60
             border border-gray-300
             rounded-md
             shadow-sm
@@ -24,7 +26,7 @@
           aria-expanded="true"
           aria-labelledby="listbox-label"
         >
-          <span class="flex items-center">
+          <span class="flex items-center pointer-events-none">
             <span class="ml-3 block truncate">{{selecting}}</span>
           </span>
           <span
@@ -73,6 +75,7 @@
             z-10
             w-full
             bg-white
+            opacity-80
             shadow-lg
             max-h-56
             rounded-md
@@ -140,7 +143,17 @@ export default {
         handleOptionOnClick(e){
             this.handleSelectOnChange(e.target.id);
             this.handleSelectOnClick();
+        },
+        handleClickOutSelect(e){
+          console.log(e.target.id + this.searchTitle);
+          if (e.target.id != this.searchTitle) this.classActive = "hidden";
         }
+    },
+    beforeMount() {
+      window.addEventListener("click", this.handleClickOutSelect);
+    },
+    beforeDestroy() {
+      window.removeEventListener("click", this.handleClickOutSelect);
     },
     props: ['selects', 'selecting', 'searchTitle', 'handleSelectOnChange'],
 }
