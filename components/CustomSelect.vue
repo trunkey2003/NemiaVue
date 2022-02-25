@@ -1,6 +1,6 @@
 <template>
     <div class="mt-1 relative min-w-[18%] mx-2 font-mono">
-        <h1 class="text-white py-1">{{searchTitle}}</h1>
+        <h1 class="text-white py-1 text-sm lg:text-md">{{searchTitle}}</h1>
         <button
           type="button"
           class="

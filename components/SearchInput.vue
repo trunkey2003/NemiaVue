@@ -36,11 +36,30 @@
     </div>
 
     <div class="container flex justify-center items-center text-gray-700 pb-6">
-      <custom-select :searchTitle="`Genre`" :selecting="searchGenre" :selects="GenreCollection" :handleSelectOnChange="handleOnChangeSearchGenre"/>
-      <custom-select :searchTitle="`Media Tag`" :selecting="searchMediaTag" :selects="MediaTagCollection.map((index) => index.name)" :handleSelectOnChange="handleOnChangeSearchMediaTag"/>
-      <custom-select :searchTitle="`Year`" :selecting="searchYear" :selects="Array.from(Array(100).keys()).reverse().map((index) => index + 1923)" :handleSelectOnChange="handleOnChangeSearchYear"/>
       <custom-select
-        :searchTitle="`Format`" 
+        :searchTitle="`Genre`"
+        :selecting="searchGenre"
+        :selects="GenreCollection"
+        :handleSelectOnChange="handleOnChangeSearchGenre"
+      />
+      <custom-select
+        :searchTitle="`Tag`"
+        :selecting="searchMediaTag"
+        :selects="MediaTagCollection.map((index) => index.name)"
+        :handleSelectOnChange="handleOnChangeSearchMediaTag"
+      />
+      <custom-select
+        :searchTitle="`Year`"
+        :selecting="searchYear"
+        :selects="
+          Array.from(Array(100).keys())
+            .reverse()
+            .map((index) => index + 1923)
+        "
+        :handleSelectOnChange="handleOnChangeSearchYear"
+      />
+      <custom-select
+        :searchTitle="`Format`"
         :selecting="searchFormat"
         :selects="[
           'Any',
@@ -58,7 +77,7 @@
         :handleSelectOnChange="handleOnChangeSearchFormat"
       />
       <custom-select
-        :searchTitle="`Status`" 
+        :searchTitle="`Status`"
         :selecting="searchStatus"
         :selects="[
           'FINISHED',
@@ -66,15 +85,30 @@
           'NOT_YET_RELEASED',
           'CANCELLED',
           'SPECIAL',
-          'HIATUS'
+          'HIATUS',
         ]"
         :handleSelectOnChange="handleOnChangeSearchStatus"
       />
     </div>
-    <div class="container flex justify-center items-center text-gray-700 pb-6">
+    <div
+      class="
+        container
+        flex flex-wrap
+        justify-center
+        items-center
+        text-gray-700
+        pb-6
+      "
+    >
       <span
-        v-if="_search != 'undefined' && _search != null && _search != '' && _search != 'null'"
+        v-if="
+          _search != 'undefined' &&
+          _search != null &&
+          _search != '' &&
+          _search != 'null'
+        "
         class="
+          mt-2
           mx-2
           inline-flex
           items-center
@@ -110,6 +144,7 @@
           searchGenre != null
         "
         class="
+          mt-2
           mx-2
           inline-flex
           items-center
@@ -145,6 +180,7 @@
           searchMediaTag != null
         "
         class="
+          mt-2
           mx-2
           inline-flex
           items-center
@@ -180,6 +216,7 @@
           searchYear != null
         "
         class="
+          mt-2
           mx-2
           inline-flex
           items-center
@@ -215,6 +252,7 @@
           searchFormat != null
         "
         class="
+          mt-2
           mx-2
           inline-flex
           items-center
@@ -250,6 +288,7 @@
           searchStatus != null
         "
         class="
+          mt-2
           mx-2
           inline-flex
           items-center
@@ -299,34 +338,41 @@ const MediaTagCollection = gql`
   }
 `;
 export default {
-  props: ['_search', '_searchGenre', '_searchMediaTag', '_searchYear', '_searchFormat', '_searchStatus'],
+  props: [
+    "_search",
+    "_searchGenre",
+    "_searchMediaTag",
+    "_searchYear",
+    "_searchFormat",
+    "_searchStatus",
+  ],
   components: { CustomSelect },
   name: "SearchInput",
-  methods:{
-    handleOnChangeSearch(search){
-      this.$emit('update-search', search);
+  methods: {
+    handleOnChangeSearch(search) {
+      this.$emit("update-search", search);
       this.search = search;
     },
-    handleOnChangeSearchGenre(searchGenre){
-      this.$emit('update-search-genre', searchGenre);
+    handleOnChangeSearchGenre(searchGenre) {
+      this.$emit("update-search-genre", searchGenre);
       this.searchGenre = searchGenre;
     },
-    handleOnChangeSearchMediaTag(searchMediaTag){
-      this.$emit('update-search-media-tag', searchMediaTag);
+    handleOnChangeSearchMediaTag(searchMediaTag) {
+      this.$emit("update-search-media-tag", searchMediaTag);
       this.searchMediaTag = searchMediaTag;
     },
-    handleOnChangeSearchYear(searchYear){
-      this.$emit('update-search-year', searchYear);
+    handleOnChangeSearchYear(searchYear) {
+      this.$emit("update-search-year", searchYear);
       this.searchYear = searchYear;
     },
-    handleOnChangeSearchFormat(searchFormat){
-      this.$emit('update-search-format', searchFormat);
+    handleOnChangeSearchFormat(searchFormat) {
+      this.$emit("update-search-format", searchFormat);
       this.searchFormat = searchFormat;
     },
-    handleOnChangeSearchStatus(searchStatus){
-      this.$emit('update-search-status', searchStatus);
+    handleOnChangeSearchStatus(searchStatus) {
+      this.$emit("update-search-status", searchStatus);
       this.searchStatus = searchStatus;
-    }
+    },
   },
   data() {
     return {
