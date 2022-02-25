@@ -9,7 +9,7 @@
             h-10
             w-full
             bg-white
-            opacity-60
+            opacity-80
             border border-gray-300
             rounded-md
             shadow-sm

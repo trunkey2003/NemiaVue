@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="container py-6 flex justify-center items-center custom-background"
+      class="container mx-auto py-6 flex justify-center items-center custom-background"
     >
       <input
         type="text"
@@ -36,7 +36,7 @@
       ></a>
     </div>
 
-    <div class="container flex justify-center items-center text-gray-700 pb-6">
+    <div class="container mx-auto flex justify-center items-center text-gray-700 pb-6">
       <custom-select
         :searchTitle="`Genre`"
         :selecting="searchGenre"

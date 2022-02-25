@@ -21,6 +21,7 @@
       id="home"
       class="
         container
+        mx-auto
         w-full
         min-h-screen
         bg-gray-100 bg-opacity-80
@@ -90,10 +91,23 @@
             "
           >
             <div class="px-6 py-4">
-              <div v-if="media.title.english" class="font-bold text-xl mb-2">
+              <div v-if="media.title.english" class="font-bold text-xl">
                 {{ media.title.english }}
               </div>
-              <div v-else class="font-bold text-xl mb-2">Blank Title</div>
+              <div v-else class="font-bold text-xl">Blank Title</div>
+              <br />
+              <div class="media-info text-gray-800 font-bold flex">
+                <svg class="heart mr-2" viewBox="0 0 32 29.6" width="20" height="20">
+                  <path
+                    d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"
+                  />
+                </svg>
+                {{ media.averageScore }}%
+              </div>
+              <div class="media-info">
+                {{ media.format }} • {{ media.episodes }} Episodes
+              </div>
             </div>
             <div class="px-6 pt-2 pb-2">
               <span
@@ -155,7 +169,7 @@
             shadow
             rounded-md
             text-white
-            bg-blue-500
+            bg-blue-400
             hover:bg-blue-800
             transition
             ease-in-out
@@ -188,10 +202,11 @@
         </button>
       </div>
       <div v-else>
-        <div class="h-full w-full bg-gray-100 flex items-center">
+        <div class="h-full w-full flex items-center">
           <div
             class="
               container
+              mx-auto
               flex flex-col
               md:flex-row
               items-center
@@ -492,6 +507,7 @@
   </div>
 </template>
 
+
 <script>
 import gql from "graphql-tag";
 
@@ -590,7 +606,7 @@ export default {
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000);
+        }, 4000);
       });
       this.search = search;
       this.page = 1;
@@ -611,7 +627,7 @@ export default {
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000);
+        }, 4000);
       });
       this.searchGenre = searchGenre;
       this.page = 1;
@@ -632,7 +648,7 @@ export default {
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000);
+        }, 4000);
       });
       this.searchMediaTag = searchMediaTag;
       this.page = 1;
@@ -653,7 +669,7 @@ export default {
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000);
+        }, 4000);
       });
       this.searchYear = searchYear;
       this.page = 1;
@@ -674,7 +690,7 @@ export default {
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000);
+        }, 4000);
       });
       this.searchFormat = searchFormat;
       this.page = 1;
@@ -695,7 +711,7 @@ export default {
       const myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000);
+        }, 4000);
       });
       this.searchStatus = searchStatus;
       this.page = 1;

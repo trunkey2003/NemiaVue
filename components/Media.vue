@@ -5,7 +5,7 @@
     </div>
     <div
       id="meida"
-      class="container w-full min-h-screen bg-gray-100 rounded-t-2xl"
+      class="container mx-auto w-full min-h-screen bg-gray-100 rounded-t-2xl"
     >
       <img v-bind:src="Media.bannerImage" />
       <div

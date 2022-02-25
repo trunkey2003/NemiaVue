@@ -1,90 +1,282 @@
 <template>
-  <nav
-    class="bg-gray-400 border-gray-200 px-2 sm:px-4 py-0 rounded dark:bg-gray-900 opacity-80"
-  >
-    <div class="container custom-font-cursive flex flex-wrap justify-between items-center mx-auto">
-      <a href="/" class="flex">
-        <svg
-          class="mr-3 h-10"
-          viewBox="0 0 52 72"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1.87695 53H28.7791C41.5357 53 51.877 42.7025 51.877 30H24.9748C12.2182 30 1.87695 40.2975 1.87695 53Z"
-            fill="#76A9FA"
-          />
-          <path
-            d="M0.000409561 32.1646L0.000409561 66.4111C12.8618 66.4111 23.2881 55.9849 23.2881 43.1235L23.2881 8.87689C10.9966 8.98066 1.39567 19.5573 0.000409561 32.1646Z"
-            fill="#A4CAFE"
-          />
-          <path
-            d="M50.877 5H23.9748C11.2182 5 0.876953 15.2975 0.876953 28H27.7791C40.5357 28 50.877 17.7025 50.877 5Z"
-            fill="#1C64F2"
-          />
-        </svg>
-        <span
-          class="self-center text-3xl font-semibold whitespace-nowrap dark:text-white"
-          >Nemia</span
-        >
-      </a>
-      <button
-        data-collapse-toggle="mobile-menu"
-        type="button"
-        @click="myToogle"
-        v-bind:class="`inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600`"
-        aria-controls="mobile-menu-2"
-        aria-expanded="false"
+  <div>
+    <nav
+      class="
+        bg-gray-400
+        border-gray-200
+        px-2
+        sm:px-4
+        py-2
+        rounded
+        dark:bg-gray-900
+        bg-opacity-80
+      "
+    >
+      <div
+        class="
+          container
+          custom-font-cursive
+          flex flex-wrap
+          justify-between
+          items-center
+          mx-auto
+        "
       >
-        <span class="sr-only">Open main menu</span>
-        <svg
-          class="w-6 h-6"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
+        <a href="/" class="flex">
+          <img src="/nemia.png" class="w-10 h-10" />
+          <span
+            class="
+              self-center
+              text-3xl
+              font-semibold
+              whitespace-nowrap
+              dark:text-white
+            "
+            >emia</span
+          >
+        </a>
+        <button
+          data-collapse-toggle="mobile-menu"
+          type="button"
+          @click="myToogle"
+          v-bind:class="`inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600`"
+          aria-controls="mobile-menu-2"
+          aria-expanded="false"
         >
-          <path
-            fill-rule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-        <svg
-          class="hidden w-6 h-6"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="w-6 h-6"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <svg
+            class="hidden w-6 h-6"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+        <div
+          v-bind:class="`${classActive} w-full md:block md:w-auto`"
+          id="mobile-menu"
         >
-          <path
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </button>
-      <div v-bind:class="`${classActive} w-full md:block md:w-auto`" id="mobile-menu">
-        <ul
-          class="flex flex-col md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
-        >
-          <li>
-            <a
-              href="/"
-              class="block py-2 pr-4 pl-3 px-3 custom-font-cursive text-lg text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:d dark:border-gray-700"
-              aria-current="page"
-              >Sign In</a
-            >
-          </li>
-          <li>
-            <a
-              href="/"
-              class="block py-2 pr-4 pl-3 px-3 custom-font-cursive text-lg text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:d dark:border-gray-700"
-              >Sign Up</a
-            >
-          </li> 
-        </ul>
+          <ul
+            class="
+              flex
+              w-full
+              justify-between	
+              md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium
+            "
+          >
+            <li>
+              <button
+                type="button"
+                class="
+                  px-4
+                  py-1
+                  my-3
+                  lg:my-0
+                  bg-gradient-to-r
+                  from-green-400
+                  to-blue-500
+                  hover:from-pink-500 hover:to-yellow-500
+                  text-white
+                  text-lg
+                "
+                data-bs-toggle="modal"
+                data-bs-target="#signUpModal"
+              >
+                Sign Up
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="
+                  px-4
+                  py-1
+                  my-3
+                  lg:my-0
+                  bg-gradient-to-r
+                  from-green-400
+                  to-blue-500
+                  hover:from-pink-500 hover:to-yellow-500
+                  text-white
+                  text-lg
+                "
+                data-bs-toggle="modal"
+                data-bs-target="#signInModal"
+              >
+                Sign In
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Modal -->
+    <div
+      class="modal fade custom-modal-01"
+      id="signUpModal"
+      tabindex="-1"
+      aria-labelledby="SignUpModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h3 class="text-center mt-3 text-3xl">Sign Up</h3>
+            <form>
+              <div
+                class="custom-error-dialog text-white fw-bold bg-danger my-3"
+              ></div>
+              <div class="mb-3">
+                <label
+                  for="exampleInputEmail1"
+                  class="form-label"
+                  >Username</label
+                >
+                <input
+                  minlength="3"
+                  maxlength="20"
+                  class="form-control"
+                  id="exampleInputTaiKhoan1"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="exampleInputPassword1"
+                  class="form-label"
+                  >Password</label
+                >
+                <input
+                  minlength="3"
+                  maxlength="20"
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="exampleInputPassword1"
+                  class="form-label"
+                  >Confirm Password</label
+                >
+                <input
+                  minlength="3"
+                  maxlength="20"
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  required
+                />
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="exampleCheck1"
+                />
+                <label class="form-check-label" for="exampleCheck1"
+                  >Auto Login After Sign Up</label
+                >
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary custom-button-01">
+                  Sign Up
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
+
+    <!-- Modal -->
+    <div
+      class="modal fade custom-modal-01"
+      id="signInModal"
+      tabindex="-1"
+      aria-labelledby="SignInModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h3 class="text-center mt-3 text-3xl">Sign In</h3>
+            <form>
+              <div
+                class="custom-error-dialog text-white fw-bold bg-danger my-3"
+              ></div>
+              <div class="mb-3">
+                <label
+                  for="exampleInputEmail1"
+                  class="form-label"
+                  >Username</label
+                >
+                <input
+                  minlength="3"
+                  maxlength="20"
+                  class="form-control"
+                  id="exampleInputTaiKhoan1"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="exampleInputPassword1"
+                  class="form-label"
+                  >Password</label
+                >
+                <input
+                  minlength="3"
+                  maxlength="20"
+                  type="password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                  required
+                />
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="exampleCheck1"
+                />
+                <label class="form-check-label" for="exampleCheck1"
+                  >Remember Me</label
+                >
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary custom-button-01">
+                  Login
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -92,14 +284,14 @@ export default {
   name: "Header",
   data() {
     return {
-    classActive: "hidden"
-  }
+      classActive: "hidden",
+    };
   },
   methods: {
-    myToogle: function() {
-      this.classActive = (this.classActive == "hidden")?  "" : "hidden";
+    myToogle: function () {
+      this.classActive = this.classActive == "hidden" ? "" : "hidden";
       // some code to filter users
-    }
-  }
+    },
+  },
 };
 </script>
