@@ -145,7 +145,6 @@ export default {
             this.handleSelectOnClick();
         },
         handleClickOutSelect(e){
-          console.log(e.target.id + this.searchTitle);
           if (e.target.id != this.searchTitle) this.classActive = "hidden";
         }
     },
