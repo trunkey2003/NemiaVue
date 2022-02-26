@@ -28,7 +28,7 @@
         rounded-t-2xl
       "
     >
-      <div v-if="medias.length || dataLoading && pageIsLoading" class="flex flex-wrap p-10">
+      <div v-if="medias.length || dataLoading" class="flex flex-wrap p-10">
         <a
           :href="`media/${media.id}`"
           v-for="media in medias"
@@ -56,7 +56,7 @@
           <!-- v-bind:src="media.coverImage.large"
             v-bind:alt="media.title.english">  -->
           <div
-            class="h-80 hover:opacity-80 thumbnail bg-no-repeat bg-center"
+            class="h-80 hover:opacity-80 thumbnail bg-no-repeat bg-center bg-gray-400"
             v-bind:id="media.id"
             v-bind:style="{
               backgroundImage: 'url(' + media.coverImage.large + ')',
