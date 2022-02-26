@@ -82,56 +82,15 @@
             "
           >
             <li>
-              <button
-                type="button"
-                class="
-                  px-4
-                  py-1
-                  my-3
-                  lg:my-0
-                  bg-gradient-to-r
-                  from-green-400
-                  to-blue-500
-                  hover:from-pink-500 hover:to-yellow-500
-                  text-white
-                  text-lg
-                "
-                data-bs-toggle="modal"
-                data-bs-target="#signUpModal"
-              >
-                Sign Up
-              </button>
+                <sign-up-modal/>
             </li>
             <li>
-              <button
-                type="button"
-                class="
-                  px-4
-                  py-1
-                  my-3
-                  lg:my-0
-                  bg-gradient-to-r
-                  from-green-400
-                  to-blue-500
-                  hover:from-pink-500 hover:to-yellow-500
-                  text-white
-                  text-lg
-                "
-                data-bs-toggle="modal"
-                data-bs-target="#signInModal"
-              >
-                Sign In
-              </button>
+                <sign-in-modal/>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-
-    <!-- Modal -->
-    <sign-up-modal/>
-    <sign-in-modal/>
-
   </div>
 </template>
 
@@ -143,6 +102,7 @@ export default {
   name: "Header",
   data() {
     return {
+      user: null,
       classActive: "hidden",
     };
   },
@@ -152,5 +112,8 @@ export default {
       // some code to filter users
     },
   },
+  beforeMount(){
+    this.$axios.get('https://me-musicplayer.herokuapp.com/api/user/trunkey', { withCredentials: true }).then((data) => {this.user = data.username; console.log(this.user);});
+  }
 };
 </script>

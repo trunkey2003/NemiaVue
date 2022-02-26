@@ -144,3 +144,7 @@ ul {
         background: rgb(2,0,36);
         background: linear-gradient(197deg, rgba(2,0,36,1) 0%, rgba(44,22,110,1) 0%, rgba(43,62,69,1) 96%);
     }
+
+.auto-show{
+  display: block!important;
+}
