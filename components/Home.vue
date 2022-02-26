@@ -28,7 +28,7 @@
         rounded-t-2xl
       "
     >
-      <div v-if="medias.length || dataLoading" class="flex flex-wrap p-10">
+      <div v-if="medias.length || dataLoading && pageIsLoading" class="flex flex-wrap p-10">
         <a
           :href="`media/${media.id}`"
           v-for="media in medias"
@@ -613,7 +613,7 @@ export default {
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      }, 3000);
+      }, 2000);
     },
 
     updateSearchGenre(searchGenre) {
@@ -629,7 +629,7 @@ export default {
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      }, 3000);
+      }, 2000);
     },
 
     updateSearchMediaTag(searchMediaTag) {
@@ -645,7 +645,7 @@ export default {
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      }, 3000);
+      }, 2000);
     },
 
     updateSearchYear(searchYear) {
@@ -661,7 +661,7 @@ export default {
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      }, 3000);
+      }, 2000);
     },
 
     updateSearchFormat(searchFormat) {
@@ -677,7 +677,7 @@ export default {
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      }, 3000);
+      }, 2000);
     },
 
     updateSearchStatus(searchStatus) {
@@ -693,7 +693,7 @@ export default {
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      }, 3000);
+      }, 2000);
     },
   },
 

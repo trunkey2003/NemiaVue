@@ -10,6 +10,7 @@
       fixed
       top-0
       z-50
+      bg-blue-900
       bg-cover
       li
       leading-[100%]
