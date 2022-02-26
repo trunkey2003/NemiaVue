@@ -97,7 +97,12 @@
               <div v-else class="font-bold text-xl">Blank Title</div>
               <br />
               <div class="media-info text-gray-800 font-bold flex">
-                <svg class="heart mr-2" viewBox="0 0 32 29.6" width="20" height="20">
+                <svg
+                  class="heart mr-2"
+                  viewBox="0 0 32 29.6"
+                  width="20"
+                  height="20"
+                >
                   <path
                     d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
 	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"
@@ -567,23 +572,19 @@ export default {
       ) {
         if (!this.dataLoading) this.page = this.page + 1;
         this.dataLoading = true;
-        const myPromise = new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve();
-          }, 3000);
-        });
         if (!this.Page.media.length) {
           this.page = this.page - 1;
           this.stopFetchingNewData = true;
           this.dataLoading = false;
           return;
         }
-        myPromise.then(() => {
-          if (this.medias != this.Page.media)
+        setTimeout(() => {
+          if (this.medias != this.Page.media && !this.stopFetchingNewData) {
             this.medias = this.medias.concat(this.Page.media);
-          this.count += 20;
-          this.dataLoading = false;
-        });
+            this.count += 20;
+            this.dataLoading = false;
+          }
+        }, 2000);
       }
     },
 
@@ -603,126 +604,96 @@ export default {
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
-      const myPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 4000);
-      });
       this.search = search;
       this.page = 1;
       this.dataLoading = true;
       this.medias = [];
-      myPromise.then(() => {
+      setTimeout(() => {
         if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      });
+      }, 3000);
     },
 
     updateSearchGenre(searchGenre) {
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
-      const myPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 4000);
-      });
       this.searchGenre = searchGenre;
       this.page = 1;
       this.dataLoading = true;
       this.medias = [];
-      myPromise.then(() => {
+      setTimeout(() => {
         if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      });
+      }, 3000);
     },
 
     updateSearchMediaTag(searchMediaTag) {
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
-      const myPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 4000);
-      });
       this.searchMediaTag = searchMediaTag;
       this.page = 1;
       this.dataLoading = true;
       this.medias = [];
-      myPromise.then(() => {
+      setTimeout(() => {
         if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      });
+      }, 3000);
     },
 
     updateSearchYear(searchYear) {
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
-      const myPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 4000);
-      });
       this.searchYear = searchYear;
       this.page = 1;
       this.dataLoading = true;
       this.medias = [];
-      myPromise.then(() => {
+      setTimeout(() => {
         if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      });
+      }, 3000);
     },
 
     updateSearchFormat(searchFormat) {
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
-      const myPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 4000);
-      });
       this.searchFormat = searchFormat;
       this.page = 1;
       this.dataLoading = true;
       this.medias = [];
-      myPromise.then(() => {
+      setTimeout(() => {
         if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      });
+      }, 3000);
     },
 
     updateSearchStatus(searchStatus) {
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
-      const myPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 4000);
-      });
       this.searchStatus = searchStatus;
       this.page = 1;
       this.dataLoading = true;
       this.medias = [];
-      myPromise.then(() => {
+      setTimeout(() => {
         if (dataFlow < this.currentDataFlow) return;
         this.medias = this.Page.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
-      });
+      }, 3000);
     },
   },
 
