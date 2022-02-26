@@ -705,7 +705,11 @@ export default {
 
   mounted() {
     this.medias = this.Page.media;
-    this.pageIsLoading = false;
+    this.$axios
+      .get("https://me-musicplayer.herokuapp.com/api/user/trunkey", {
+        withCredentials: true,
+      })
+      .finally(() => this.pageIsLoading = false)
   },
 
   beforeDestroy() {
@@ -714,6 +718,7 @@ export default {
 
   data() {
     const vars = {
+      user: null,
       stopFetchingNewData: false,
       pageIsLoading: true,
       dataLoading: false,

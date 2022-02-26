@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="alert-error-box" v-if="loginError">
+      Wrong username or password
+      <button class="close-alert-btn" @click="handleLoginError()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="20" height="20">
+        <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+        <path
+          d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"
+        />
+      </svg>
+      </button>
+    </div>
     <nav
       class="
         bg-gray-400
@@ -74,20 +85,49 @@
           id="mobile-menu"
         >
           <ul
+            v-if="!user"
             class="
               flex
               w-full
-              justify-between	
+              justify-between
               md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium
             "
           >
             <li>
-                <sign-up-modal/>
+              <sign-up-modal />
             </li>
             <li>
-                <sign-in-modal/>
+              <sign-in-modal @login-error="handleLoginError" />
             </li>
           </ul>
+          <div
+            v-else
+            class="
+              flex
+              w-full
+              justify-between
+              md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium
+              text-white
+            "
+          >
+            <div class="py-2">Hello, {{ user }}</div>
+            <button
+              type="button"
+              class="
+                ml-3
+                py-2
+                px-4
+                bg-gradient-to-r
+                from-green-400
+                to-blue-500
+                hover:from-pink-500 hover:to-yellow-500
+                text-white
+              "
+              @click="signOut()"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -95,13 +135,14 @@
 </template>
 
 <script>
-import SignInModal from './SignInModal.vue';
-import SignUpModal from './SignUpModal.vue';
+import SignInModal from "./SignInModal.vue";
+import SignUpModal from "./SignUpModal.vue";
 export default {
   components: { SignUpModal, SignInModal },
   name: "Header",
   data() {
     return {
+      loginError: false,
       user: null,
       classActive: "hidden",
     };
@@ -111,9 +152,25 @@ export default {
       this.classActive = this.classActive == "hidden" ? "" : "hidden";
       // some code to filter users
     },
+    signOut() {
+      this.$axios
+        .get("https://me-musicplayer.herokuapp.com/api/user/signout", {
+          withCredentials: true,
+        })
+        .then(() => (window.location.href = "/"));
+    },
+    handleLoginError(msg) {
+      this.loginError = !this.loginError;
+    },
   },
-  beforeMount(){
-    this.$axios.get('https://me-musicplayer.herokuapp.com/api/user/trunkey', { withCredentials: true }).then((data) => {this.user = data.username; console.log(this.user);});
-  }
+  async beforeMount() {
+    const { data } = await this.$axios.get(
+      "https://me-musicplayer.herokuapp.com/api/user/trunkey",
+      {
+        withCredentials: true,
+      }
+    );
+    this.user = data.onAccess;
+  },
 };
 </script>

@@ -142,6 +142,9 @@ export default {
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
+      const msg = "Wrong username & password"; 
+      this.$emit("login-error", msg);
+      return;
       const body = {
         username: e.target.username.value,
         password: e.target.password.value,
@@ -151,11 +154,13 @@ export default {
         .$post("https://me-musicplayer.herokuapp.com/api/user/login", body, { withCredentials: true })
         .then((data) => {
           console.log(data);
+          window.location.href = "/";
           document.getElementById("close-sign-up-modal").click();
         })
         .catch((error) => {
           if (error.response) {
-            if (error.response.status == 409)
+            if (error.response.status == 403)
+              this.$emit("update-search", search);
               return;
           }
         });
