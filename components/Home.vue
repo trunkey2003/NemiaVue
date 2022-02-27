@@ -5,17 +5,14 @@
     </div>
     <SearchInput
       :_search="search"
-      :_searchGenre="searchGenre"
-      :_searchMediaTag="searchMediaTag"
-      :_searchYear="searchYear"
-      :_searchFormat="searchFormat"
-      :_searchStatus="searchStatus"
       @update-search="updateSearch"
       @update-search-genre="updateSearchGenre"
       @update-search-media-tag="updateSearchMediaTag"
       @update-search-year="updateSearchYear"
       @update-search-format="updateSearchFormat"
       @update-search-status="updateSearchStatus"
+      @update-search-country-of-origin="updateSearchCountryOfOrigin"
+      @update-search-source="updateSearchSource"
     />
     <div
       id="home"
@@ -79,7 +76,7 @@
             v-bind:id="'box-' + media.id"
             class="
               absolute
-              w-64
+              w-80
               top-0
               left-[105%]
               z-30
@@ -90,15 +87,15 @@
               rounded-lg
               hidden
               box
+              h-80
             "
           >
-            <div class="px-6 py-4">
-              <div v-if="media.title.english" class="font-bold text-xl">
+            <div class="px-6 py-4 h-48">
+              <div v-if="media.title.english" class="font-bold text-xl max-h-32 pb-2">
                 {{ media.title.english }}
               </div>
-              <div v-else class="font-bold text-xl">Blank Title</div>
-              <br />
-              <div class="media-info text-gray-800 font-bold flex">
+              <div v-else class="font-bold text-xl max-h-32 pb-2">Blank Title</div>
+              <div class="media-info text-gray-800 font-bold flex h-8">
                 <svg
                   class="heart mr-2"
                   viewBox="0 0 32 29.6"
@@ -112,11 +109,11 @@
                 </svg>
                 {{ media.averageScore }}%
               </div>
-              <div class="media-info">
+              <div class="media-info h-8">
                 {{ media.format }} • {{ media.episodes }} Episodes
               </div>
             </div>
-            <div class="px-6 pt-2 pb-2">
+            <div class="px-6 pt-2 pb-2 h-32">
               <span
                 class="
                   mt-2
@@ -529,6 +526,8 @@ const query = gql`
     $searchFormat: MediaFormat
     $searchStatus: MediaStatus
     $searchSort: [MediaSort]
+    $searchCountryOfOrigin: CountryCode
+    $searchSource: MediaSource
   ) {
     Page(page: $page, perPage: $perPage) {
       media(
@@ -539,6 +538,8 @@ const query = gql`
         format: $searchFormat
         status: $searchStatus
         sort: $searchSort
+        countryOfOrigin: $searchCountryOfOrigin
+        source: $searchSource
       ) {
         id
         title {
@@ -697,6 +698,38 @@ export default {
         this.stopFetchingNewData = false;
       }, 2000);
     },
+
+    updateSearchCountryOfOrigin(searchCountryOfOrigin) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchCountryOfOrigin = searchCountryOfOrigin;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
+
+    updateSearchSource(searchSource) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchSource = searchSource;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
   },
 
   beforeMount() {
@@ -736,6 +769,8 @@ export default {
       searchFormat: this.$route.query.searchFormat,
       searchStatus: this.$route.query.searchStatus,
       searchSort: null,
+      searchCountryOfOrigin: "Any",
+      searchSource: "Any",
     };
     return vars;
   },
@@ -753,6 +788,8 @@ export default {
           searchFormat: this.searchFormat,
           searchStatus: this.searchStatus,
           searchSort: this.searchSort,
+          searchCountryOfOrigin: this.searchCountryOfOrigin,
+          searchSource: this.searchSource
         };
         Object.keys(vars).forEach((key) => {
           if (

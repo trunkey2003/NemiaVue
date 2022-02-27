@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="alert-error-box" v-if="showError">
+    <div class="alert-error-box custom-fade" v-if="showError">
       <div class="relative px-4 w-full h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-black rounded-lg shadow dark:bg-gray-700 w-full">
@@ -22,7 +22,7 @@
     </div>
     </div>
 
-    <div class="alert-error-box" v-if="showSuccess">
+    <div class="alert-error-box custom-fade" v-if="showSuccess">
       <div class="relative px-4 w-full h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-black rounded-lg shadow dark:bg-gray-700 w-full">

@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-1 relative min-w-[18%] mx-2 font-mono select z-40">
+    <div v-bind:class="`mt-1 relative ${width} mx-2 font-mono select z-40`">
         <h1 class="text-white py-1 text-sm lg:text-md">{{searchTitle}}</h1>
         <button
           v-bind:id="searchTitle"
@@ -27,7 +27,7 @@
           aria-labelledby="listbox-label"
         >
           <span class="flex items-center pointer-events-none">
-            <span class="ml-3 block truncate">{{selecting}}</span>
+            <span class="ml-3 block truncate">{{(handleOnRender)? handleOnRender(selecting) : selecting}}</span>
           </span>
           <span
             class="
@@ -85,6 +85,7 @@
             overflow-auto
             focus:outline-none
             sm:text-sm
+            custom-fade
             `
           "
           tabindex="-1"
@@ -116,7 +117,7 @@
           >
             <div class="flex items-center pointer-events-none	">
               <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-              <span class="font-normal ml-3 block truncate pointer-events-none"> {{select}} </span>
+              <span class="font-normal ml-3 block truncate pointer-events-none"> {{(handleOnRender)? handleOnRender(select) : select}} </span>
             </div>
           </li>
 
@@ -139,6 +140,7 @@ export default {
             } else {
                 this.classActive = "";
             }
+            console.log(this.handleOnRender);
         },
         handleOptionOnClick(e){
             this.handleSelectOnChange(e.target.id);
@@ -146,7 +148,7 @@ export default {
         },
         handleClickOutSelect(e){
           if (e.target.id != this.searchTitle) this.classActive = "hidden";
-        }
+        },
     },
     beforeMount() {
       window.addEventListener("click", this.handleClickOutSelect);
@@ -154,6 +156,6 @@ export default {
     beforeDestroy() {
       window.removeEventListener("click", this.handleClickOutSelect);
     },
-    props: ['selects', 'selecting', 'searchTitle', 'handleSelectOnChange'],
+    props: ['handleOnRender','width','selects', 'selecting', 'searchTitle', 'handleSelectOnChange'],
 }
 </script>

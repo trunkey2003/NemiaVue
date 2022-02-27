@@ -183,7 +183,6 @@ ul {
     padding: 1vh;
     width: 20vw;
     height: 20vh;
-    animation: custom-fade 0.7s ease;
   }
 }
 
@@ -195,7 +194,19 @@ ul {
   z-index: 100000001;
 }
 
+.custom-fade {
+  animation: custom-fade 0.7s ease;
+}
+
 @keyframes custom-fade {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.min-w-custom-18{
+  width: 18%;
+}
+
+.min-w-custom-50{
+  width: 50%;
 }
