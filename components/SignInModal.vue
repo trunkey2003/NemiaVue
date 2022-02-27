@@ -142,14 +142,11 @@ export default {
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
-      const msg = "Wrong username & password"; 
-      this.$emit("login-error", msg);
-      return;
       const body = {
         username: e.target.username.value,
         password: e.target.password.value,
       };
-
+      this.$emit("loading", true);
       this.$axios
         .$post("https://me-musicplayer.herokuapp.com/api/user/login", body, { withCredentials: true })
         .then((data) => {
@@ -159,11 +156,18 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            if (error.response.status == 403)
-              this.$emit("update-search", search);
+            if (error.response.status == 403){
+              this.$emit("error", "Wrong username or password");
               return;
+            } else {
+              this.$emit("error", "Internal Server Error");
+              return;
+            }
           }
-        });
+        })
+        .finally(() => {
+          this.$emit("loading", false);
+        })
     },
   },
 };

@@ -160,6 +160,7 @@ export default {
     async handleSubmit(e) {
       e.preventDefault();
       if (e.target.password.value != e.target.confirmPassword.value) {
+        this.$emit("error", "Confirm password doesn't match");
         return;
       }
 
@@ -167,7 +168,7 @@ export default {
         username: e.target.username.value,
         password: e.target.password.value,
       };
-
+      this.$emit("loading", true);
       this.$axios
         .$post("https://me-musicplayer.herokuapp.com/api/user/signup", body)
         .then((data) => {
@@ -176,9 +177,15 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            if (error.response.status == 409)
-              return;
+            if (error.response.status == 409){
+              this.$emit("error", "User already exist");
+            } else {
+              this.$emit("error", "Internal Server error");
+            }
           }
+        })
+        .finally(() => {
+          this.$emit("loading", false);
         });
     },
     checkCaptcha(){

@@ -584,7 +584,7 @@ export default {
             this.count += 20;
             this.dataLoading = false;
           }
-        }, 2000);
+        }, 4000);
       }
     },
 

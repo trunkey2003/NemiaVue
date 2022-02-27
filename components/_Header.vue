@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="alert-error-box" v-if="loginError">
-      Wrong username or password
-      <button class="close-alert-btn" @click="handleLoginError()">
+      {{msg}}
+      <button class="close-alert-btn" @click="handleLoginError('')">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="20" height="20">
         <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
         <path
@@ -10,6 +10,9 @@
         />
       </svg>
       </button>
+    </div>
+    <div v-if="loading">
+      <fetch-loading/>
     </div>
     <nav
       class="
@@ -94,10 +97,10 @@
             "
           >
             <li>
-              <sign-up-modal />
+              <sign-up-modal @error="handleLoginError" @loading="handlePageLoading"/>
             </li>
             <li>
-              <sign-in-modal @login-error="handleLoginError" />
+              <sign-in-modal @error="handleLoginError" @loading="handlePageLoading" />
             </li>
           </ul>
           <div
@@ -135,16 +138,19 @@
 </template>
 
 <script>
+import PageLoading from './PageLoading.vue';
 import SignInModal from "./SignInModal.vue";
 import SignUpModal from "./SignUpModal.vue";
 export default {
-  components: { SignUpModal, SignInModal },
+  components: { SignUpModal, SignInModal, PageLoading },
   name: "Header",
   data() {
     return {
       loginError: false,
+      loading: false,
       user: null,
       classActive: "hidden",
+      msg: "",
     };
   },
   methods: {
@@ -153,15 +159,26 @@ export default {
       // some code to filter users
     },
     signOut() {
+      this.handlePageLoading(true);
       this.$axios
         .get("https://me-musicplayer.herokuapp.com/api/user/signout", {
           withCredentials: true,
         })
-        .then(() => (window.location.href = "/"));
+        .then(() => (window.location.href = "/"))
+        .finally(() => this.handlePageLoading(false));
     },
     handleLoginError(msg) {
-      this.loginError = !this.loginError;
+      if (msg) {
+        this.loginError = true;
+        this.msg = msg;
+      } else {
+        this.loginError = false;
+        this.msg = "";
+      }
     },
+    handlePageLoading(boolean){
+      this.loading = boolean;
+    }
   },
   async beforeMount() {
     const { data } = await this.$axios.get(
