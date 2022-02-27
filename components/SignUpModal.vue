@@ -128,7 +128,7 @@
                 <input
                   type="checkbox"
                   class="form-check-input"
-                  id="exampleCheck1"
+                  id="autoLogin"
                 />
                 <label class="form-check-label" for="exampleCheck1"
                   >Auto Login After Sign Up</label
@@ -159,6 +159,7 @@ export default {
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
+      const autoLogin = document.getElementById('autoLogin').checked;
       if (e.target.password.value != e.target.confirmPassword.value) {
         this.$emit("error", "Confirm password doesn't match");
         return;
@@ -172,6 +173,8 @@ export default {
       this.$axios
         .$post("https://me-musicplayer.herokuapp.com/api/user/signup", body)
         .then((data) => {
+          this.$emit("success", "Congratulations, your account has been successfully created.");
+          if (autoLogin)
           this.$axios
             .$post(
               "https://me-musicplayer.herokuapp.com/api/user/login",
@@ -183,6 +186,7 @@ export default {
               window.location.href = "/";
             })
             .catch((err) =>{
+              this.$emit("error", "Internal Server error");
               console.log(err);
             })
             .finally(() => this.$emit("loading", false));
@@ -200,7 +204,8 @@ export default {
           this.$emit("loading", false);
         })
         .finally(() => {
-          // this.$emit("loading", false);
+          if (autoLogin) return;
+          this.$emit("loading", false);
         });
     },
     checkCaptcha() {

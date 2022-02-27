@@ -150,6 +150,7 @@ export default {
       this.$axios
         .$post("https://me-musicplayer.herokuapp.com/api/user/login", body, { withCredentials: true })
         .then((data) => {
+          this.$emit("success", "Signed In");
           console.log(data);
           window.location.href = "/";
           document.getElementById("close-sign-up-modal").click();
