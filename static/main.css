@@ -152,16 +152,13 @@ ul {
 .alert-error-box {
   z-index: 100000000;
   position: fixed;
-  top: 90vh;
-  left: 1vw;
+  top: 30vh;
+  left: 40vw;
   padding: 1vh;
-  min-width: 20vw;
-  max-width: 30vw;
-  height: 5vh;
-  background-color: #be4167;
-  border-radius: 0.5rem;
-  color: white;
-  border: none; }
+  width: 20vw;
+  height: 20vh;
+  animation: custom-fade 0.7s ease;
+}
 
 .close-alert-btn{
   fill: white;
@@ -170,10 +167,19 @@ ul {
   right: 10px;
 }
 
+.close-alert-btn-footer{
+  
+}
+
 .close-alert-btn:hover{
   fill: rgb(196, 196, 196);
 }
 
 .custom-fetch-loading{
   z-index: 100000001;
+}
+
+@keyframes custom-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

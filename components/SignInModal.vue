@@ -68,11 +68,11 @@
             >
             <button id="close-sign-up-modal" data-bs-dismiss="modal">
               <svg
-                class="absolute top-3 right-3"
+                class="absolute top-3 right-3 fill-white hover:fill-gray-400"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
-                width="32"
-                height="32"
+                width="25"
+                height="25"
               >
                 <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                 <path
