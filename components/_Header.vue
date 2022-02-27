@@ -46,7 +46,7 @@
           mx-auto
         "
       >
-        <a href="/" class="flex">
+        <a href="/" class="flex hover:opacity-80 hover:no-underline">
           <img src="/nemia.png" class="w-10 h-10" />
           <span
             class="

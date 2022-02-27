@@ -51,6 +51,7 @@
             rounded
             w-full
             relative
+            hover:no-underline
           "
         >
           <!-- v-bind:src="media.coverImage.large"
@@ -88,6 +89,7 @@
               shadow-lg
               rounded-lg
               hidden
+              box
             "
           >
             <div class="px-6 py-4">

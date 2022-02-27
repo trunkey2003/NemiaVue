@@ -172,25 +172,40 @@ export default {
       this.$axios
         .$post("https://me-musicplayer.herokuapp.com/api/user/signup", body)
         .then((data) => {
+          this.$axios
+            .$post(
+              "https://me-musicplayer.herokuapp.com/api/user/login",
+              body,
+              { withCredentials: true }
+            )
+            .then((data) => {
+              console.log(data);
+              window.location.href = "/";
+            })
+            .catch((err) =>{
+              console.log(err);
+            })
+            .finally(() => this.$emit("loading", false));
           console.log(data);
           document.getElementById("close-sign-up-modal").click();
         })
         .catch((error) => {
           if (error.response) {
-            if (error.response.status == 409){
+            if (error.response.status == 409) {
               this.$emit("error", "User already exist");
             } else {
               this.$emit("error", "Internal Server error");
             }
           }
+          this.$emit("loading", false);
         })
         .finally(() => {
-          this.$emit("loading", false);
+          // this.$emit("loading", false);
         });
     },
-    checkCaptcha(){
+    checkCaptcha() {
       return false;
-    }
+    },
   },
 };
 </script>

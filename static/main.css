@@ -169,6 +169,9 @@ ul {
     height: 20vh;
     animation: custom-fade 0.7s ease;
   }
+  .box{
+    display: none;
+  }
 }
 
 @media (min-width:1200.1px){
