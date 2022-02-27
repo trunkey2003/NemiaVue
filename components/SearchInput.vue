@@ -136,7 +136,7 @@
           v-bind:class="
             `${classActive}
             h-96
-            w-[36rem]
+            w-[50rem]
             absolute
             top-12
             right-0
@@ -184,6 +184,11 @@
               :handleSelectOnChange="handleOnChangeSearchSource"
               :handleOnRender="handleOnRenderSearchSource"
             />
+          </div>
+          <div class="flex w-full">
+            <filter-select/>
+            <filter-select/>
+            <filter-select/>
           </div>
         </div>
       </div>
