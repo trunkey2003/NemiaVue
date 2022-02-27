@@ -56,7 +56,7 @@
           <!-- v-bind:src="media.coverImage.large"
             v-bind:alt="media.title.english">  -->
           <div
-            class="h-80 hover:opacity-80 thumbnail bg-no-repeat bg-center bg-gray-400"
+            class="h-80 hover:opacity-80 thumbnail bg-no-repeat bg-center"
             v-bind:id="media.id"
             v-bind:style="{
               backgroundImage: 'url(' + media.coverImage.large + ')',

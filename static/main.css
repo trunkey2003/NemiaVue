@@ -149,16 +149,7 @@ ul {
   display: block!important;
 }
 
-.alert-error-box {
-  z-index: 100000000;
-  position: fixed;
-  top: 30vh;
-  left: 40vw;
-  padding: 1vh;
-  width: 20vw;
-  height: 20vh;
-  animation: custom-fade 0.7s ease;
-}
+
 
 .close-alert-btn{
   fill: white;
@@ -167,8 +158,30 @@ ul {
   right: 10px;
 }
 
-.close-alert-btn-footer{
-  
+@media (max-width:1200px){
+  .alert-error-box {
+    z-index: 100000000;
+    position: fixed;
+    top: 30vh;
+    left: 10vw;
+    padding: 1vh;
+    width: 80vw;
+    height: 20vh;
+    animation: custom-fade 0.7s ease;
+  }
+}
+
+@media (min-width:1200.1px){
+  .alert-error-box {
+    z-index: 100000000;
+    position: fixed;
+    top: 30vh;
+    left: 40vw;
+    padding: 1vh;
+    width: 20vw;
+    height: 20vh;
+    animation: custom-fade 0.7s ease;
+  }
 }
 
 .close-alert-btn:hover{

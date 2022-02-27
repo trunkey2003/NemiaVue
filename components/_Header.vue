@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="alert-error-box" v-if="showError">
-      <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+      <div class="relative px-4 w-full h-full md:h-auto">
         <!-- Modal content -->
-        <div class="relative bg-black rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-black rounded-lg shadow dark:bg-gray-700 w-full">
             <!-- Modal header -->
             <div class="flex justify-end p-2">
                 <button @click="handleLoginError('')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-gray-300" data-modal-toggle="popup-modal">
