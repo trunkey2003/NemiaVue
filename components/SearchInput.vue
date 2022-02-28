@@ -136,7 +136,7 @@
           v-bind:class="
             `${classActive}
             h-96
-            w-[50rem]
+            w-[65rem]
             absolute
             top-12
             right-0
@@ -186,9 +186,9 @@
             />
           </div>
           <div class="flex w-full">
-            <filter-select/>
-            <filter-select/>
-            <filter-select/>
+            <range-select :searchTitle="`Year Range`" :min='1970' :max='2023'/>
+            <range-select :searchTitle="`Episodes`" :min='0' :max='150'/>
+            <range-select :searchTitle="`Duration`" :min='0' :max='170'/>
           </div>
         </div>
       </div>
