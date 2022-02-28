@@ -125,7 +125,7 @@
           "
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
-          @click="() => classActive = (classActive == 'hidden')? '' : 'hidden'"
+          @click="() => (classActive = classActive == 'hidden' ? '' : 'hidden')"
         >
           <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
           <path
@@ -133,8 +133,7 @@
           />
         </svg>
         <div
-          v-bind:class="
-            `${classActive}
+          v-bind:class="`${classActive}
             h-96
             w-[65rem]
             absolute
@@ -143,20 +142,14 @@
             bg-white
             z-40
             rounded
-            custom-fade`
-          "
+            custom-fade`"
         >
           <div class="flex w-full">
             <custom-select
               :width="`min-w-custom-50`"
               :searchTitle="`Country Of Origin`"
               :selecting="searchCountryOfOrigin"
-              :selects="[
-                'JP',
-                'KR',
-                'CN',
-                'TW'
-              ]"
+              :selects="['JP', 'KR', 'CN', 'TW']"
               :handleSelectOnChange="handleOnChangeSearchCountryOfOrigin"
               :handleOnRender="handleOnRenderSearchCountryOfOrigin"
             />
@@ -186,9 +179,27 @@
             />
           </div>
           <div class="flex w-full">
-            <range-select :searchTitle="`Year Range`" :min='1970' :max='2023'/>
-            <range-select :searchTitle="`Episodes`" :min='0' :max='150'/>
-            <range-select :searchTitle="`Duration`" :min='0' :max='170'/>
+            <range-select
+              :searchTitle="`Year Range`"
+              :min="1970"
+              :max="2023"
+              :handleOnChangeSearchLower="handleOnChangeSearchStartDateGreater"
+              :handleOnChangeSearchUpper="handleOnChangeSearchStartDateLesser"
+            />
+            <range-select
+              :searchTitle="`Episodes`"
+              :min="0"
+              :max="150"
+              :handleOnChangeSearchLower="handleOnChangeSearchEpisodesGreater"
+              :handleOnChangeSearchUpper="handleOnChangeSearchEpisodesLesser"
+            />
+            <range-select
+              :searchTitle="`Duration`"
+              :min="0"
+              :max="170"
+              :handleOnChangeSearchLower="handleOnChangeSearchDurationGreater"
+              :handleOnChangeSearchUpper="handleOnChangeSearchDurationLesser"
+            />
           </div>
         </div>
       </div>
@@ -513,12 +524,39 @@ const MediaTagCollection = gql`
   }
 `;
 export default {
-  props: [
-    "_search",
-  ],
+  props: ["_search"],
   components: { CustomSelect },
   name: "SearchInput",
+  data() {
+    return {
+      showClassActive: false,
+      classActive: this.showClassActive ? "" : "hidden",
+      search: this.$route.query.search,
+      searchGenre: this.$route.query.searchGenre
+        ? this.$route.query.searchGenre
+        : "Any",
+      searchMediaTag: this.$route.query.searchMediaTag
+        ? this.$route.query.searchMediaTag
+        : "Any",
+      searchYear: this.$route.query.searchYear
+        ? this.$route.query.searchYear
+        : "Any",
+      searchFormat: this.$route.query.searchFormat
+        ? this.$route.query.searchFormat
+        : "Any",
+      searchStatus: this.$route.query.searchStatus
+        ? this.$route.query.searchStatus
+        : "Any",
+      searchCountryOfOrigin: "Any",
+      searchSource: "Any",
+      searchStartDateGreater: null,
+      searchStartDateLesser: null,
+      searchDurationGreater: null,
+      searchDurationLesser: null,
+    };
+  },
   methods: {
+    //Handle On Change
     handleOnChangeSearch(search) {
       this.$emit("update-search", search);
       this.search = search;
@@ -543,50 +581,57 @@ export default {
       this.$emit("update-search-status", searchStatus);
       this.searchStatus = searchStatus;
     },
-    handleOnChangeSearchCountryOfOrigin(searchCountryOfOrigin){
+    handleOnChangeSearchCountryOfOrigin(searchCountryOfOrigin) {
       this.$emit("update-search-country-of-origin", searchCountryOfOrigin);
       this.searchCountryOfOrigin = searchCountryOfOrigin;
     },
-    handleOnChangeSearchSource(searchSource){
+    handleOnChangeSearchSource(searchSource) {
       this.$emit("update-search-source", searchSource);
       this.searchSource = searchSource;
     },
-    handleOnRenderSearchCountryOfOrigin(searchCountryOfOrigin){
-      switch(searchCountryOfOrigin) {
-        case "Any": return "Any";
-        case "JP": return "Japan";
-        case "KR": return "South Korea";
-        case "CN": return "China";
-        case "TW": return "Taiwan";  
+    handleOnChangeSearchStartDateGreater(searchStartDateGreater) {
+      this.$emit("update-search-start-date-greater", searchStartDateGreater);
+      this.searchStartDateGreater = searchStartDateGreater;
+    },
+    handleOnChangeSearchStartDateLesser(searchStartDateLesser) {
+      this.$emit("update-search-start-date-lesser", searchStartDateLesser);
+      this.searchStartDateLesser = searchStartDateLesser;
+    },
+    handleOnChangeSearchEpisodesGreater(searchEpisodesGreater) {
+      this.$emit("update-search-episodes-greater", searchEpisodesGreater);
+      this.searchEpisodesGreater = searchEpisodesGreater;
+    },
+    handleOnChangeSearchEpisodesLesser(searchEpisodesLesser) {
+      this.$emit("update-search-episodes-lesser", searchEpisodesLesser);
+      this.searchEpisodesLesser = searchEpisodesLesser;
+    },
+    handleOnChangeSearchDurationGreater(searchDurationGreater) {
+      this.$emit("update-search-duration-greater", searchDurationGreater);
+      this.searchDurationGreater = searchDurationGreater;
+    },
+    handleOnChangeSearchDurationLesser(searchDurationLesser) {
+      this.$emit("update-search-duration-lesser", searchDurationLesser);
+      this.searchDurationLesser = searchDurationLesser;
+    },
+
+    // Handle On Render
+    handleOnRenderSearchCountryOfOrigin(searchCountryOfOrigin) {
+      switch (searchCountryOfOrigin) {
+        case "Any":
+          return "Any";
+        case "JP":
+          return "Japan";
+        case "KR":
+          return "South Korea";
+        case "CN":
+          return "China";
+        case "TW":
+          return "Taiwan";
       }
     },
-    handleOnRenderSearchSource(searchSource){
+    handleOnRenderSearchSource(searchSource) {
       return searchSource.replace("_", " ");
-    }
-  },
-  data() {
-    return {
-      showClassActive: false,
-      classActive: (this.showClassActive)? "" : "hidden",
-      search: this.$route.query.search,
-      searchGenre: this.$route.query.searchGenre
-        ? this.$route.query.searchGenre
-        : "Any",
-      searchMediaTag: this.$route.query.searchMediaTag
-        ? this.$route.query.searchMediaTag
-        : "Any",
-      searchYear: this.$route.query.searchYear
-        ? this.$route.query.searchYear
-        : "Any",
-      searchFormat: this.$route.query.searchFormat
-        ? this.$route.query.searchFormat
-        : "Any",
-      searchStatus: this.$route.query.searchStatus
-        ? this.$route.query.searchStatus
-        : "Any",
-      searchCountryOfOrigin: "Any",
-      searchSource: "Any",
-    };
+    },
   },
   apollo: {
     GenreCollection: {

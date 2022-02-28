@@ -10,11 +10,12 @@
           py-[0.2rem]
           w-[40px]
           max-w-[40px]
-          bg-gray-800 bg-opacity-80
-          rounded
+          bg-gray-800 bg-opacity-70
+          rounded-lg
           text-white
           top-[-0.1rem]
           text-center text-sm
+          font-medium	
         "
         v-bind:style="{
           left:
@@ -33,11 +34,12 @@
           py-[0.2rem]
           w-[40px]
           max-w-[40px]
-          bg-gray-800 bg-opacity-80
-          rounded
+          bg-gray-800 bg-opacity-70
+          rounded-lg
           text-white
           top-[-0.1rem]
           text-center text-sm
+          font-medium	
         "
         v-bind:style="{
           left:
@@ -157,7 +159,7 @@ input[type="range"]::-webkit-slider-thumb::before {
 
 <script>
 export default {
-  props: ["searchTitle", "min", "max"],
+  props: ["handleOnChangeSearchLower", "handleOnChangeSearchUpper", "searchTitle", "min", "max"],
   data() {
     return {
       lower: parseInt(this.min),
@@ -174,10 +176,10 @@ export default {
   },
   methods: {
     handleDropLower() {
-      console.log(this.lower);
+      this.handleOnChangeSearchLower(this.lower);
     },
     handleDropUpper() {
-      console.log(this.upper);
+      this.handleOnChangeSearchUpper(this.upper);
     },
   },
 };

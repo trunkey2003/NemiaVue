@@ -13,6 +13,12 @@
       @update-search-status="updateSearchStatus"
       @update-search-country-of-origin="updateSearchCountryOfOrigin"
       @update-search-source="updateSearchSource"
+      @update-search-start-date-greater="updateSearchStartDateGreater"
+      @update-search-start-date-lesser="updateSearchStartDateLesser"
+      @update-search-episodes-greater="updateSearchEpisodesGreater"
+      @update-search-episodes-lesser="updateSearchEpisodesLesser"
+      @update-search-duration-greater="updateSearchDurationGreater"
+      @update-search-duration-lesser="updateSearchDurationLesser"
     />
     <div
       id="home"
@@ -91,10 +97,15 @@
             "
           >
             <div class="px-6 py-4 h-48">
-              <div v-if="media.title.english" class="font-bold text-xl max-h-32 pb-2">
+              <div
+                v-if="media.title.english"
+                class="font-bold text-xl max-h-32 pb-2"
+              >
                 {{ media.title.english }}
               </div>
-              <div v-else class="font-bold text-xl max-h-32 pb-2">Blank Title</div>
+              <div v-else class="font-bold text-xl max-h-32 pb-2">
+                Blank Title
+              </div>
               <div class="media-info text-gray-800 font-bold flex h-8">
                 <svg
                   class="heart mr-2"
@@ -110,7 +121,8 @@
                 {{ media.averageScore }}%
               </div>
               <div class="media-info h-8">
-                {{ media.format }} • {{ media.episodes }} Episodes
+                {{ media.format }} • {{ media.episodes }} Episodes •
+                {{(media.startDate)? media.startDate.year : (media.seasonYear)? media.seasonYear : "NaN"}}
               </div>
             </div>
             <div class="px-6 pt-2 pb-2 h-32">
@@ -528,6 +540,12 @@ const query = gql`
     $searchSort: [MediaSort]
     $searchCountryOfOrigin: CountryCode
     $searchSource: MediaSource
+    $searchStartDateGreater: FuzzyDateInt
+    $searchStartDateLesser: FuzzyDateInt
+    $searchEpisodesGreater: Int
+    $searchEpisodesLesser: Int
+    $searchDurationGreater: Int
+    $searchDurationLesser: Int
   ) {
     Page(page: $page, perPage: $perPage) {
       media(
@@ -540,7 +558,17 @@ const query = gql`
         sort: $searchSort
         countryOfOrigin: $searchCountryOfOrigin
         source: $searchSource
+        startDate_greater: $searchStartDateGreater
+        startDate_lesser: $searchStartDateLesser
+        episodes_greater: $searchEpisodesGreater
+        episodes_lesser: $searchEpisodesLesser
+        duration_greater:$searchDurationGreater
+        duration_lesser: $searchDurationLesser
       ) {
+        seasonYear
+        startDate{
+          year
+        }
         id
         title {
           english
@@ -562,6 +590,36 @@ const query = gql`
 `;
 
 export default {
+  data() {
+    const vars = {
+      user: null,
+      stopFetchingNewData: false,
+      pageIsLoading: true,
+      dataLoading: false,
+      currentDataFlow: 0,
+      medias: [],
+      count: 0,
+      page: 1,
+      perPage: 20,
+      search: this.$route.query.search,
+      searchGenre: this.$route.query.searchGenre,
+      searchMediaTag: this.$route.query.searchMediaTag,
+      searchYear: this.$route.query.searchYear,
+      searchFormat: this.$route.query.searchFormat,
+      searchStatus: this.$route.query.searchStatus,
+      searchSort: null,
+      searchCountryOfOrigin: "Any",
+      searchSource: "Any",
+      searchStartDateGreater: 1970,
+      searchStartDateLesser: 2023,
+      searchEpisodesGreater: 0,
+      searchEpisodesLesser: 150,
+      searchDurationGreater: 0, 
+      searchDurationLesser: 170,
+    };
+    return vars;
+  },
+
   methods: {
     handleScroll() {
       var home = document.getElementById("home");
@@ -730,6 +788,102 @@ export default {
         this.stopFetchingNewData = false;
       }, 2000);
     },
+
+    updateSearchStartDateGreater(searchStartDateGreater) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchStartDateGreater = searchStartDateGreater;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
+
+    updateSearchStartDateLesser(searchStartDateLesser) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchStartDateLesser = searchStartDateLesser;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
+
+    updateSearchEpisodesGreater(searchEpisodesGreater) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchEpisodesGreater = searchEpisodesGreater;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
+
+    updateSearchEpisodesLesser(searchEpisodesLesser) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchEpisodesLesser = searchEpisodesLesser;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
+
+    updateSearchDurationGreater(searchDurationGreater) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchDurationGreater = searchDurationGreater;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
+
+    updateSearchDurationLesser(searchDurationLesser) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchDurationLesser = searchDurationLesser;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
   },
 
   beforeMount() {
@@ -744,36 +898,13 @@ export default {
       .get("https://me-musicplayer.herokuapp.com/api/user/trunkey", {
         withCredentials: true,
       })
-      .finally(() => this.pageIsLoading = false)
+      .finally(() => (this.pageIsLoading = false));
   },
 
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
   },
 
-  data() {
-    const vars = {
-      user: null,
-      stopFetchingNewData: false,
-      pageIsLoading: true,
-      dataLoading: false,
-      currentDataFlow: 0,
-      medias: [],
-      count: 0,
-      page: 1,
-      perPage: 20,
-      search: this.$route.query.search,
-      searchGenre: this.$route.query.searchGenre,
-      searchMediaTag: this.$route.query.searchMediaTag,
-      searchYear: this.$route.query.searchYear,
-      searchFormat: this.$route.query.searchFormat,
-      searchStatus: this.$route.query.searchStatus,
-      searchSort: null,
-      searchCountryOfOrigin: "Any",
-      searchSource: "Any",
-    };
-    return vars;
-  },
   apollo: {
     Page: {
       query: query,
@@ -789,7 +920,17 @@ export default {
           searchStatus: this.searchStatus,
           searchSort: this.searchSort,
           searchCountryOfOrigin: this.searchCountryOfOrigin,
-          searchSource: this.searchSource
+          searchSource: this.searchSource,
+          searchStartDateGreater: (this.searchStartDateGreater != 1970 || this.searchStartDateLesser != 2023)
+            ? this.searchStartDateGreater * 10000
+            : null, //FuzzyDateInt Format
+          searchStartDateLesser: (this.searchStartDateGreater != 1970 || this.searchStartDateLesser != 2023)
+            ? this.searchStartDateLesser * 10000
+            : null, //FuzzyDateInt Format
+          searchEpisodesGreater: (this.searchEpisodesGreater != 0 || this.searchEpisodesLesser != 150)? this.searchEpisodesGreater :  null,
+          searchEpisodesLesser: (this.searchEpisodesGreater != 0 || this.searchEpisodesLesser != 150)? this.searchEpisodesLesser :  null,
+          searchDurationGreater: (this.searchDurationGreater != 0 || this.searchDurationLesser != 170)? this.searchDurationGreater : null,
+          searchDurationLesser: (this.searchDurationGreater != 0 || this.searchDurationLesser != 170)? this.searchDurationLesser : null,
         };
         Object.keys(vars).forEach((key) => {
           if (
