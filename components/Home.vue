@@ -19,6 +19,7 @@
       @update-search-episodes-lesser="updateSearchEpisodesLesser"
       @update-search-duration-greater="updateSearchDurationGreater"
       @update-search-duration-lesser="updateSearchDurationLesser"
+      @update-search-is-adult="updateSearchIsAdult"
     />
     <div
       id="home"
@@ -122,7 +123,13 @@
               </div>
               <div class="media-info h-8">
                 {{ media.format }} • {{ media.episodes }} Episodes •
-                {{(media.startDate)? media.startDate.year : (media.seasonYear)? media.seasonYear : "NaN"}}
+                {{
+                  media.startDate
+                    ? media.startDate.year
+                    : media.seasonYear
+                    ? media.seasonYear
+                    : "NaN"
+                }}
               </div>
             </div>
             <div class="px-6 pt-2 pb-2 h-32">
@@ -546,6 +553,7 @@ const query = gql`
     $searchEpisodesLesser: Int
     $searchDurationGreater: Int
     $searchDurationLesser: Int
+    $searchIsAdult: Boolean
   ) {
     Page(page: $page, perPage: $perPage) {
       media(
@@ -562,11 +570,13 @@ const query = gql`
         startDate_lesser: $searchStartDateLesser
         episodes_greater: $searchEpisodesGreater
         episodes_lesser: $searchEpisodesLesser
-        duration_greater:$searchDurationGreater
+        duration_greater: $searchDurationGreater
         duration_lesser: $searchDurationLesser
+        isAdult: $searchIsAdult
       ) {
+        isAdult
         seasonYear
-        startDate{
+        startDate {
           year
         }
         id
@@ -614,8 +624,9 @@ export default {
       searchStartDateLesser: 2023,
       searchEpisodesGreater: 0,
       searchEpisodesLesser: 150,
-      searchDurationGreater: 0, 
+      searchDurationGreater: 0,
       searchDurationLesser: 170,
+      searchIsAdult: false,
     };
     return vars;
   },
@@ -884,6 +895,22 @@ export default {
         this.stopFetchingNewData = false;
       }, 2000);
     },
+
+    updateSearchIsAdult(searchIsAdult) {
+      this.currentDataFlow++;
+      let dataFlow = this.currentDataFlow;
+      this.stopFetchingNewData = true;
+      this.searchIsAdult = searchIsAdult;
+      this.page = 1;
+      this.dataLoading = true;
+      this.medias = [];
+      setTimeout(() => {
+        if (dataFlow < this.currentDataFlow) return;
+        this.medias = this.Page.media;
+        this.dataLoading = false;
+        this.stopFetchingNewData = false;
+      }, 2000);
+    },
   },
 
   beforeMount() {
@@ -921,16 +948,33 @@ export default {
           searchSort: this.searchSort,
           searchCountryOfOrigin: this.searchCountryOfOrigin,
           searchSource: this.searchSource,
-          searchStartDateGreater: (this.searchStartDateGreater != 1970 || this.searchStartDateLesser != 2023)
-            ? this.searchStartDateGreater * 10000
-            : null, //FuzzyDateInt Format
-          searchStartDateLesser: (this.searchStartDateGreater != 1970 || this.searchStartDateLesser != 2023)
-            ? this.searchStartDateLesser * 10000
-            : null, //FuzzyDateInt Format
-          searchEpisodesGreater: (this.searchEpisodesGreater != 0 || this.searchEpisodesLesser != 150)? this.searchEpisodesGreater :  null,
-          searchEpisodesLesser: (this.searchEpisodesGreater != 0 || this.searchEpisodesLesser != 150)? this.searchEpisodesLesser :  null,
-          searchDurationGreater: (this.searchDurationGreater != 0 || this.searchDurationLesser != 170)? this.searchDurationGreater : null,
-          searchDurationLesser: (this.searchDurationGreater != 0 || this.searchDurationLesser != 170)? this.searchDurationLesser : null,
+          searchStartDateGreater:
+            this.searchStartDateGreater != 1970 ||
+            this.searchStartDateLesser != 2023
+              ? this.searchStartDateGreater * 10000
+              : null, //FuzzyDateInt Format
+          searchStartDateLesser:
+            this.searchStartDateGreater != 1970 ||
+            this.searchStartDateLesser != 2023
+              ? this.searchStartDateLesser * 10000
+              : null, //FuzzyDateInt Format
+          searchEpisodesGreater:
+            this.searchEpisodesGreater != 0 || this.searchEpisodesLesser != 150
+              ? this.searchEpisodesGreater
+              : null,
+          searchEpisodesLesser:
+            this.searchEpisodesGreater != 0 || this.searchEpisodesLesser != 150
+              ? this.searchEpisodesLesser
+              : null,
+          searchDurationGreater:
+            this.searchDurationGreater != 0 || this.searchDurationLesser != 170
+              ? this.searchDurationGreater
+              : null,
+          searchDurationLesser:
+            this.searchDurationGreater != 0 || this.searchDurationLesser != 170
+              ? this.searchDurationLesser
+              : null,
+          searchIsAdult: this.searchIsAdult,
         };
         Object.keys(vars).forEach((key) => {
           if (

@@ -201,6 +201,15 @@
               :handleOnChangeSearchUpper="handleOnChangeSearchDurationLesser"
             />
           </div>
+          <div class="ml-4 flex w-full">
+          <div class="py-2 px-3 font-bold">{{(searchIsAdult)? "Adult Mode" : "Safe Mode"}}</div>
+          <label>
+            <input type="checkbox" v-model="searchIsAdult" @input="handlOnChangeSearchIsAdult" />
+            <span>
+              <i></i>
+            </span>
+          </label>
+          </div>
         </div>
       </div>
     </div>
@@ -553,6 +562,7 @@ export default {
       searchStartDateLesser: null,
       searchDurationGreater: null,
       searchDurationLesser: null,
+      searchIsAdult: false,
     };
   },
   methods: {
@@ -612,6 +622,10 @@ export default {
     handleOnChangeSearchDurationLesser(searchDurationLesser) {
       this.$emit("update-search-duration-lesser", searchDurationLesser);
       this.searchDurationLesser = searchDurationLesser;
+    },
+    handlOnChangeSearchIsAdult() {
+      this.searchIsAdult = !this.searchIsAdult;
+      this.$emit("update-search-is-adult", this.searchIsAdult);
     },
 
     // Handle On Render
