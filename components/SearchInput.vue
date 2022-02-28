@@ -144,10 +144,133 @@
             rounded
             custom-fade`"
         >
+          <div class="flex">
+            <div class="flex w-1/2 h-12 max-h-12">
+              <div
+                class="
+                  font-bold
+                  mt-2
+                  ml-2
+                  inline-flex
+                  items-center
+                  justify-center
+                  h-[32px]
+                "
+              >
+                Country Of Origin
+              </div>
+              <span
+                v-if="
+                  searchCountryOfOrigin != 'Any' &&
+                  searchCountryOfOrigin != 'null' &&
+                  searchCountryOfOrigin != 'undefined' &&
+                  searchCountryOfOrigin != null
+                "
+                class="
+                  relative
+                  mt-2
+                  ml-2
+                  inline-flex
+                  items-center
+                  justify-center
+                  min-w-[120px]
+                  h-[32px]
+                  text-xs
+                  font-bold
+                  leading-none
+                  text-red-100
+                  bg-cyan-600
+                  rounded-full
+                "
+                >{{
+                  handleOnRenderSearchCountryOfOrigin(searchCountryOfOrigin)
+                }}
+                <svg
+                  @click="() => handleOnChangeSearchCountryOfOrigin('Any')"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="
+                    bi bi-x
+                    absolute
+                    right-[4px]
+                    top-[6px]
+                    hover:cursor-pointer hover:fill-gray-400
+                  "
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+                  /></svg
+              ></span>
+            </div>
+            <div class="flex w-1/2 h-12 max-h-12">
+              <div
+                class="
+                  font-bold
+                  mt-2
+                  ml-2
+                  inline-flex
+                  items-center
+                  justify-center
+                  h-[32px]
+                "
+              >
+                Source
+              </div>
+              <span
+                v-if="
+                  searchSource != 'Any' &&
+                  searchSource != 'null' &&
+                  searchSource != 'undefined' &&
+                  searchSource != null
+                "
+                class="
+                  relative
+                  mt-2
+                  ml-2
+                  inline-flex
+                  items-center
+                  justify-center
+                  min-w-[120px]
+                  h-[32px]
+                  text-xs
+                  font-bold
+                  leading-none
+                  text-red-100
+                  bg-cyan-600
+                  rounded-full
+                "
+                >{{
+                  handleOnRenderSearchSource(searchSource)
+                }}
+                <svg
+                  @click="() => handleOnChangeSearchSource('Any')"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="
+                    bi bi-x
+                    absolute
+                    right-[4px]
+                    top-[6px]
+                    hover:cursor-pointer hover:fill-gray-400
+                  "
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+                  /></svg
+              ></span>
+            </div>
+          </div>
+
           <div class="flex w-full">
             <custom-select
               :width="`min-w-custom-50`"
-              :searchTitle="`Country Of Origin`"
+              :searchTitle="``"
               :selecting="searchCountryOfOrigin"
               :selects="['JP', 'KR', 'CN', 'TW']"
               :handleSelectOnChange="handleOnChangeSearchCountryOfOrigin"
@@ -155,7 +278,7 @@
             />
             <custom-select
               :width="`min-w-custom-50`"
-              :searchTitle="`Source Material`"
+              :searchTitle="``"
               :selecting="searchSource"
               :selects="[
                 'ORIGINAL',
@@ -202,13 +325,23 @@
             />
           </div>
           <div class="ml-4 flex w-full">
-          <div class="py-2 px-3 font-bold">{{(searchIsAdult)? "Adult Mode" : "Safe Mode"}}</div>
-          <label>
-            <input type="checkbox" v-model="searchIsAdult" @input="handlOnChangeSearchIsAdult" />
-            <span>
-              <i></i>
-            </span>
-          </label>
+            <div class="py-2 px-3 font-bold">
+              {{ searchIsAdult ? "Adult Mode" : "Safe Mode" }}
+            </div>
+            <label>
+              <input
+                type="checkbox"
+                v-model="searchIsAdult"
+                @input="handlOnChangeSearchIsAdult"
+              />
+              <span>
+                <i></i>
+              </span>
+            </label>
+          </div>
+          <div class="h-1 w-[80%] mx-auto my-2 bg-gray-200"> </div>
+          <div class="ml-4 mt-2 flex w-full">
+            <div class="font-bold">Advanced Genres & Tag Filters</div>
           </div>
         </div>
       </div>
