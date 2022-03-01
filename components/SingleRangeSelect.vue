@@ -1,6 +1,7 @@
 <template>
   <span class="relative top-[1.5rem]">
     <div
+      v-show="showSpan"
         class="
           absolute
           py-[0.2rem]
@@ -16,16 +17,16 @@
         "
         v-bind:style="{
           left:
-            (parseInt(lower - min) * 250) / (parseInt(max) - parseInt(min)) -
+            (parseInt(value - min) * 250) / (parseInt(max) - parseInt(min)) -
             20 +
             2 +
             8 +
             'px',
         }"
       >
-        {{ lower }}
+        {{ value }}
       </div>
-    <input type="range" v-bind:min="min" v-bind:max="max" v-model="lower"/>
+    <input type="range" v-bind:min="min" v-bind:max="max" v-model="value" @mouseup="handleMouseUpInput" @mouseenter="handleShowSpan" @mouseout="handleHideSpan"/>
   </span>
 </template>
 
@@ -95,10 +96,22 @@ input[type="range"]::-webkit-slider-thumb::before {
 
 <script>
 export default {
-  props: ['min', 'max'],
+  props: ['min', 'max', 'handlOnChangeSearch'],
   data(){
     return{
-      lower: 0,
+      value: 0,
+      showSpan: false,
+    }
+  },
+  methods:{
+    handleShowSpan(){
+      this.showSpan = true;
+    },
+    handleHideSpan(){
+      this.showSpan = false;
+    },
+    handleMouseUpInput(){
+      this.handlOnChangeSearch(this.value);
     }
   }
 };

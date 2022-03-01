@@ -136,7 +136,7 @@
           v-bind:class="`${classFilter}
             min-h-96
             max-h-[48rem]
-            w-[65rem]
+            w-[68rem]
             absolute
             top-12
             right-0
@@ -379,7 +379,8 @@
           <div class="flex p-3 max-h-[24rem] overflow-auto">
             <div v-bind:class="`${classAdvancedFilter}`">
               <div class="font-bold py-2">Minimum Average Score</div>
-              <single-range-select :min="0" :max="100"/>
+              <single-range-select :min="0" :max="100" :handlOnChangeSearch="handlOnChangeSearchScoreGreater"/>
+              <advanced-tags/>
             </div>
           </div>
         </div>
@@ -716,6 +717,7 @@
 <script>
 import gql from "graphql-tag";
 import CustomSelect from "./CustomSelect.vue";
+import AdvancedTags from './AdvancedTags.vue';
 
 const GenreCollection = gql`
   query {
@@ -726,13 +728,14 @@ const GenreCollection = gql`
 const MediaTagCollection = gql`
   query {
     MediaTagCollection {
-      name
+      name,
+      category
     }
   }
 `;
 export default {
   props: ["_search"],
-  components: { CustomSelect },
+  components: { CustomSelect, AdvancedTags },
   name: "SearchInput",
   data() {
     return {
@@ -762,6 +765,7 @@ export default {
       searchDurationGreater: null,
       searchDurationLesser: null,
       searchIsAdult: false,
+      searchAverageScoreGreater: 0,
     };
   },
   methods: {
@@ -823,8 +827,12 @@ export default {
       this.searchDurationLesser = searchDurationLesser;
     },
     handlOnChangeSearchIsAdult() {
-      this.$emit("update-search-is-adult", this.searchIsAdult, "searchIsAdult");
+      this.$emit("update-search-is-adult", !this.searchIsAdult, "searchIsAdult");
       this.searchIsAdult = !this.searchIsAdult;
+    },
+    handlOnChangeSearchScoreGreater(searchAverageScoreGreater) {
+      this.$emit("update-search-average-score-greater", searchAverageScoreGreater, "searchAverageScoreGreater");
+      this.searchAverageScoreGreater = searchAverageScoreGreater;
     },
 
     // Handle On Render

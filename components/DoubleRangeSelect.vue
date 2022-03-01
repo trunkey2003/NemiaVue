@@ -5,6 +5,7 @@
     </div>
     <div class="multi-range relative">
       <div
+        v-show="showSpanLower"
         class="
           absolute
           py-[0.2rem]
@@ -29,6 +30,7 @@
         {{ lower }}
       </div>
       <div
+       v-show="showSpanUpper"
         class="
           absolute
           py-[0.2rem]
@@ -61,6 +63,8 @@
           v-model="lower"
           name="lower"
           @mouseup="handleDropLower"
+          @mouseenter="handleShowSpanLower"
+          @mouseout="handleHideSpanLower"
         />
         <input
           type="range"
@@ -69,6 +73,8 @@
           v-model="upper"
           name="upper"
           @mouseup="handleDropUpper"
+          @mouseenter="handleShowSpanUpper"
+          @mouseout="handleHideSpanUpper"
         />
       </span>
     </div>
@@ -117,13 +123,13 @@ input[name="upper"]::-webkit-slider-thumb {
   width: 16px;
   border-radius: 16px;
   background-color: #3db4f2b3;
-  margin: 5px;
+  margin: 5px 0;
   position: relative;
-  right: 6px;
+  left: -3px;
   cursor: grab;
   appearance: none;
   pointer-events: all;
-  box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25); */
 }
 
 input[name="upper"]::-webkit-slider-thumb:active:hover {
@@ -164,6 +170,8 @@ export default {
     return {
       lower: parseInt(this.min),
       upper: parseInt(this.max),
+      showSpanLower: false,
+      showSpanUpper: false,
     };
   },
   watch: {
@@ -181,6 +189,18 @@ export default {
     handleDropUpper() {
       this.handleOnChangeSearchUpper(this.upper);
     },
+    handleShowSpanLower(){
+      this.showSpanLower = true;
+    },
+    handleShowSpanUpper(){
+      this.showSpanUpper = true;
+    },
+    handleHideSpanLower(){
+      this.showSpanLower = false;
+    },
+    handleHideSpanUpper(){
+      this.showSpanUpper = false;
+    }
   },
 };
 </script>

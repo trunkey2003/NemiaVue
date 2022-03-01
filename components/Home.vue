@@ -20,6 +20,7 @@
       @update-search-duration-greater="updateFilterApollo"
       @update-search-duration-lesser="updateFilterApollo"
       @update-search-is-adult="updateFilterApollo"
+      @update-search-average-score-greater="updateFilterApollo"
     />
     <div
       id="home"
