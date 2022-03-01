@@ -5,21 +5,21 @@
     </div>
     <SearchInput
       :_search="search"
-      @update-search="updateSearch"
-      @update-search-genre="updateSearchGenre"
-      @update-search-media-tag="updateSearchMediaTag"
-      @update-search-year="updateSearchYear"
-      @update-search-format="updateSearchFormat"
-      @update-search-status="updateSearchStatus"
-      @update-search-country-of-origin="updateSearchCountryOfOrigin"
-      @update-search-source="updateSearchSource"
-      @update-search-start-date-greater="updateSearchStartDateGreater"
-      @update-search-start-date-lesser="updateSearchStartDateLesser"
-      @update-search-episodes-greater="updateSearchEpisodesGreater"
-      @update-search-episodes-lesser="updateSearchEpisodesLesser"
-      @update-search-duration-greater="updateSearchDurationGreater"
-      @update-search-duration-lesser="updateSearchDurationLesser"
-      @update-search-is-adult="updateSearchIsAdult"
+      @update-search="updateFilterApollo"
+      @update-search-genre="updateFilterApollo"
+      @update-search-media-tag="updateFilterApollo"
+      @update-search-year="updateFilterApollo"
+      @update-search-format="updateFilterApollo"
+      @update-search-status="updateFilterApollo"
+      @update-search-country-of-origin="updateFilterApollo"
+      @update-search-source="updateFilterApollo"
+      @update-search-start-date-greater="updateFilterApollo"
+      @update-search-start-date-lesser="updateFilterApollo"
+      @update-search-episodes-greater="updateFilterApollo"
+      @update-search-episodes-lesser="updateFilterApollo"
+      @update-search-duration-greater="updateFilterApollo"
+      @update-search-duration-lesser="updateFilterApollo"
+      @update-search-is-adult="updateFilterApollo"
     />
     <div
       id="home"
@@ -672,235 +672,11 @@ export default {
       box.classList.add("hidden");
     },
 
-    updateSearch(search) {
+    updateFilterApollo(search, varName) {
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
-      this.search = search;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchGenre(searchGenre) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchGenre = searchGenre;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchMediaTag(searchMediaTag) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchMediaTag = searchMediaTag;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchYear(searchYear) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchYear = searchYear;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchFormat(searchFormat) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchFormat = searchFormat;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchStatus(searchStatus) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchStatus = searchStatus;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchCountryOfOrigin(searchCountryOfOrigin) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchCountryOfOrigin = searchCountryOfOrigin;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchSource(searchSource) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchSource = searchSource;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchStartDateGreater(searchStartDateGreater) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchStartDateGreater = searchStartDateGreater;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchStartDateLesser(searchStartDateLesser) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchStartDateLesser = searchStartDateLesser;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchEpisodesGreater(searchEpisodesGreater) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchEpisodesGreater = searchEpisodesGreater;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchEpisodesLesser(searchEpisodesLesser) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchEpisodesLesser = searchEpisodesLesser;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchDurationGreater(searchDurationGreater) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchDurationGreater = searchDurationGreater;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchDurationLesser(searchDurationLesser) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchDurationLesser = searchDurationLesser;
-      this.page = 1;
-      this.dataLoading = true;
-      this.medias = [];
-      setTimeout(() => {
-        if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
-        this.dataLoading = false;
-        this.stopFetchingNewData = false;
-      }, 2000);
-    },
-
-    updateSearchIsAdult(searchIsAdult) {
-      this.currentDataFlow++;
-      let dataFlow = this.currentDataFlow;
-      this.stopFetchingNewData = true;
-      this.searchIsAdult = searchIsAdult;
+      this[varName] = search;
       this.page = 1;
       this.dataLoading = true;
       this.medias = [];

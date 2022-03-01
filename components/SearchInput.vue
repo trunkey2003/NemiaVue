@@ -134,7 +134,8 @@
         </svg>
         <div
           v-bind:class="`${classActive}
-            h-96
+            min-h-96
+            max-h-[48rem]
             w-[65rem]
             absolute
             top-12
@@ -142,7 +143,9 @@
             bg-white
             z-40
             rounded
-            custom-fade`"
+            custom-fade
+            p-3
+            `"
         >
           <div class="flex">
             <div class="flex w-1/2 h-12 max-h-12">
@@ -242,9 +245,7 @@
                   bg-cyan-600
                   rounded-full
                 "
-                >{{
-                  handleOnRenderSearchSource(searchSource)
-                }}
+                >{{ handleOnRenderSearchSource(searchSource) }}
                 <svg
                   @click="() => handleOnChangeSearchSource('Any')"
                   xmlns="http://www.w3.org/2000/svg"
@@ -339,9 +340,41 @@
               </span>
             </label>
           </div>
-          <div class="h-1 w-[80%] mx-auto my-2 bg-gray-200"> </div>
+          <div class="h-1 w-[80%] mx-auto my-3 bg-gray-200"></div>
           <div class="ml-4 mt-2 flex w-full">
-            <div class="font-bold">Advanced Genres & Tag Filters</div>
+            <button
+              class="font-bold flex"
+              @click="
+                () => (advancedFilterIsShowing = !advancedFilterIsShowing)
+              "
+            >
+              <svg
+                v-if="advancedFilterIsShowing"
+                class="w-[24px] h-[24px] py-[2px]"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+              >
+                <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                <path
+                  d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"
+                />
+              </svg>
+              <svg
+                v-else
+                class="w-[24px] h-[24px] py-[2px]"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 256 512"
+              >
+                <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                <path
+                  d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"
+                />
+              </svg>
+              Advanced Genres & Tag Filters
+            </button>
+          </div>
+          <div class="flex p-3 max-h-[24rem] overflow-auto">
+            <div class="h-[96rem]">Hello</div>
           </div>
         </div>
       </div>
@@ -648,6 +681,32 @@
   </div>
 </template>
 
+<style scoped>
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff00;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3db4f2b3;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1c5370b3;
+}
+
+::-webkit-scrollbar:hover{
+  background: #c9e8ff;
+}
+</style>
+
 <script>
 import gql from "graphql-tag";
 import CustomSelect from "./CustomSelect.vue";
@@ -671,6 +730,7 @@ export default {
   name: "SearchInput",
   data() {
     return {
+      advancedFilterIsShowing: false,
       showClassActive: false,
       classActive: this.showClassActive ? "" : "hidden",
       search: this.$route.query.search,
@@ -701,64 +761,64 @@ export default {
   methods: {
     //Handle On Change
     handleOnChangeSearch(search) {
-      this.$emit("update-search", search);
+      this.$emit("update-search", search, "search");
       this.search = search;
     },
     handleOnChangeSearchGenre(searchGenre) {
-      this.$emit("update-search-genre", searchGenre);
+      this.$emit("update-search-genre", searchGenre, "searchGenre");
       this.searchGenre = searchGenre;
     },
     handleOnChangeSearchMediaTag(searchMediaTag) {
-      this.$emit("update-search-media-tag", searchMediaTag);
+      this.$emit("update-search-media-tag", searchMediaTag, "searchMediaTag");
       this.searchMediaTag = searchMediaTag;
     },
     handleOnChangeSearchYear(searchYear) {
-      this.$emit("update-search-year", searchYear);
+      this.$emit("update-search-year", searchYear, "searchYear");
       this.searchYear = searchYear;
     },
     handleOnChangeSearchFormat(searchFormat) {
-      this.$emit("update-search-format", searchFormat);
+      this.$emit("update-search-format", searchFormat, "searchFormat");
       this.searchFormat = searchFormat;
     },
     handleOnChangeSearchStatus(searchStatus) {
-      this.$emit("update-search-status", searchStatus);
+      this.$emit("update-search-status", searchStatus, "searchStatus");
       this.searchStatus = searchStatus;
     },
     handleOnChangeSearchCountryOfOrigin(searchCountryOfOrigin) {
-      this.$emit("update-search-country-of-origin", searchCountryOfOrigin);
+      this.$emit("update-search-country-of-origin", searchCountryOfOrigin, "searchCountryOfOrigin");
       this.searchCountryOfOrigin = searchCountryOfOrigin;
     },
     handleOnChangeSearchSource(searchSource) {
-      this.$emit("update-search-source", searchSource);
+      this.$emit("update-search-source", searchSource, "searchSource");
       this.searchSource = searchSource;
     },
     handleOnChangeSearchStartDateGreater(searchStartDateGreater) {
-      this.$emit("update-search-start-date-greater", searchStartDateGreater);
+      this.$emit("update-search-start-date-greater", searchStartDateGreater, "searchStartDateGreater");
       this.searchStartDateGreater = searchStartDateGreater;
     },
     handleOnChangeSearchStartDateLesser(searchStartDateLesser) {
-      this.$emit("update-search-start-date-lesser", searchStartDateLesser);
+      this.$emit("update-search-start-date-lesser", searchStartDateLesser, "searchStartDateLesser");
       this.searchStartDateLesser = searchStartDateLesser;
     },
     handleOnChangeSearchEpisodesGreater(searchEpisodesGreater) {
-      this.$emit("update-search-episodes-greater", searchEpisodesGreater);
+      this.$emit("update-search-episodes-greater", searchEpisodesGreater, "searchEpisodesGreater");
       this.searchEpisodesGreater = searchEpisodesGreater;
     },
     handleOnChangeSearchEpisodesLesser(searchEpisodesLesser) {
-      this.$emit("update-search-episodes-lesser", searchEpisodesLesser);
+      this.$emit("update-search-episodes-lesser", searchEpisodesLesser, "searchEpisodesLesser");
       this.searchEpisodesLesser = searchEpisodesLesser;
     },
     handleOnChangeSearchDurationGreater(searchDurationGreater) {
-      this.$emit("update-search-duration-greater", searchDurationGreater);
+      this.$emit("update-search-duration-greater", searchDurationGreater, "searchDurationGreater");
       this.searchDurationGreater = searchDurationGreater;
     },
     handleOnChangeSearchDurationLesser(searchDurationLesser) {
-      this.$emit("update-search-duration-lesser", searchDurationLesser);
+      this.$emit("update-search-duration-lesser", searchDurationLesser, "searchDurationLesser");
       this.searchDurationLesser = searchDurationLesser;
     },
     handlOnChangeSearchIsAdult() {
+      this.$emit("update-search-is-adult", this.searchIsAdult, "searchIsAdult");
       this.searchIsAdult = !this.searchIsAdult;
-      this.$emit("update-search-is-adult", this.searchIsAdult);
     },
 
     // Handle On Render
