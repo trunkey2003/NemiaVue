@@ -125,7 +125,7 @@
           "
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
-          @click="() => (classActive = classActive == 'hidden' ? '' : 'hidden')"
+          @click="() => (classFilter = classFilter == 'hidden' ? '' : 'hidden')"
         >
           <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
           <path
@@ -133,7 +133,7 @@
           />
         </svg>
         <div
-          v-bind:class="`${classActive}
+          v-bind:class="`${classFilter}
             min-h-96
             max-h-[48rem]
             w-[65rem]
@@ -303,21 +303,21 @@
             />
           </div>
           <div class="flex w-full">
-            <range-select
+            <double-range-select
               :searchTitle="`Year Range`"
               :min="1970"
               :max="2023"
               :handleOnChangeSearchLower="handleOnChangeSearchStartDateGreater"
               :handleOnChangeSearchUpper="handleOnChangeSearchStartDateLesser"
             />
-            <range-select
+            <double-range-select
               :searchTitle="`Episodes`"
               :min="0"
               :max="150"
               :handleOnChangeSearchLower="handleOnChangeSearchEpisodesGreater"
               :handleOnChangeSearchUpper="handleOnChangeSearchEpisodesLesser"
             />
-            <range-select
+            <double-range-select
               :searchTitle="`Duration`"
               :min="0"
               :max="170"
@@ -345,7 +345,10 @@
             <button
               class="font-bold flex"
               @click="
-                () => (advancedFilterIsShowing = !advancedFilterIsShowing)
+                () => {
+                advancedFilterIsShowing = !advancedFilterIsShowing; 
+                classAdvancedFilter = (classAdvancedFilter == 'hidden')? 'h-[96rem]' : 'hidden';
+                }
               "
             >
               <svg
@@ -374,7 +377,10 @@
             </button>
           </div>
           <div class="flex p-3 max-h-[24rem] overflow-auto">
-            <div class="h-[96rem]">Hello</div>
+            <div v-bind:class="`${classAdvancedFilter}`">
+              <div class="font-bold py-2">Minimum Average Score</div>
+              <single-range-select :min="0" :max="100"/>
+            </div>
           </div>
         </div>
       </div>
@@ -627,7 +633,7 @@
           bg-blue-600
           rounded-full
         "
-        >{{ searchCountryOfOrigin
+        >{{ handleOnRenderSearchCountryOfOrigin(searchCountryOfOrigin)
         }}<svg
           @click="() => handleOnChangeSearchCountryOfOrigin('Any')"
           xmlns="http://www.w3.org/2000/svg"
@@ -731,8 +737,8 @@ export default {
   data() {
     return {
       advancedFilterIsShowing: false,
-      showClassActive: false,
-      classActive: this.showClassActive ? "" : "hidden",
+      classFilter: "hidden",
+      classAdvancedFilter: "hidden",
       search: this.$route.query.search,
       searchGenre: this.$route.query.searchGenre
         ? this.$route.query.searchGenre

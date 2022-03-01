@@ -554,6 +554,7 @@ const query = gql`
     $searchDurationGreater: Int
     $searchDurationLesser: Int
     $searchIsAdult: Boolean
+    $searchAverageScoreGreater: Int
   ) {
     Page(page: $page, perPage: $perPage) {
       media(
@@ -570,13 +571,14 @@ const query = gql`
         startDate_lesser: $searchStartDateLesser
         episodes_greater: $searchEpisodesGreater
         episodes_lesser: $searchEpisodesLesser
-        duration_greater: $searchDurationGreater
+        duration_greater:$searchDurationGreater
         duration_lesser: $searchDurationLesser
         isAdult: $searchIsAdult
+        averageScore_greater: $searchAverageScoreGreater
       ) {
         isAdult
         seasonYear
-        startDate {
+        startDate{
           year
         }
         id
@@ -627,6 +629,7 @@ export default {
       searchDurationGreater: 0,
       searchDurationLesser: 170,
       searchIsAdult: false,
+      searchAverageScoreGreater: 0,
     };
     return vars;
   },
@@ -751,6 +754,7 @@ export default {
               ? this.searchDurationLesser
               : null,
           searchIsAdult: this.searchIsAdult,
+          searchAverageScoreGreater: (this.searchAverageScoreGreater)? this.searchAverageScoreGreater : null,
         };
         Object.keys(vars).forEach((key) => {
           if (
