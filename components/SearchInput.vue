@@ -346,8 +346,9 @@
               class="font-bold flex"
               @click="
                 () => {
-                advancedFilterIsShowing = !advancedFilterIsShowing; 
-                classAdvancedFilter = (classAdvancedFilter == 'hidden')? 'h-[96rem]' : 'hidden';
+                  advancedFilterIsShowing = !advancedFilterIsShowing;
+                  classAdvancedFilter =
+                    classAdvancedFilter == 'hidden' ? 'h-[96rem]' : 'hidden';
                 }
               "
             >
@@ -379,8 +380,14 @@
           <div class="flex p-3 max-h-[24rem] overflow-auto">
             <div v-bind:class="`${classAdvancedFilter}`">
               <div class="font-bold py-2">Minimum Average Score</div>
-              <single-range-select :min="0" :max="100" :handlOnChangeSearch="handlOnChangeSearchScoreGreater"/>
-              <advanced-tags/>
+              <single-range-select
+                :min="0"
+                :max="100"
+                :handlOnChangeSearch="handlOnChangeSearchScoreGreater"
+              />
+              <div>
+                <advanced-tags v-for="category in tagsCategory" v-bind:key="category" :MediaTagCollection="MediaTagCollection" :category="category" :handleSelectOnChange="handleOnChangeSearchMediaTag" />
+              </div>
             </div>
           </div>
         </div>
@@ -709,7 +716,7 @@
   background: #1c5370b3;
 }
 
-::-webkit-scrollbar:hover{
+::-webkit-scrollbar:hover {
   background: #c9e8ff;
 }
 </style>
@@ -717,7 +724,7 @@
 <script>
 import gql from "graphql-tag";
 import CustomSelect from "./CustomSelect.vue";
-import AdvancedTags from './AdvancedTags.vue';
+import AdvancedTags from "./AdvancedTags.vue";
 
 const GenreCollection = gql`
   query {
@@ -728,7 +735,7 @@ const GenreCollection = gql`
 const MediaTagCollection = gql`
   query {
     MediaTagCollection {
-      name,
+      name
       category
     }
   }
@@ -766,6 +773,7 @@ export default {
       searchDurationLesser: null,
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
+      tagsCategory: [],
     };
   },
   methods: {
@@ -795,7 +803,11 @@ export default {
       this.searchStatus = searchStatus;
     },
     handleOnChangeSearchCountryOfOrigin(searchCountryOfOrigin) {
-      this.$emit("update-search-country-of-origin", searchCountryOfOrigin, "searchCountryOfOrigin");
+      this.$emit(
+        "update-search-country-of-origin",
+        searchCountryOfOrigin,
+        "searchCountryOfOrigin"
+      );
       this.searchCountryOfOrigin = searchCountryOfOrigin;
     },
     handleOnChangeSearchSource(searchSource) {
@@ -803,35 +815,67 @@ export default {
       this.searchSource = searchSource;
     },
     handleOnChangeSearchStartDateGreater(searchStartDateGreater) {
-      this.$emit("update-search-start-date-greater", searchStartDateGreater, "searchStartDateGreater");
+      this.$emit(
+        "update-search-start-date-greater",
+        searchStartDateGreater,
+        "searchStartDateGreater"
+      );
       this.searchStartDateGreater = searchStartDateGreater;
     },
     handleOnChangeSearchStartDateLesser(searchStartDateLesser) {
-      this.$emit("update-search-start-date-lesser", searchStartDateLesser, "searchStartDateLesser");
+      this.$emit(
+        "update-search-start-date-lesser",
+        searchStartDateLesser,
+        "searchStartDateLesser"
+      );
       this.searchStartDateLesser = searchStartDateLesser;
     },
     handleOnChangeSearchEpisodesGreater(searchEpisodesGreater) {
-      this.$emit("update-search-episodes-greater", searchEpisodesGreater, "searchEpisodesGreater");
+      this.$emit(
+        "update-search-episodes-greater",
+        searchEpisodesGreater,
+        "searchEpisodesGreater"
+      );
       this.searchEpisodesGreater = searchEpisodesGreater;
     },
     handleOnChangeSearchEpisodesLesser(searchEpisodesLesser) {
-      this.$emit("update-search-episodes-lesser", searchEpisodesLesser, "searchEpisodesLesser");
+      this.$emit(
+        "update-search-episodes-lesser",
+        searchEpisodesLesser,
+        "searchEpisodesLesser"
+      );
       this.searchEpisodesLesser = searchEpisodesLesser;
     },
     handleOnChangeSearchDurationGreater(searchDurationGreater) {
-      this.$emit("update-search-duration-greater", searchDurationGreater, "searchDurationGreater");
+      this.$emit(
+        "update-search-duration-greater",
+        searchDurationGreater,
+        "searchDurationGreater"
+      );
       this.searchDurationGreater = searchDurationGreater;
     },
     handleOnChangeSearchDurationLesser(searchDurationLesser) {
-      this.$emit("update-search-duration-lesser", searchDurationLesser, "searchDurationLesser");
+      this.$emit(
+        "update-search-duration-lesser",
+        searchDurationLesser,
+        "searchDurationLesser"
+      );
       this.searchDurationLesser = searchDurationLesser;
     },
     handlOnChangeSearchIsAdult() {
-      this.$emit("update-search-is-adult", !this.searchIsAdult, "searchIsAdult");
+      this.$emit(
+        "update-search-is-adult",
+        !this.searchIsAdult,
+        "searchIsAdult"
+      );
       this.searchIsAdult = !this.searchIsAdult;
     },
     handlOnChangeSearchScoreGreater(searchAverageScoreGreater) {
-      this.$emit("update-search-average-score-greater", searchAverageScoreGreater, "searchAverageScoreGreater");
+      this.$emit(
+        "update-search-average-score-greater",
+        searchAverageScoreGreater,
+        "searchAverageScoreGreater"
+      );
       this.searchAverageScoreGreater = searchAverageScoreGreater;
     },
 
@@ -853,6 +897,10 @@ export default {
     handleOnRenderSearchSource(searchSource) {
       return searchSource.replace("_", " ");
     },
+  },
+
+  mounted(){
+    this.tagsCategory = [...new Set(this.MediaTagCollection.map((index) =>  index.category))]
   },
   apollo: {
     GenreCollection: {
