@@ -108,7 +108,7 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="password2" class="form-label"
+                <label for="password2" class="form-label w-full"
                   >Confirm Password</label
                 >
                 <input

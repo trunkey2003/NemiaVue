@@ -96,7 +96,7 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="password1" class="form-label">Password</label>
+                <label for="password1" class="form-label w-full">Password</label>
                 <input
                   name="password"
                   minlength="3"

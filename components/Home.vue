@@ -531,7 +531,6 @@
   </div>
 </template>
 
-
 <script>
 import gql from "graphql-tag";
 
@@ -601,6 +600,7 @@ const query = gql`
     }
   }
 `;
+
 
 export default {
   data() {

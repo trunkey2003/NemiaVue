@@ -245,7 +245,7 @@
                   bg-cyan-600
                   rounded-full
                 "
-                >{{ handleOnRenderSearchSource(searchSource) }}
+                >{{ handleOnRenderUnderScore(searchSource) }}
                 <svg
                   @click="() => handleOnChangeSearchSource('Any')"
                   xmlns="http://www.w3.org/2000/svg"
@@ -299,7 +299,7 @@
                 'PICTURE_BOOK',
               ]"
               :handleSelectOnChange="handleOnChangeSearchSource"
-              :handleOnRender="handleOnRenderSearchSource"
+              :handleOnRender="handleOnRenderUnderScore"
             />
           </div>
           <div class="flex w-full">
@@ -379,14 +379,70 @@
           </div>
           <div class="flex p-3 max-h-[24rem] overflow-auto">
             <div v-bind:class="`${classAdvancedFilter}`">
-              <div class="font-bold py-2">Minimum Average Score</div>
-              <single-range-select
-                :min="0"
-                :max="100"
-                :handlOnChangeSearch="handlOnChangeSearchScoreGreater"
-              />
+              <div class="flex">
+                <!-- Score filter -->
+                <div class="w-[30%]">
+                  <div class="font-bold py-2">Minimum Average Score</div>
+                  <single-range-select
+                    :min="0"
+                    :max="100"
+                    :handlOnChangeSearch="handlOnChangeSearchScoreGreater"
+                  />
+                </div>
+
+                <!-- Filter advanced tags input -->
+                <div class="w-[20%]">
+                  <div class="relative">
+                    <div
+                      class="
+                        flex
+                        absolute
+                        inset-y-0
+                        left-0
+                        items-center
+                        pl-3
+                        pointer-events-none
+                      "
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                        class="w-[16px] h-[16px] fill-gray-400"
+                      >
+                        <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                        <path
+                          d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      id="email-adress-icon"
+                      class="
+                        bg-gray-50
+                        border border-gray-300
+                        text-gray-900 text-sm
+                        rounded-lg
+                        focus:ring-blue-500 focus:border-blue-500
+                        block
+                        w-full
+                        pl-10
+                        p-2.5
+                      "
+                      placeholder="Filter Tags"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Advanced tags -->
               <div>
-                <advanced-tags v-for="category in tagsCategory" v-bind:key="category" :MediaTagCollection="MediaTagCollection" :category="category" :handleSelectOnChange="handleOnChangeSearchMediaTag" />
+                <advanced-tags
+                  v-for="category in tagsCategory"
+                  v-bind:key="category"
+                  :MediaTagCollection="MediaTagCollection"
+                  :category="category"
+                  :handleSelectOnChange="handleOnChangeSearchMediaTag"
+                />
               </div>
             </div>
           </div>
@@ -569,7 +625,7 @@
           bg-blue-600
           rounded-full
         "
-        >{{ searchFormat }}
+        >{{ handleOnRenderUnderScore(searchFormat) }}
         <svg
           @click="() => handleOnChangeSearchFormat('Any')"
           xmlns="http://www.w3.org/2000/svg"
@@ -605,8 +661,7 @@
           bg-blue-600
           rounded-full
         "
-        >{{ searchStatus
-        }}<svg
+        >{{ handleOnRenderUnderScore(searchStatus)}}<svg
           @click="() => handleOnChangeSearchStatus('Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -718,6 +773,98 @@
 
 ::-webkit-scrollbar:hover {
   background: #c9e8ff;
+}
+
+label{
+  position: relative;
+  width: 80px;
+  height: 40px;
+  cursor: pointer;
+}
+
+label input{
+  position: relative;
+  z-index: 1;
+  appearance: none;
+}
+
+label span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #05be05;
+  border-radius: 40px;
+  transition: 0.5s;
+  box-shadow: 0 7.5px 12.5px #05be0566;
+}
+
+label span:hover{
+  background: #0f570f;
+}
+
+label input:checked ~ span{
+  background: #fe0000;
+  box-shadow: 0 7.5px 12.5px #fe000066;
+}
+
+label span i{
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+label input:checked ~ span i{
+  left: 42px;
+}
+
+label span i::before{
+  content: '';
+  position: absolute;
+  top: 11px;
+  left: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #05be05;
+  box-shadow: 17.5px 0 0 #05be05;
+  transition: 0.5s;
+}
+
+label input:checked ~ span i::before{
+  background: #fe0000;
+  box-shadow: 17.5px 0 0 #fe0000;
+}
+
+label input:checked:hover ~ span{
+  background: #550505;
+}
+
+label span i::after{
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: calc(50% - 7.5px);
+  width: 15px;
+  height: 7.5px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background: #05be05;
+  transition: 0.5s;
+}
+
+label input:checked ~ span i::after{
+  bottom: 7.5px;
+  height: 3px;
+  border-radius: 0;
+  /* border-radius: 6px; */
+  background: #fe0000;
 }
 </style>
 
@@ -894,13 +1041,15 @@ export default {
           return "Taiwan";
       }
     },
-    handleOnRenderSearchSource(searchSource) {
-      return searchSource.replace("_", " ");
+    handleOnRenderUnderScore(tag) {
+      return tag.replace("_", " ");
     },
   },
 
-  mounted(){
-    this.tagsCategory = [...new Set(this.MediaTagCollection.map((index) =>  index.category))]
+  mounted() {
+    this.tagsCategory = [
+      ...new Set(this.MediaTagCollection.map((index) => index.category)),
+    ];
   },
   apollo: {
     GenreCollection: {

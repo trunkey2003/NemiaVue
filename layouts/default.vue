@@ -5,3 +5,9 @@
   <Footer/>
 </div>
 </template>
+
+<style>
+body {
+  font-family: 'Overpass'!important;
+}
+</style>

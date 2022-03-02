@@ -62,7 +62,6 @@
       <div
         class="
           container
-          custom-font-cursive
           flex flex-wrap
           justify-between
           items-center
