@@ -85,7 +85,7 @@
             overflow-auto
             focus:outline-none
             sm:text-sm
-            custom-fade
+            custom-select-fade
             `
           "
           tabindex="-1"

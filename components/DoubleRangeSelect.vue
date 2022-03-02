@@ -1,7 +1,29 @@
 <template>
-  <div class="w-[270px] mx-auto h-32">
-    <div class="py-2 flex">
-      <div class="font-bold">{{searchTitle}}</div>
+  <div class="w-[270px] mx-auto h-32 mt-1">
+    <div class="flex">
+      <div class="py-2 font-bold">{{ searchTitle }}</div>
+      <div v-show="curruntStateLower != min || curruntStateUpper != max" class="ml-5 my-1 py-1 bg-cyan-600 rounded-full px-4 text-white relative">
+        {{ curruntStateLower }} - {{ curruntStateUpper }}
+        <svg
+          @click="() => {lower = min; upper = max; handleDropLower(); handleDropUpper();}"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="
+            bi bi-x
+            absolute
+            right-[4px]
+            top-[6px]
+            hover:cursor-pointer hover:fill-gray-400
+          "
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </div>
     </div>
     <div class="multi-range relative">
       <div
@@ -14,9 +36,9 @@
           bg-gray-800 bg-opacity-70
           rounded-lg
           text-white
-          top-[-0.1rem]
+          top-[-0.6rem]
           text-center text-sm
-          font-medium	
+          font-medium
         "
         v-bind:style="{
           left:
@@ -30,7 +52,7 @@
         {{ lower }}
       </div>
       <div
-       v-show="showSpanUpper"
+        v-show="showSpanUpper"
         class="
           absolute
           py-[0.2rem]
@@ -39,9 +61,9 @@
           bg-gray-800 bg-opacity-70
           rounded-lg
           text-white
-          top-[-0.1rem]
+          top-[-0.6rem]
           text-center text-sm
-          font-medium	
+          font-medium
         "
         v-bind:style="{
           left:
@@ -146,10 +168,11 @@ input[type="range"]::-webkit-slider-thumb::before {
 }
 .multi-range {
   position: relative;
-  height: 50px;
+  height: 20px;
 }
 .multi-range input[type="range"] {
   position: absolute;
+  top: 15px;
 }
 .multi-range input[type="range"]:nth-child(1)::-webkit-slider-thumb::before {
   background-color: red;
@@ -165,42 +188,58 @@ input[type="range"]::-webkit-slider-thumb::before {
 
 <script>
 export default {
-  props: ["handleOnChangeSearchLower", "handleOnChangeSearchUpper", "searchTitle", "min", "max"],
+  props: [
+    "handleOnChangeSearchLower",
+    "handleOnChangeSearchUpper",
+    "searchTitle",
+    "min",
+    "max",
+  ],
   data() {
     return {
       lower: parseInt(this.min),
       upper: parseInt(this.max),
+      curruntStateLower: parseInt(this.min),
+      curruntStateUpper: parseInt(this.max),
       showSpanLower: false,
       showSpanUpper: false,
     };
   },
   watch: {
     lower(newLower, oldLower) {
-      if (parseInt(this.lower) + 1 >= this.upper) this.lower = oldLower;
+      if (parseInt(newLower) + 2 >= parseInt(this.upper))
+        this.lower = parseInt(oldLower);
     },
     upper(newUpper, oldUpper) {
-      if (parseInt(this.lower) + 1 >= newUpper) this.upper = oldUpper;
+      if (parseInt(newUpper) - 2 <= parseInt(this.lower))
+        this.upper = parseInt(oldUpper);
     },
   },
   methods: {
     handleDropLower() {
-      this.handleOnChangeSearchLower(this.lower);
+      if (this.lower != this.curruntStateLower) {
+        this.handleOnChangeSearchLower(this.lower);
+        this.curruntStateLower = this.lower;
+      }
     },
     handleDropUpper() {
-      this.handleOnChangeSearchUpper(this.upper);
+      if (this.upper != this.curruntStateUpper) {
+        this.handleOnChangeSearchUpper(this.upper);
+        this.curruntStateUpper = this.upper;
+      }
     },
-    handleShowSpanLower(){
+    handleShowSpanLower() {
       this.showSpanLower = true;
     },
-    handleShowSpanUpper(){
+    handleShowSpanUpper() {
       this.showSpanUpper = true;
     },
-    handleHideSpanLower(){
+    handleHideSpanLower() {
       this.showSpanLower = false;
     },
-    handleHideSpanUpper(){
+    handleHideSpanUpper() {
       this.showSpanUpper = false;
-    }
+    },
   },
 };
 </script>

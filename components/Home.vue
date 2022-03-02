@@ -69,11 +69,11 @@
             }"
           ></div>
           <div
-            v-if="media.title.english"
+            v-if="media.title.romaji"
             v-bind:id="media.id"
             class="custom-font text-center pb-2 lg:pb-0"
           >
-            {{ media.title.english }}
+            {{ media.title.romaji }}
           </div>
           <div v-else v-bind:id="media.id" class="custom-font text-center">
             Blank Title
@@ -100,10 +100,10 @@
           >
             <div class="px-6 py-4 h-48">
               <div
-                v-if="media.title.english"
+                v-if="media.title.romaji"
                 class="font-bold text-xl max-h-32 pb-2"
               >
-                {{ media.title.english }}
+                {{ media.title.romaji }}
               </div>
               <div v-else class="font-bold text-xl max-h-32 pb-2">
                 Blank Title
@@ -583,7 +583,7 @@ const query = gql`
         }
         id
         title {
-          english
+          romaji
         }
         description
         coverImage {
@@ -754,7 +754,7 @@ export default {
             this.searchDurationGreater != 0 || this.searchDurationLesser != 170
               ? this.searchDurationLesser
               : null,
-          searchIsAdult: this.searchIsAdult,
+          searchIsAdult: (this.searchIsAdult)? null : false,
           searchAverageScoreGreater: (this.searchAverageScoreGreater)? this.searchAverageScoreGreater : null,
         };
         Object.keys(vars).forEach((key) => {
@@ -770,7 +770,6 @@ export default {
           }
         });
         console.log(vars);
-        console.log(this.currentDataFlow);
         return vars;
       },
     },

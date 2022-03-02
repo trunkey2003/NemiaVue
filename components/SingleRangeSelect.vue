@@ -30,7 +30,7 @@
   </span>
 </template>
 
-<style>
+<style scoped>
 input[type="range"] {
   box-sizing: border-box;
   appearance: none;
@@ -77,7 +77,7 @@ input[type="range"]::-webkit-slider-thumb::before {
 }
 .multi-range {
   position: relative;
-  height: 50px;
+  height: 30px;
 }
 .multi-range input[type="range"] {
   position: absolute;

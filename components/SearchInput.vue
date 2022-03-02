@@ -97,6 +97,7 @@
           'ONE_SHOT',
         ]"
         :handleSelectOnChange="handleOnChangeSearchFormat"
+        :handleOnRender="handleOnRenderUnderScore"
       />
       <custom-select
         :width="`min-w-custom-18`"
@@ -111,6 +112,7 @@
           'HIATUS',
         ]"
         :handleSelectOnChange="handleOnChangeSearchStatus"
+        :handleOnRender="handleOnRenderUnderScore"
       />
       <!-- Advanced filter -->
       <div class="h-10 bg-gray-300 w-10 mt-[1.78rem] rounded relative">
@@ -125,7 +127,15 @@
           "
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
-          @click="() => (classFilter = classFilter == 'hidden' ? '' : 'hidden')"
+          @click="
+            () => {
+              classFilter = classFilter == 'hidden' ? '' : 'hidden';
+              if (classFilter == 'hidden') {
+                advancedFilterIsShowing = false;
+                classAdvancedFilter = 'hidden';
+              }
+            }
+          "
         >
           <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
           <path
@@ -143,7 +153,7 @@
             bg-white
             z-40
             rounded
-            custom-fade
+            advanced-filter-fade
             p-3
             `"
         >
@@ -348,7 +358,9 @@
                 () => {
                   advancedFilterIsShowing = !advancedFilterIsShowing;
                   classAdvancedFilter =
-                    classAdvancedFilter == 'hidden' ? 'h-[96rem]' : 'hidden';
+                    classAdvancedFilter == 'hidden'
+                      ? 'min-h-[16rem] w-full'
+                      : 'hidden';
                 }
               "
             >
@@ -377,9 +389,9 @@
               Advanced Genres & Tag Filters
             </button>
           </div>
-          <div class="flex p-3 max-h-[24rem] overflow-auto">
+          <div class="flex p-3 max-h-[24rem] overflow-auto w-full">
             <div v-bind:class="`${classAdvancedFilter}`">
-              <div class="flex">
+              <div class="flex w-full">
                 <!-- Score filter -->
                 <div class="w-[30%]">
                   <div class="font-bold py-2">Minimum Average Score</div>
@@ -391,7 +403,7 @@
                 </div>
 
                 <!-- Filter advanced tags input -->
-                <div class="w-[20%]">
+                <div class="w-[30%]">
                   <div class="relative">
                     <div
                       class="
@@ -430,6 +442,7 @@
                         p-2.5
                       "
                       placeholder="Filter Tags"
+                      v-model="tagsFilter"
                     />
                   </div>
                 </div>
@@ -439,7 +452,7 @@
                 <advanced-tags
                   v-for="category in tagsCategory"
                   v-bind:key="category"
-                  :MediaTagCollection="MediaTagCollection"
+                  :MediaTagCollection="mediaTags"
                   :category="category"
                   :handleSelectOnChange="handleOnChangeSearchMediaTag"
                 />
@@ -660,8 +673,10 @@
           text-red-100
           bg-blue-600
           rounded-full
+          capitalize
         "
-        >{{ handleOnRenderUnderScore(searchStatus)}}<svg
+        >{{ handleOnRenderUnderScore(searchStatus)
+        }}<svg
           @click="() => handleOnChangeSearchStatus('Any')"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -775,20 +790,20 @@
   background: #c9e8ff;
 }
 
-label{
+label {
   position: relative;
   width: 80px;
   height: 40px;
   cursor: pointer;
 }
 
-label input{
+label input {
   position: relative;
   z-index: 1;
   appearance: none;
 }
 
-label span{
+label span {
   position: absolute;
   top: 0;
   left: 0;
@@ -800,16 +815,16 @@ label span{
   box-shadow: 0 7.5px 12.5px #05be0566;
 }
 
-label span:hover{
+label span:hover {
   background: #0f570f;
 }
 
-label input:checked ~ span{
+label input:checked ~ span {
   background: #fe0000;
   box-shadow: 0 7.5px 12.5px #fe000066;
 }
 
-label span i{
+label span i {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -820,12 +835,12 @@ label span i{
   transition: 0.5s;
 }
 
-label input:checked ~ span i{
+label input:checked ~ span i {
   left: 42px;
 }
 
-label span i::before{
-  content: '';
+label span i::before {
+  content: "";
   position: absolute;
   top: 11px;
   left: 6px;
@@ -837,17 +852,17 @@ label span i::before{
   transition: 0.5s;
 }
 
-label input:checked ~ span i::before{
+label input:checked ~ span i::before {
   background: #fe0000;
   box-shadow: 17.5px 0 0 #fe0000;
 }
 
-label input:checked:hover ~ span{
+label input:checked:hover ~ span {
   background: #550505;
 }
 
-label span i::after{
-  content: '';
+label span i::after {
+  content: "";
   position: absolute;
   bottom: 6px;
   left: calc(50% - 7.5px);
@@ -859,7 +874,7 @@ label span i::after{
   transition: 0.5s;
 }
 
-label input:checked ~ span i::after{
+label input:checked ~ span i::after {
   bottom: 7.5px;
   height: 3px;
   border-radius: 0;
@@ -921,6 +936,8 @@ export default {
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
       tagsCategory: [],
+      mediaTags: [],
+      tagsFilter: "",
     };
   },
   methods: {
@@ -1025,7 +1042,6 @@ export default {
       );
       this.searchAverageScoreGreater = searchAverageScoreGreater;
     },
-
     // Handle On Render
     handleOnRenderSearchCountryOfOrigin(searchCountryOfOrigin) {
       switch (searchCountryOfOrigin) {
@@ -1042,14 +1058,34 @@ export default {
       }
     },
     handleOnRenderUnderScore(tag) {
-      return tag.replace("_", " ");
+      tag = tag.replace("_", " ");
+      tag = tag.replace("_", " ");
+      tag = tag.toLowerCase();
+      tag = tag.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+      tag = tag.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+      tag = tag.replace("Tv", "TV");
+      return tag;
     },
   },
 
   mounted() {
+    this.mediaTags = this.MediaTagCollection.filter(({ name }) =>
+      name.includes(this.tagsFilter)
+    );
     this.tagsCategory = [
-      ...new Set(this.MediaTagCollection.map((index) => index.category)),
+      ...new Set(this.mediaTags.map((index) => index.category)),
     ];
+  },
+
+  watch: {
+    tagsFilter(newTagsFilter) {
+      this.mediaTags = this.MediaTagCollection.filter(({ name }) =>
+        name.toLowerCase().replace(" ", "").includes(newTagsFilter.toLowerCase().replace(" ", ""))
+      );
+      this.tagsCategory = [
+        ...new Set(this.mediaTags.map((index) => index.category)),
+      ];
+    },
   },
   apollo: {
     GenreCollection: {
