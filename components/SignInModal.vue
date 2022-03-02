@@ -113,7 +113,7 @@
                   class="form-check-input"
                   id="exampleCheck1"
                 />
-                <label class="form-check-label" for="exampleCheck1"
+                <label class="form-check-label w-full" for="exampleCheck1"
                   >Remember me</label
                 >
               </div>
