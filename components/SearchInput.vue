@@ -359,7 +359,7 @@
                   advancedFilterIsShowing = !advancedFilterIsShowing;
                   classAdvancedFilter =
                     classAdvancedFilter == 'hidden'
-                      ? 'min-h-[16rem] w-full'
+                      ? 'min-h-[16rem] w-full overflow-y-auto'
                       : 'hidden';
                 }
               "
@@ -389,7 +389,7 @@
               Advanced Genres & Tag Filters
             </button>
           </div>
-          <div class="flex p-3 max-h-[24rem] overflow-auto w-full">
+          <div class="flex p-3 max-h-[24rem] w-full">
             <div v-bind:class="`${classAdvancedFilter}`">
               <div class="flex w-full">
                 <!-- Score filter -->
@@ -448,7 +448,7 @@
                 </div>
               </div>
               <!-- Advanced tags -->
-              <div>
+              <div class="">
                 <advanced-tags
                   v-for="category in tagsCategory"
                   v-bind:key="category"
@@ -881,6 +881,7 @@ label input:checked ~ span i::after {
   /* border-radius: 6px; */
   background: #fe0000;
 }
+
 </style>
 
 <script>
@@ -899,6 +900,7 @@ const MediaTagCollection = gql`
     MediaTagCollection {
       name
       category
+      description
     }
   }
 `;
