@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="custom-background">
     <div
       class="
         container
@@ -8,7 +8,6 @@
         flex
         justify-center
         items-center
-        custom-background
       "
     >
       <input
@@ -20,9 +19,9 @@
         class="
           w-1/2
           py-2
-          border-b-2 border-yellow-400
+          border-b-2 border-cyan-400
           outline-none
-          focus:border-green-400
+          focus:border-purple-400
           opacity-50
         "
       />
@@ -30,7 +29,7 @@
         :href="`?search=${search}&searchGenre=${searchGenre}&searchMediaTag=${searchMediaTag}&searchYear=${searchYear}&searchFormat=${searchFormat}&searchStatus=${searchStatus}`"
         ><svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 mx-2 text-yellow-600"
+          class="w-6 h-6 mx-2 text-cyan-600"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -861,6 +860,9 @@ label input:checked ~ span i::after {
   /* border-radius: 6px; */
   background: #fe0000;
 }
+.custom-background{
+  background: url('https://wallpaperaccess.com/full/1761712.jpg');
+}
 </style>
 
 <script>
@@ -1116,11 +1118,9 @@ export default {
   apollo: {
     GenreCollection: {
       query: GenreCollection,
-      prefetch: true,
     },
     MediaTagCollection: {
       query: MediaTagCollection,
-      prefetch: true,
     },
   },
 };

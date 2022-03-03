@@ -307,8 +307,9 @@
               leading-normal
             "
           >
-            <div class="max-h-full">
+            <div class="max-h-full" v-if="Media.characters.edges[index].voiceActors[0]">
               <h2
+               
                 class="text-gray-900 font-bold text-lg"
               >
                 {{
@@ -317,7 +318,6 @@
               </h2>
               <p class="text-center text-sm text-gray-600 my-2">
                 {{
-                  Media.characters.edges[index].voiceActors &&
                   Media.characters.edges[index].voiceActors[0].language
                 }}
               </p>
@@ -335,10 +335,11 @@
               text-center
               overflow-hidden
             "
+            v-if="Media.characters.edges[index].voiceActors[0]"
             v-bind:style="{
               backgroundImage:
                 'url(' +
-                (Media.characters.edges[index].voiceActors &&
+                (Media.characters.edges[index].voiceActors[0] &&
                   Media.characters.edges[index].voiceActors[0].image.large) +
                 ')',
             }"
@@ -480,6 +481,11 @@ const query = gql`
 `;
 
 export default {
+  data(){
+    return{
+      pageIsLoading: true,
+    }
+  },
   apollo: {
     Media: {
       query: query,
@@ -490,5 +496,8 @@ export default {
       },
     },
   },
+  mounted(){
+    this.pageIsLoading = false; 
+  }
 };
 </script>

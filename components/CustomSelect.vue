@@ -1,6 +1,6 @@
 <template>
     <div v-bind:class="`mt-1 relative ${width} mx-2 select z-40`">
-        <h1 class="text-white py-1 text-sm lg:text-md">{{searchTitle}}</h1>
+        <h1 class="text-white py-1 text-sm lg:text-md font-bold">{{searchTitle}}</h1>
         <button
           v-bind:id="searchTitle"
           type="button"
@@ -9,7 +9,6 @@
             h-10
             w-full
             bg-white
-            opacity-80
             border border-gray-300
             rounded-md
             shadow-sm
@@ -75,7 +74,7 @@
             z-10
             w-full
             bg-white
-            opacity-80
+            opacity-90
             shadow-lg
             max-h-56
             rounded-md

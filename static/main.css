@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background: url('https://static.vecteezy.com/system/resources/previews/003/211/055/original/space-seamless-pattern-for-textile-prints-and-repeat-background-vector.jpg');
-}
 .custom-button{
     background-color: black;
     color: white;
@@ -219,7 +216,7 @@ ul {
 }
 
 .custom-select-fade {
-  animation: custom-select-fade 0.7s ease;
+  animation: custom-select-fade 0.4s ease;
 }
 
 .tag-spans{
@@ -228,7 +225,7 @@ ul {
 
 @keyframes custom-select-fade {
   from { opacity: 0; height: 0; }
-  to { opacity: 0.8; height: 14rem;}
+  to { opacity: 0.9; height: 14rem;}
 }
 
 @keyframes advanced-filter-fade {
@@ -241,7 +238,7 @@ ul {
   to { opacity: 1;}
 }
 .advanced-filter-fade {
-  animation: advanced-filter-fade 0.7s ease;
+  animation: advanced-filter-fade 0.4s ease;
 }
 
 

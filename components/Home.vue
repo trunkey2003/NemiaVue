@@ -24,16 +24,9 @@
     />
     <div
       id="home"
-      class="
-        container
-        mx-auto
-        w-full
-        min-h-screen
-        bg-gray-100 bg-opacity-80
-        rounded-t-2xl
-      "
+      class="w-full min-h-screen bg-gray-900 bg-opacity-80"
       v-if="
-        (search != 'Any' && search != null) ||
+        (search != '' && search != null) ||
         (searchGenre != 'Any' && searchGenre != null) ||
         (searchMediaTag != 'Any' && searchMediaTag != null) ||
         (searchYear != 'Any' && searchYear != null) ||
@@ -52,7 +45,10 @@
         searchIsAdult
       "
     >
-      <div v-if="medias.length || dataLoading" class="flex flex-wrap p-10">
+      <div
+        v-if="medias.length || dataLoading"
+        class="flex flex-wrap py-10 px-72"
+      >
         <a
           :href="`media/${media.id}`"
           v-for="media in medias"
@@ -70,111 +66,15 @@
           "
           class="
             cursor-pointer
-            md:max-w-[100%]
-            lg:max-w-[15%] lg:mx-[0.8%] lg:my-3
+            lg:mx-[0.8%] lg:my-3
             rounded
-            w-full
+            w-[15%]
             relative
             hover:no-underline
           "
         >
-          <!-- v-bind:src="media.coverImage.large"
-            v-bind:alt="media.title.english">  -->
-          <div
-            class="h-80 hover:opacity-80 thumbnail bg-no-repeat bg-center"
-            v-bind:id="media.id"
-            v-bind:style="{
-              backgroundImage: 'url(' + media.coverImage.large + ')',
-            }"
-          ></div>
-          <div
-            v-if="media.title.romaji"
-            v-bind:id="media.id"
-            class="custom-font text-center pb-2 lg:pb-0"
-          >
-            {{ media.title.romaji }}
-          </div>
-          <div v-else v-bind:id="media.id" class="custom-font text-center">
-            Blank Title
-          </div>
-
-          <!-- box -->
-          <div
-            v-bind:id="'box-' + media.id"
-            class="
-              absolute
-              w-80
-              top-0
-              left-[105%]
-              z-30
-              py-2
-              px-2
-              bg-white
-              shadow-lg
-              rounded-lg
-              hidden
-              box
-              h-80
-            "
-          >
-            <div class="px-6 py-4 h-48">
-              <div
-                v-if="media.title.romaji"
-                class="font-bold text-xl max-h-32 pb-2"
-              >
-                {{ media.title.romaji }}
-              </div>
-              <div v-else class="font-bold text-xl max-h-32 pb-2">
-                Blank Title
-              </div>
-              <div class="media-info text-gray-800 font-bold flex h-8">
-                <svg
-                  class="heart mr-2"
-                  viewBox="0 0 32 29.6"
-                  width="20"
-                  height="20"
-                >
-                  <path
-                    d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"
-                  />
-                </svg>
-                {{ media.averageScore }}%
-              </div>
-              <div class="media-info h-8">
-                {{ media.format }} • {{ media.episodes }} Episodes •
-                {{
-                  media.startDate
-                    ? media.startDate.year
-                    : media.seasonYear
-                    ? media.seasonYear
-                    : "NaN"
-                }}
-              </div>
-            </div>
-            <div class="px-6 pt-2 pb-2 h-32">
-              <span
-                class="
-                  mt-2
-                  mx-2
-                  inline-flex
-                  items-center
-                  justify-center
-                  px-2
-                  py-1
-                  text-xs
-                  font-bold
-                  leading-none
-                  text-red-100
-                  bg-blue-600
-                  rounded-full
-                "
-                v-for="genre in media.genres"
-                v-bind:key="genre"
-                >#{{ genre }}</span
-              >
-            </div>
-          </div>
+          <media-container :media="media" />
+          <media-detail-box :media="media" />
         </a>
         <div
           v-for="index in (1, 6)"
@@ -547,24 +447,50 @@
 
       <!-- <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div> -->
     </div>
-    <div
-      v-else
-      class="
-        container
-        mx-auto
-        w-full
-        min-h-screen
-        bg-gray-100 bg-opacity-80
-        rounded-t-2xl
-      "
-    ></div>
+    <div v-else class="mx-auto w-full min-h-screen bg-gray-900 bg-opacity-80">
+      <div class="px-72 pt-10 flex w-full">
+        <div class="font-bold text-white text-lg">TRENDING NOW</div>
+        <div class="font-bold text-gray-400 text-sm ml-auto leading-6">View All</div>
+      </div>
+      <div class="flex flex-wrap py-2 px-72">
+        <a
+          :href="`media/${media.id}`"
+          v-for="media in trendingNow"
+          :key="media.id"
+          v-bind:id="media.id"
+          @mouseover="
+            (e) => {
+              handleMouseOver(e);
+            }
+          "
+          @mouseleave="
+            (e) => {
+              handleMouseLeave(e);
+            }
+          "
+          class="
+            cursor-pointer
+            lg:mx-[0.8%] lg:my-3
+            rounded
+            w-[15%]
+            relative
+            hover:no-underline
+          "
+        >
+          <media-container :media="media" />
+          <media-detail-box :media="media" />
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import gql from "graphql-tag";
+import MediaContainer from "./MediaContainer.vue";
+import MediaDetailBox from "./MediaDetailBox.vue";
 
-const query = gql`
+const Page = gql`
   query Page(
     $page: Int
     $perPage: Int
@@ -606,7 +532,6 @@ const query = gql`
         isAdult: $searchIsAdult
         averageScore_greater: $searchAverageScoreGreater
       ) {
-        isAdult
         seasonYear
         startDate {
           year
@@ -615,7 +540,6 @@ const query = gql`
         title {
           romaji
         }
-        description
         coverImage {
           large
         }
@@ -630,8 +554,35 @@ const query = gql`
     }
   }
 `;
-
+const TrendingNow = gql`
+  query Page($searchTrendingNow: [MediaSort]) {
+    Page(page: 1, perPage: 6) {
+      media(sort: $searchTrendingNow) {
+        seasonYear
+        startDate {
+          year
+        }
+        trending
+        id
+        title {
+          romaji
+        }
+        coverImage {
+          large
+        }
+        genres
+        tags {
+          name
+        }
+        format
+        episodes
+        averageScore
+      }
+    }
+  }
+`;
 export default {
+  components: { MediaContainer, MediaDetailBox },
   data() {
     const vars = {
       user: null,
@@ -660,6 +611,8 @@ export default {
       searchDurationLesser: null,
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
+      trendingNow: [],
+      allMedia: [],
     };
     return vars;
   },
@@ -671,7 +624,7 @@ export default {
       }
       if (
         !(
-          (this.search != "Any" && this.search != null) ||
+          (this.search != "" && this.search != null) ||
           (this.searchGenre != "Any" && this.searchGenre != null) ||
           (this.searchMediaTag != "Any" && this.searchMediaTag != null) ||
           (this.searchYear != "Any" && this.searchYear != null) ||
@@ -708,15 +661,15 @@ export default {
       ) {
         if (!this.dataLoading) this.page = this.page + 1;
         this.dataLoading = true;
-        if (!this.Page.media.length) {
+        if (!this.allMedia.media.length) {
           this.page = this.page - 1;
           this.stopFetchingNewData = true;
           this.dataLoading = false;
           return;
         }
         setTimeout(() => {
-          if (this.medias != this.Page.media && !this.stopFetchingNewData) {
-            this.medias = this.medias.concat(this.Page.media);
+          if (this.medias != this.allMedia.media && !this.stopFetchingNewData) {
+            this.medias = this.medias.concat(this.allMedia.media);
             this.count += 20;
             this.dataLoading = false;
           }
@@ -746,7 +699,7 @@ export default {
       this.medias = [];
       setTimeout(() => {
         if (dataFlow < this.currentDataFlow) return;
-        this.medias = this.Page.media;
+        this.medias = this.allMedia.media;
         this.dataLoading = false;
         this.stopFetchingNewData = false;
       }, 2000);
@@ -760,7 +713,8 @@ export default {
   },
 
   mounted() {
-    this.medias = this.Page.media;
+    this.medias = this.allMedia.media;
+    console.log(this.trendingNow);
     this.$axios
       .get("https://me-musicplayer.herokuapp.com/api/user/trunkey", {
         withCredentials: true,
@@ -773,8 +727,8 @@ export default {
   },
 
   apollo: {
-    Page: {
-      query: query,
+    allMedia: {
+      query: Page,
       variables() {
         const vars = {
           page: this.page,
@@ -837,6 +791,16 @@ export default {
         console.log(vars);
         return vars;
       },
+      update: (data) => data.Page,
+    },
+    trendingNow: {
+      query: TrendingNow,
+      variables() {
+        return {
+          searchTrendingNow: "TRENDING_DESC",
+        };
+      },
+      update: (data) => data.Page.media,
     },
   },
 };
