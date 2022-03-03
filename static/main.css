@@ -10,6 +10,30 @@ body{
     color: white;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff00;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3db4f2b3;
+  border-radius: 2rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1c5370b3;
+}
+
+::-webkit-scrollbar:hover {
+  background: #c9e8ff;
+}
+
 .custom-font-cursive{
     font-family: cursive;
 }

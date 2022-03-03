@@ -770,29 +770,6 @@
 
 <style scoped>
 /* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #ffffff00;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #3db4f2b3;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #1c5370b3;
-}
-
-::-webkit-scrollbar:hover {
-  background: #c9e8ff;
-}
-
 label {
   position: relative;
   width: 80px;
