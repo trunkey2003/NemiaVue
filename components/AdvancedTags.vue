@@ -20,9 +20,10 @@
         "
         @click="handleOnClickSpan"
         @mouseenter="(e) => handleShowSpan(e)"
-        @mouseleave="() => showSpan = 0"
+        @mouseout="() => showSpan = 0"
+        @mousewheel="() => showSpan = 0"
       >
-        <div v-bind:id="`tag-${mediaTag.name}`" class="fixed h-[120px] w-[250px] bg-black text-white z-40 text-left p-2 rounded tag-spans" v-bind:style="{top: spanPositionTop + 'px', left: spanPositionLeft + 'px'}" v-show="mediaTag.description && showSpan == mediaTag.name">{{mediaTag.description}}</div>
+        <div v-bind:id="`tag-${mediaTag.name}`" class="fixed h-[120px] w-[250px] bg-black text-white z-40 text-left p-2 rounded tag-spans pointer-events-none" v-bind:style="{top: spanPositionTop + 'px', left: spanPositionLeft + 'px'}" v-show="mediaTag.description && showSpan == mediaTag.name">{{mediaTag.description}}</div>
         {{ mediaTag.name }}
       </button>
     </div>

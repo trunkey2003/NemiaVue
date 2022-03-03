@@ -140,7 +140,6 @@ export default {
             } else {
                 this.classActive = "";
             }
-            console.log(this.handleOnRender);
         },
         handleOptionOnClick(e){
             this.handleSelectOnChange(e.target.id);

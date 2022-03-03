@@ -1080,7 +1080,7 @@ export default {
       const className = "advanced-filter-box";
       //find parrent 
       if (
-        ((e.target.parentNode?.classList?.contains(className) ||
+        e.target.parentNode?.classList?.contains(className) ||
         e.target.parentNode?.parentNode?.classList?.contains(className) ||
         e.target.parentNode?.parentNode?.parentNode?.classList?.contains(
           className
@@ -1095,7 +1095,9 @@ export default {
         className
         ) || 
         e.target.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.classList?.contains(
-        className)))
+        className) ||
+        e.target.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.classList?.contains(
+        className)
       ) return;
 
       this.classFilter = 'hidden';

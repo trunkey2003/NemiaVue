@@ -32,6 +32,25 @@
         bg-gray-100 bg-opacity-80
         rounded-t-2xl
       "
+      v-if="
+        (search != 'Any' && search != null) ||
+        (searchGenre != 'Any' && searchGenre != null) ||
+        (searchMediaTag != 'Any' && searchMediaTag != null) ||
+        (searchYear != 'Any' && searchYear != null) ||
+        (searchFormat != 'Any' && searchFormat != null) ||
+        (searchStatus != 'Any' && searchStatus != null) ||
+        (searchSort != 'Any' && searchSort != null) ||
+        (searchCountryOfOrigin != 'Any' && searchCountryOfOrigin != null) ||
+        (searchSource != 'Any' && searchSource != null) ||
+        (searchStartDateGreater != 1970 && searchStartDateGreater != null) ||
+        (searchStartDateLesser != 2023 && searchStartDateLesser != null) ||
+        (searchEpisodesGreater != 0 && searchEpisodesGreater != null) ||
+        (searchEpisodesLesser != 150 && searchEpisodesLesser != null) ||
+        (searchDurationGreater != 0 && searchDurationGreater != null) ||
+        (searchDurationLesser != 170 && searchDurationLesser != null) ||
+        searchAverageScoreGreater != 0 ||
+        searchIsAdult
+      "
     >
       <div v-if="medias.length || dataLoading" class="flex flex-wrap p-10">
         <a
@@ -528,6 +547,17 @@
 
       <!-- <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div> -->
     </div>
+    <div
+      v-else
+      class="
+        container
+        mx-auto
+        w-full
+        min-h-screen
+        bg-gray-100 bg-opacity-80
+        rounded-t-2xl
+      "
+    ></div>
   </div>
 </template>
 
@@ -571,14 +601,14 @@ const query = gql`
         startDate_lesser: $searchStartDateLesser
         episodes_greater: $searchEpisodesGreater
         episodes_lesser: $searchEpisodesLesser
-        duration_greater:$searchDurationGreater
+        duration_greater: $searchDurationGreater
         duration_lesser: $searchDurationLesser
         isAdult: $searchIsAdult
         averageScore_greater: $searchAverageScoreGreater
       ) {
         isAdult
         seasonYear
-        startDate{
+        startDate {
           year
         }
         id
@@ -601,7 +631,6 @@ const query = gql`
   }
 `;
 
-
 export default {
   data() {
     const vars = {
@@ -621,14 +650,14 @@ export default {
       searchFormat: this.$route.query.searchFormat,
       searchStatus: this.$route.query.searchStatus,
       searchSort: null,
-      searchCountryOfOrigin: "Any",
-      searchSource: "Any",
-      searchStartDateGreater: 1970,
-      searchStartDateLesser: 2023,
-      searchEpisodesGreater: 0,
-      searchEpisodesLesser: 150,
-      searchDurationGreater: 0,
-      searchDurationLesser: 170,
+      searchCountryOfOrigin: null,
+      searchSource: null,
+      searchStartDateGreater: null,
+      searchStartDateLesser: null,
+      searchEpisodesGreater: null,
+      searchEpisodesLesser: null,
+      searchDurationGreater: null,
+      searchDurationLesser: null,
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
     };
@@ -637,10 +666,41 @@ export default {
 
   methods: {
     handleScroll() {
-      var home = document.getElementById("home");
       if (this.stopFetchingNewData) {
         return;
       }
+      if (
+        !(
+          (this.search != "Any" && this.search != null) ||
+          (this.searchGenre != "Any" && this.searchGenre != null) ||
+          (this.searchMediaTag != "Any" && this.searchMediaTag != null) ||
+          (this.searchYear != "Any" && this.searchYear != null) ||
+          (this.searchFormat != "Any" && this.searchFormat != null) ||
+          (this.searchStatus != "Any" && this.searchStatus != null) ||
+          (this.searchSort != "Any" && this.searchSort != null) ||
+          (this.searchCountryOfOrigin != "Any" &&
+            this.searchCountryOfOrigin != null) ||
+          (this.searchSource != "Any" && this.searchSource != null) ||
+          (this.searchStartDateGreater != 1970 &&
+            this.searchStartDateGreater != null) ||
+          (this.searchStartDateLesser != 2023 &&
+            this.searchStartDateLesser != null) ||
+          (this.searchEpisodesGreater != 0 &&
+            this.searchEpisodesGreater != null) ||
+          (this.searchEpisodesLesser != 150 &&
+            this.searchEpisodesLesser != null) ||
+          (this.searchDurationGreater != 0 &&
+            this.searchDurationGreater != null) ||
+          (this.searchDurationLesser != 170 &&
+            this.searchDurationLesser != null) ||
+          this.searchAverageScoreGreater != 0 ||
+          this.searchIsAdult
+        )
+      )
+        return;
+
+      //warn : this line ran even return;
+      var home = document.getElementById("home");
       if (
         window.scrollY + 1000 >= home.scrollHeight &&
         this.medias.length <= this.count &&
@@ -729,13 +789,15 @@ export default {
           searchCountryOfOrigin: this.searchCountryOfOrigin,
           searchSource: this.searchSource,
           searchStartDateGreater:
-            this.searchStartDateGreater != 1970 ||
-            this.searchStartDateLesser != 2023
+            (this.searchStartDateGreater != 1970 ||
+              this.searchStartDateLesser != 2023) &&
+            this.searchStartDateGreater != null
               ? this.searchStartDateGreater * 10000
               : null, //FuzzyDateInt Format
           searchStartDateLesser:
-            this.searchStartDateGreater != 1970 ||
-            this.searchStartDateLesser != 2023
+            (this.searchStartDateGreater != 1970 ||
+              this.searchStartDateLesser != 2023) &&
+            this.searchStartDateLesser != null
               ? this.searchStartDateLesser * 10000
               : null, //FuzzyDateInt Format
           searchEpisodesGreater:
@@ -754,8 +816,11 @@ export default {
             this.searchDurationGreater != 0 || this.searchDurationLesser != 170
               ? this.searchDurationLesser
               : null,
-          searchIsAdult: (this.searchIsAdult)? null : false,
-          searchAverageScoreGreater: (this.searchAverageScoreGreater)? this.searchAverageScoreGreater : null,
+          searchIsAdult: this.searchIsAdult ? null : false,
+          searchAverageScoreGreater:
+            this.searchAverageScoreGreater != 0
+              ? this.searchAverageScoreGreater
+              : null,
         };
         Object.keys(vars).forEach((key) => {
           if (
