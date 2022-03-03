@@ -115,13 +115,15 @@
         :handleOnRender="handleOnRenderUnderScore"
       />
       <!-- Advanced filter -->
-      <div class="h-10 bg-gray-300 w-10 mt-[1.78rem] rounded relative">
+      <div class="mt-[1.78rem] relative advanced-filter-box">
         <svg
+          id="advancedFilterButton"
           class="
-            h-7
-            w-7
-            mx-auto
-            mt-[0.4rem]
+            p-1
+            h-10
+            w-10
+            rounded
+            bg-gray-300
             fill-gray-700
             hover:fill-gray-900 hover:cursor-pointer
           "
@@ -139,6 +141,7 @@
         >
           <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
           <path
+            class="pointer-events-none"
             d="M496 384H160v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h80v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h336c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160h-80v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h336v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h80c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160H288V48c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16C7.2 64 0 71.2 0 80v32c0 8.8 7.2 16 16 16h208v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h208c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16z"
           />
         </svg>
@@ -881,7 +884,6 @@ label input:checked ~ span i::after {
   /* border-radius: 6px; */
   background: #fe0000;
 }
-
 </style>
 
 <script>
@@ -1063,11 +1065,47 @@ export default {
       tag = tag.replace("_", " ");
       tag = tag.replace("_", " ");
       tag = tag.toLowerCase();
-      tag = tag.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
-      tag = tag.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+      tag = tag.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+        letter.toUpperCase()
+      );
+      tag = tag.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+        letter.toUpperCase()
+      );
       tag = tag.replace("Tv", "TV");
       return tag;
     },
+
+    //handle click out
+    handleClickOutAdvancedFilter(e) {
+      const className = "advanced-filter-box";
+      //find parrent 
+      if (
+        ((e.target.parentNode?.classList?.contains(className) ||
+        e.target.parentNode?.parentNode?.classList?.contains(className) ||
+        e.target.parentNode?.parentNode?.parentNode?.classList?.contains(
+          className
+        ) ||
+        e.target.parentNode?.parentNode?.parentNode?.parentNode?.classList?.contains(
+          className
+        ) ||
+        e.target.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.classList?.contains(
+          className
+        ) || 
+        e.target.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.classList?.contains(
+        className
+        ) || 
+        e.target.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.parentNode?.classList?.contains(
+        className)))
+      ) return;
+
+      this.classFilter = 'hidden';
+      this.classAdvancedFilter = 'hidden';
+      this.advancedFilterIsShowing = false;
+    },
+  },
+
+  beforeMount() {
+    window.addEventListener("click", this.handleClickOutAdvancedFilter);
   },
 
   mounted() {
@@ -1079,10 +1117,17 @@ export default {
     ];
   },
 
+  beforeDestroy() {
+    window.removeEventListener("click", this.handleClickOutAdvancedFilter);
+  },
+
   watch: {
     tagsFilter(newTagsFilter) {
       this.mediaTags = this.MediaTagCollection.filter(({ name }) =>
-        name.toLowerCase().replace(" ", "").includes(newTagsFilter.toLowerCase().replace(" ", ""))
+        name
+          .toLowerCase()
+          .replace(" ", "")
+          .includes(newTagsFilter.toLowerCase().replace(" ", ""))
       );
       this.tagsCategory = [
         ...new Set(this.mediaTags.map((index) => index.category)),

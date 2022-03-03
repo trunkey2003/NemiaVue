@@ -57,7 +57,6 @@ export default {
     },
     handleShowSpan(e){
       const rect = e.target.getBoundingClientRect();
-      console.log(document.getElementById(`tag-${e.target.value}`).offsetHeight);
       this.spanPositionLeft = rect.left;
       this.spanPositionTop = rect.top - 125;
       this.showSpan = e.target.value;
