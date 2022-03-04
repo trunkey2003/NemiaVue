@@ -547,7 +547,7 @@
             "
             class="
               cursor-pointer
-              lg:mx-[0.8%] lg:my-3
+              lg:mx-[0.8%] lg:py-0
               rounded
               w-[15%]
               relative

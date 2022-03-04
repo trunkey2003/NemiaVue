@@ -4,7 +4,7 @@
 
 .custom-button{
     background-color: black;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 ::-webkit-scrollbar {

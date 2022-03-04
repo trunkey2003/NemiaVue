@@ -60,7 +60,6 @@
                 text-gray-700 text-base text-clip
                 overflow-auto
                 max-h-[85%]
-                bg-gray-200
               "
             >
               {{ Media.description }}
@@ -93,9 +92,9 @@
               mt-3
               uppercase
               rounded
-              text-amber-600
-              bg-amber-200
-              hover:bg-amber-300
+              text-[#996515]
+              bg-[#FFDF00]
+              hover:bg-[#D4AF37]
               uppercase
               last:mr-0
               mr-1
@@ -132,9 +131,9 @@
               mt-3
               uppercase
               rounded
-              text-red-600
-              bg-red-200
-              hover:bg-red-300
+              text-[#ef3038]
+              bg-red-300
+              hover:bg-red-400
               uppercase
               last:mr-0
               mr-1

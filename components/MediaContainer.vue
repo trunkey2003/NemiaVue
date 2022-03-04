@@ -18,11 +18,11 @@
     <div
       v-if="media.title.romaji"
       v-bind:id="media.id"
-      class="custom-font text-center pb-2 lg:pb-0"
+      class="custom-font text-center lg:pb-0 min-h-15 max-h-24"
     >
       {{ media.title.romaji }}
     </div>
-    <div v-else v-bind:id="media.id" class="custom-font text-center">
+    <div v-else v-bind:id="media.id" class="custom-font text-center py-2">
       Blank Title
     </div>
   </div>
