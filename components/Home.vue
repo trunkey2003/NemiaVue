@@ -42,7 +42,7 @@
         (searchDurationGreater != 0 && searchDurationGreater != null) ||
         (searchDurationLesser != 170 && searchDurationLesser != null) ||
         searchAverageScoreGreater != 0 ||
-        searchIsAdult
+        searchIsAdult || $route.name == 'index'
       "
     >
       <div
@@ -447,13 +447,121 @@
 
       <!-- <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div> -->
     </div>
+    <div v-else-if="searchSortTrend">
+      <div id="trending-now">
+        <div class="px-72 pt-10 flex w-full">
+          <div class="font-bold text-white text-lg">TRENDING NOW</div>
+        </div>
+        <div class="flex flex-wrap py-2 px-72">
+          <a
+            :href="`media/${media.id}`"
+            v-for="media in medias"
+            :key="media.id"
+            v-bind:id="media.id"
+            @mouseover="
+              (e) => {
+                handleMouseOver(e);
+              }
+            "
+            @mouseleave="
+              (e) => {
+                handleMouseLeave(e);
+              }
+            "
+            class="
+              cursor-pointer
+              lg:mx-[0.8%] lg:my-3
+              rounded
+              w-[15%]
+              relative
+              hover:no-underline
+            "
+          >
+            <media-container :media="media" />
+            <media-detail-box :media="media" />
+          </a>
+        </div>
+      </div>
+      <div
+        v-if="medias.length || dataLoading"
+        class="flex flex-wrap py-10 px-72"
+      >
+        <div
+          v-for="index in (1, 6)"
+          v-bind:key="'loading-' + index"
+          class="
+            hidden
+            lg:block
+            cursor-pointer
+            max-w-[15%]
+            md:max-w-[100%]
+            lg:max-w-[15%] lg:mx-[0.8%] lg:my-3
+            w-full
+          "
+        >
+          <div
+            v-if="dataLoading"
+            class="h-80 hover:opacity-80 bg-gray-600 animate-pulse bg-center"
+          ></div>
+        </div>
+
+        <button
+          v-if="dataLoading"
+          type="button"
+          class="
+            inline-flex
+            lg:hidden
+            items-center
+            mt-3
+            mx-auto
+            px-8
+            py-2
+            font-semibold
+            leading-6
+            text-sm
+            shadow
+            rounded-md
+            text-white
+            bg-blue-400
+            hover:bg-blue-800
+            transition
+            ease-in-out
+            duration-150
+            cursor-not-allowed
+          "
+          disabled=""
+        >
+          <svg
+            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          Processing...
+        </button>
+      </div>
+    </div>
     <div v-else class="mx-auto w-full min-h-screen bg-gray-900 bg-opacity-80">
       <div id="trending-now">
         <div class="px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">TRENDING NOW</div>
-          <div class="font-bold text-gray-400 text-sm ml-auto leading-6">
+          <a class="font-bold text-gray-400 text-sm ml-auto leading-6" href="/trending">
             View All
-          </div>
+          </a>
         </div>
         <div class="flex flex-wrap py-2 px-72">
           <a
@@ -589,6 +697,7 @@ const Page = gql`
     $searchDurationLesser: Int
     $searchIsAdult: Boolean
     $searchAverageScoreGreater: Int
+    $searchSeason: MediaSeason
   ) {
     Page(page: $page, perPage: $perPage) {
       media(
@@ -609,6 +718,7 @@ const Page = gql`
         duration_lesser: $searchDurationLesser
         isAdult: $searchIsAdult
         averageScore_greater: $searchAverageScoreGreater
+        season: $searchSeason
       ) {
         seasonYear
         startDate {
@@ -745,6 +855,7 @@ export default {
       searchDurationLesser: null,
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
+      searchSortTrend: (this.$route.name == 'trending')? "TRENDING_DESC" : null,
     };
     return vars;
   },
@@ -822,6 +933,7 @@ export default {
     },
 
     updateFilterApollo(search, varName) {
+      this.searchSortTrend = null;
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
@@ -851,6 +963,7 @@ export default {
         withCredentials: true,
       })
       .finally(() => (this.pageIsLoading = false));
+    console.log(this.medias);
   },
 
   beforeDestroy() {
@@ -870,7 +983,7 @@ export default {
           searchYear: this.searchYear,
           searchFormat: this.searchFormat,
           searchStatus: this.searchStatus,
-          searchSort: this.searchSort,
+          searchSort: (this.searchSortTrend)? this.searchSortTrend : this.searchSort,
           searchCountryOfOrigin: this.searchCountryOfOrigin,
           searchSource: this.searchSource,
           searchStartDateGreater:
