@@ -448,38 +448,116 @@
       <!-- <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div> -->
     </div>
     <div v-else class="mx-auto w-full min-h-screen bg-gray-900 bg-opacity-80">
-      <div class="px-72 pt-10 flex w-full">
-        <div class="font-bold text-white text-lg">TRENDING NOW</div>
-        <div class="font-bold text-gray-400 text-sm ml-auto leading-6">View All</div>
+      <div id="trending-now">
+        <div class="px-72 pt-10 flex w-full">
+          <div class="font-bold text-white text-lg">TRENDING NOW</div>
+          <div class="font-bold text-gray-400 text-sm ml-auto leading-6">
+            View All
+          </div>
+        </div>
+        <div class="flex flex-wrap py-2 px-72">
+          <a
+            :href="`media/${media.id}`"
+            v-for="media in trendingNow"
+            :key="media.id"
+            v-bind:id="media.id"
+            @mouseover="
+              (e) => {
+                handleMouseOver(e);
+              }
+            "
+            @mouseleave="
+              (e) => {
+                handleMouseLeave(e);
+              }
+            "
+            class="
+              cursor-pointer
+              lg:mx-[0.8%] lg:my-3
+              rounded
+              w-[15%]
+              relative
+              hover:no-underline
+            "
+          >
+            <media-container :media="media" />
+            <media-detail-box :media="media" />
+          </a>
+        </div>
       </div>
-      <div class="flex flex-wrap py-2 px-72">
-        <a
-          :href="`media/${media.id}`"
-          v-for="media in trendingNow"
-          :key="media.id"
-          v-bind:id="media.id"
-          @mouseover="
-            (e) => {
-              handleMouseOver(e);
-            }
-          "
-          @mouseleave="
-            (e) => {
-              handleMouseLeave(e);
-            }
-          "
-          class="
-            cursor-pointer
-            lg:mx-[0.8%] lg:my-3
-            rounded
-            w-[15%]
-            relative
-            hover:no-underline
-          "
-        >
-          <media-container :media="media" />
-          <media-detail-box :media="media" />
-        </a>
+      <div id="popular-this-season">
+        <div class="px-72 pt-10 flex w-full">
+          <div class="font-bold text-white text-lg">POPULAR THIS SEASON</div>
+          <div class="font-bold text-gray-400 text-sm ml-auto leading-6">
+            View All
+          </div>
+        </div>
+        <div class="flex flex-wrap py-2 px-72">
+          <a
+            :href="`media/${media.id}`"
+            v-for="media in popularThisSeason"
+            :key="media.id"
+            v-bind:id="media.id"
+            @mouseover="
+              (e) => {
+                handleMouseOver(e);
+              }
+            "
+            @mouseleave="
+              (e) => {
+                handleMouseLeave(e);
+              }
+            "
+            class="
+              cursor-pointer
+              lg:mx-[0.8%] lg:my-3
+              rounded
+              w-[15%]
+              relative
+              hover:no-underline
+            "
+          >
+            <media-container :media="media" />
+            <media-detail-box :media="media" />
+          </a>
+        </div>
+      </div>
+      <div id="upcoming-next-season">
+        <div class="px-72 pt-10 flex w-full">
+          <div class="font-bold text-white text-lg">UPCOMING NEXT SEASON</div>
+          <div class="font-bold text-gray-400 text-sm ml-auto leading-6">
+            View All
+          </div>
+        </div>
+        <div class="flex flex-wrap py-2 px-72">
+          <a
+            :href="`media/${media.id}`"
+            v-for="media in upcomingNextSeason"
+            :key="media.id"
+            v-bind:id="media.id"
+            @mouseover="
+              (e) => {
+                handleMouseOver(e);
+              }
+            "
+            @mouseleave="
+              (e) => {
+                handleMouseLeave(e);
+              }
+            "
+            class="
+              cursor-pointer
+              lg:mx-[0.8%] lg:my-3
+              rounded
+              w-[15%]
+              relative
+              hover:no-underline
+            "
+          >
+            <media-container :media="media" />
+            <media-detail-box :media="media" />
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -581,6 +659,62 @@ const TrendingNow = gql`
     }
   }
 `;
+
+const popularThisSeason = gql`
+  query Page($searchPopularThisSeason: [MediaSort]) {
+    Page(page: 1, perPage: 6) {
+      media(sort: $searchPopularThisSeason) {
+        seasonYear
+        startDate {
+          year
+        }
+        trending
+        id
+        title {
+          romaji
+        }
+        coverImage {
+          large
+        }
+        genres
+        tags {
+          name
+        }
+        format
+        episodes
+        averageScore
+      }
+    }
+  }
+`;
+
+const upcomingNextSeason = gql`
+  query Page($searchSeason: MediaSeason, $searchYear: Int) {
+    Page(page: 1, perPage: 6) {
+      media(season: $searchSeason, seasonYear: $searchYear) {
+        seasonYear
+        startDate {
+          year
+        }
+        trending
+        id
+        title {
+          romaji
+        }
+        coverImage {
+          large
+        }
+        genres
+        tags {
+          name
+        }
+        format
+        episodes
+        averageScore
+      }
+    }
+  }
+`;
 export default {
   components: { MediaContainer, MediaDetailBox },
   data() {
@@ -611,8 +745,6 @@ export default {
       searchDurationLesser: null,
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
-      trendingNow: [],
-      allMedia: [],
     };
     return vars;
   },
@@ -714,7 +846,6 @@ export default {
 
   mounted() {
     this.medias = this.allMedia.media;
-    console.log(this.trendingNow);
     this.$axios
       .get("https://me-musicplayer.herokuapp.com/api/user/trunkey", {
         withCredentials: true,
@@ -802,6 +933,25 @@ export default {
       },
       update: (data) => data.Page.media,
     },
+    upcomingNextSeason: {
+      query: upcomingNextSeason,
+      variables() {
+        return {
+          searchSeason: "SPRING",
+          searchYear: 2022,
+        };
+      },
+      update: (data) => data.Page.media,
+    },
+    popularThisSeason: {
+      query: popularThisSeason,
+      variables() {
+        return {
+          searchPopularThisSeason: "POPULARITY_DESC",
+        };
+      },
+      update: (data) => data.Page.media,
+    }
   },
 };
 </script>

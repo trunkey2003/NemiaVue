@@ -72,8 +72,8 @@ export default {
   props: ["media"],
   methods: {
     handleOnRenderUnderScore(tag) {
-      tag = tag.replace("_", " ");
-      tag = tag.replace("_", " ");
+      tag = tag?.replace("_", " ");
+      tag = tag?.replace("_", " ");
       return tag;
     },
   },
