@@ -346,6 +346,70 @@
         </div>
       </div>
 
+      <!-- Staff -->
+      <div class="relative flex py-5 items-center">
+        <div class="flex-grow border-t border-blue-400"></div>
+        <span class="flex-shrink mx-4 text-blue-400">Staff</span>
+        <div class="flex-grow border-t border-blue-400"></div>
+      </div>
+      <div class="flex flex-wrap">
+        <div
+          v-for="media in Media.staff.edges"
+          v-bind:key="media.node.id"
+          class="
+            ml-2
+            mt-3
+            lg:h-32 lg:w-[32%]
+            w-[47.5%]
+            lg:flex
+            border-2 border-sky-500
+            hover:bg-gray-300
+            cursor-pointer
+          "
+        >
+          <div
+            class="
+              md:w-full
+              h-32
+              lg:w-1/5 lg:h-auto
+              flex-none
+              bg-cover
+              rounded-t
+              lg:rounded-t-none lg:rounded-l
+              text-center
+              overflow-hidden
+            "
+            v-bind:style="{
+              backgroundImage: 'url(' + media.node.image.large + ')',
+            }"
+          ></div>
+          <div
+            class="
+              text-center
+              border-l
+              lg:w-[80%] lg:border-b
+              border-gray-400
+              lg:border-gray-400
+              rounded-b
+              lg:rounded-b-none lg:rounded-r
+              p-1
+              flex flex-col
+              justify-between
+              leading-normal
+            "
+          >
+            <div class="max-h-full">
+              <h2 class="text-gray-900 font-bold text-lg">
+                {{ media.node.name.full }}
+              </h2>
+              <p class="text-center text-sm text-gray-600 my-2">
+                {{ media.role }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Watch -->
       <div class="relative flex py-5 items-center">
         <div class="flex-grow border-t border-blue-400"></div>
@@ -420,6 +484,22 @@ const query = gql`
         extraLarge
       }
       description
+      format
+      status
+      startDate {
+        year
+        month
+      }
+      season
+      popularity
+      favourites
+      studios(isMain: true){
+        edges {
+          node {
+            name
+          }
+        }
+      }
       characters {
         edges {
           node {
@@ -474,6 +554,20 @@ const query = gql`
         id
         site
         thumbnail
+      }
+      staff {
+        edges {
+          node {
+            id
+            name {
+              full
+            }
+            image {
+              large
+            }
+          }
+          role
+        }
       }
     }
   }
