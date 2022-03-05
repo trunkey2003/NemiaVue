@@ -171,13 +171,13 @@ export default {
       };
       this.$emit("loading", true);
       this.$axios
-        .$post("https://me-musicplayer.herokuapp.com/api/user/signup", body)
+        .$post(`${process.env.SERVER}/api/user/signup`, body)
         .then((data) => {
           this.$emit("success", "Congratulations, your account has been successfully created.");
           if (autoLogin)
           this.$axios
             .$post(
-              "https://me-musicplayer.herokuapp.com/api/user/login",
+              `${process.env.SERVER}/api/user/login`,
               body,
               { withCredentials: true }
             )

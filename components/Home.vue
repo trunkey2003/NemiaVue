@@ -63,7 +63,8 @@
           "
           class="
             cursor-pointer
-            lg:mx-[0.8%] my-3
+            lg:mx-[0.8%]
+            my-3
             rounded
             w-full
             mx-[1%]
@@ -72,7 +73,11 @@
             hover:no-underline
           "
         >
-          <media-container :media="media" />
+          <media-container
+            :image="media.coverImage.large"
+            :title="media.title.romaji"
+            :id="media.id"
+          />
           <media-detail-box :media="media" />
         </a>
         <div
@@ -85,7 +90,8 @@
             w-[31%]
             mx-[1%]
             md:max-w-[100%]
-            lg:w-[15%] lg:mx-[0.8%] my-3
+            lg:w-[15%] lg:mx-[0.8%]
+            my-3
             w-full
           "
         >
@@ -450,9 +456,17 @@
     <div v-else-if="searchSortTrend || searchUpcoming">
       <div id="home">
         <div class="lg:px-72 pt-10 flex w-full max-w-full">
-          <div class="font-bold text-white text-lg">{{(searchSortTrend == 'TRENDING_DESC')? 'TRENDING' : (searchSortTrend == 'POPULARITY_DESC')? 'POPULAR THIS SEASON' : 'UPCOMING NEXT SEASON'}}</div>
+          <div class="font-bold text-white text-lg">
+            {{
+              searchSortTrend == "TRENDING_DESC"
+                ? "TRENDING"
+                : searchSortTrend == "POPULARITY_DESC"
+                ? "POPULAR THIS SEASON"
+                : "UPCOMING NEXT SEASON"
+            }}
+          </div>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72 ">
+        <div class="flex flex-wrap py-2 lg:px-72">
           <a
             :href="`media/${media.id}`"
             v-for="media in medias"
@@ -470,7 +484,8 @@
             "
             class="
               cursor-pointer
-              lg:mx-[0.8%] my-3
+              lg:mx-[0.8%]
+              my-3
               rounded
               w-[100%]
               mx-[1%]
@@ -479,7 +494,11 @@
               hover:no-underline
             "
           >
-            <media-container :media="media" />
+            <media-container
+              :image="media.coverImage.large"
+              :title="media.title.romaji"
+              :id="media.id"
+            />
             <media-detail-box :media="media" />
           </a>
           <div
@@ -566,7 +585,7 @@
             View All
           </a>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72 ">
+        <div class="flex flex-wrap py-2 lg:px-72">
           <a
             :href="`media/${media.id}`"
             v-for="media in trendingNow"
@@ -593,7 +612,11 @@
               hover:no-underline
             "
           >
-            <media-container :media="media" />
+            <media-container
+              :image="media.coverImage.large"
+              :title="media.title.romaji"
+              :id="media.id"
+            />
             <media-detail-box :media="media" />
           </a>
         </div>
@@ -601,11 +624,14 @@
       <div id="popular-this-season">
         <div class="lg:px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">POPULAR THIS SEASON</div>
-          <a class="font-bold text-gray-400 text-sm ml-auto leading-6" href="/popular">
+          <a
+            class="font-bold text-gray-400 text-sm ml-auto leading-6"
+            href="/popular"
+          >
             View All
           </a>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72 ">
+        <div class="flex flex-wrap py-2 lg:px-72">
           <a
             :href="`media/${media.id}`"
             v-for="media in popularThisSeason"
@@ -632,7 +658,11 @@
               hover:no-underline
             "
           >
-            <media-container :media="media" />
+            <media-container
+              :image="media.coverImage.large"
+              :title="media.title.romaji"
+              :id="media.id"
+            />
             <media-detail-box :media="media" />
           </a>
         </div>
@@ -640,11 +670,14 @@
       <div id="upcoming-next-season">
         <div class="lg:px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">UPCOMING NEXT SEASON</div>
-          <a class="font-bold text-gray-400 text-sm ml-auto leading-6" href="/upcoming">
+          <a
+            class="font-bold text-gray-400 text-sm ml-auto leading-6"
+            href="/upcoming"
+          >
             View All
           </a>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72 ">
+        <div class="flex flex-wrap py-2 lg:px-72">
           <a
             :href="`media/${media.id}`"
             v-for="media in upcomingNextSeason"
@@ -662,7 +695,7 @@
             "
             class="
               cursor-pointer
-              lg:mx-[0.8%] lg:py-0
+              lg:mx-[0.8%] lg:my-3
               rounded
               w-[31%]
               mx-[1%]
@@ -671,9 +704,28 @@
               hover:no-underline
             "
           >
-            <media-container :media="media" />
+            <media-container
+              :image="media.coverImage.large"
+              :title="media.title.romaji"
+              :id="media.id"
+            />
             <media-detail-box :media="media" />
           </a>
+        </div>
+      </div>
+      <!-- TOP 100 -->
+      <div id="Top 100">
+        <div class="lg:px-72 pt-10 flex w-full">
+          <div class="font-bold text-white text-lg">TOP 100 ANIME</div>
+          <a
+            class="font-bold text-gray-400 text-sm ml-auto leading-6"
+            href="/upcoming"
+          >
+            View All
+          </a>
+        </div>
+        <div class="w-full py-5 lg:px-72">
+          <top-anime-box v-for="media in top100Anime" v-bind:key="media.id"/>
         </div>
       </div>
     </div>
@@ -834,6 +886,35 @@ const upcomingNextSeason = gql`
     }
   }
 `;
+
+const top100Anime = gql`
+  query Page($searchTop100Anime: [MediaSort]) {
+    Page(page: 1, perPage: 10) {
+      media(sort: $searchTop100Anime) {
+        seasonYear
+        startDate {
+          year
+        }
+        trending
+        id
+        title {
+          romaji
+        }
+        coverImage {
+          large
+        }
+        genres
+        tags {
+          name
+        }
+        format
+        episodes
+        averageScore
+      }
+    }
+  }
+`;
+
 export default {
   components: { MediaContainer, MediaDetailBox },
   data() {
@@ -865,7 +946,7 @@ export default {
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
       searchSortTrend: this.handleSearchSortTrend(this.$route.name),
-      searchUpcoming: (this.$route.name == 'upcoming')? true : false,
+      searchUpcoming: this.$route.name == "upcoming" ? true : false,
     };
     return vars;
   },
@@ -901,8 +982,9 @@ export default {
             this.searchDurationLesser != null) ||
           this.searchAverageScoreGreater != 0 ||
           this.searchIsAdult
-        )
-        && !this.searchSortTrend && !this.searchUpcoming
+        ) &&
+        !this.searchSortTrend &&
+        !this.searchUpcoming
       )
         return;
 
@@ -960,13 +1042,16 @@ export default {
       }, 2000);
     },
 
-    handleSearchSortTrend(routeName){
+    handleSearchSortTrend(routeName) {
       switch (routeName) {
-        case "trending": return "TRENDING_DESC";
-        case "popular": return "POPULARITY_DESC";
-        default: return null;
+        case "trending":
+          return "TRENDING_DESC";
+        case "popular":
+          return "POPULARITY_DESC";
+        default:
+          return null;
       }
-    }
+    },
   },
 
   beforeMount() {
@@ -978,7 +1063,7 @@ export default {
   mounted() {
     this.medias = this.allMedia.media;
     this.$axios
-      .get("https://me-musicplayer.herokuapp.com/api/user/trunkey", {
+      .get(`${process.env.SERVER}/api/user/trunkey`, {
         withCredentials: true,
       })
       .finally(() => (this.pageIsLoading = false));
@@ -999,8 +1084,8 @@ export default {
           search: this.search,
           searchGenre: this.searchGenre,
           searchMediaTag: this.searchMediaTag,
-          searchYear: (this.searchUpcoming)? '2022' : this.searchYear,
-          searchSeason: (this.searchUpcoming)? 'SPRING' : null,
+          searchYear: this.searchUpcoming ? "2022" : this.searchYear,
+          searchSeason: this.searchUpcoming ? "SPRING" : null,
           searchFormat: this.searchFormat,
           searchStatus: this.searchStatus,
           searchSort: this.searchSortTrend
@@ -1040,7 +1125,7 @@ export default {
           searchAverageScoreGreater:
             this.searchAverageScoreGreater != 0
               ? this.searchAverageScoreGreater
-              : null, 
+              : null,
         };
         Object.keys(vars).forEach((key) => {
           if (
@@ -1087,6 +1172,15 @@ export default {
       },
       update: (data) => data.Page.media,
     },
+    top100Anime:{
+      query: top100Anime,
+      variables(){
+        return {
+          searchTop100Anime: "SCORE_DESC"
+        };
+      },
+      update: (data) => data.Page.media,
+    }
   },
 };
 </script>

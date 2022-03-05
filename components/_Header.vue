@@ -198,7 +198,7 @@ export default {
     signOut() {
       this.handlePageLoading(true);
       this.$axios
-        .get("https://me-musicplayer.herokuapp.com/api/user/signout", {
+        .get(`${process.env.SERVER}/api/user/signout`, {
           withCredentials: true,
         })
         .then(() => (window.location.href = "/"))
@@ -220,15 +220,15 @@ export default {
       this.showSuccess = msg;
     }
   },
-  async beforeMount() {
-    const { data } = await this.$axios.get(
-      "https://me-musicplayer.herokuapp.com/api/user/trunkey",
+  beforeMount() {
+    this.$axios.get(
+      `${process.env.SERVER}/api/user/trunkey`,
       {
         withCredentials: true,
       }
-    );
-    this.user = data.onAccess;
-    this.pageIsLoading = false;
+    )
+    .then(({data}) => this.user = data.onAccess)
+    .finally(() => this.pageIsLoading = false)
   },
 };
 </script>

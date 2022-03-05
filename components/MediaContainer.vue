@@ -10,19 +10,19 @@
         bg-no-repeat bg-center
         rounded
       "
-      v-bind:id="media.id"
+      v-bind:id="id"
       v-bind:style="{
-        backgroundImage: 'url(' + media.coverImage.large + ')',
+        backgroundImage: 'url(' + image + ')',
       }"
     ></div>
     <div
-      v-if="media.title.romaji"
-      v-bind:id="media.id"
+      v-if="title"
+      v-bind:id="id"
       class="custom-font text-center lg:pb-0 min-h-15 max-h-24"
     >
-      {{ media.title.romaji }}
+      {{ title }}
     </div>
-    <div v-else v-bind:id="media.id" class="custom-font text-center py-2">
+    <div v-else v-bind:id="id" class="custom-font text-center py-2">
       Blank Title
     </div>
   </div>
@@ -30,6 +30,6 @@
 
 <script>
 export default {
-    props: ['media']
+    props: ['image','id','title']
 };
 </script>

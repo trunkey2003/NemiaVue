@@ -68,16 +68,129 @@
         </div>
       </div>
 
-      <!-- Ranking -->
-      <div class="relative flex py-5 items-center">
-        <div class="flex-grow border-t border-blue-400"></div>
-        <span class="flex-shrink mx-4 text-blue-400">Rankings</span>
-        <div class="flex-grow border-t border-blue-400"></div>
+      <div class="w-full p-4 mt-4 flex flex-wrap bg-gray-200">
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Format</div>
+          <div>{{ Media.format }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Status</div>
+          <div>{{ handleCapitalizeString(Media.status) }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Start Date</div>
+          <div>
+            {{
+              handleRenderIntegerMonth(Media.startDate.month) +
+              ", " +
+              Media.startDate.year
+            }}
+          </div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Season</div>
+          <div>
+            {{
+              handleCapitalizeString(Media.season) + " " + Media.startDate.year
+            }}
+          </div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Popularity</div>
+          <div>{{ Media.popularity }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Favorites</div>
+          <div>{{ Media.favourites }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Studios</div>
+          <div v-if="Media.studios.edges">
+            {{
+              Media.studios.edges
+                .map((index) => {
+                  if (index.isMain) return index.node.name;
+                })
+                .filter((index) => index)
+                .join(", ")
+            }}
+          </div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Producers</div>
+          <div v-if="Media.studios.edges">
+            {{
+              Media.studios.edges
+                .map((index) => {
+                  if (!index.isMain) return index.node.name;
+                })
+                .filter((index) => index)
+                .join(", ")
+            }}
+          </div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Source</div>
+          <div>{{ handleCapitalizeString(Media.source) }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Hashtag</div>
+          <div>{{ Media.hashtag }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Genres</div>
+          <div>{{ Media.genres.join(", ") }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Romaji</div>
+          <div>{{ Media.title.romaji }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">English</div>
+          <div>{{ Media.title.english }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Native</div>
+          <div>{{ Media.title.native }}</div>
+        </div>
+        <div class="w-[100%] lg:w-[25%] py-2">
+          <div class="font-bold">Synonyms</div>
+          <div>{{ Media.synonyms.join(", ") }}</div>
+        </div>
       </div>
+
+      <!-- Tags -->
+      <div class="mt-3">
+        <div class="font-bold">Tags</div>
+        <div class="mt-2 flex flex-wrap">
+          <tag-span
+            v-for="tag in Media.tags"
+            v-bind:key="tag.name"
+            :title="tag.name"
+            :value="tag.rank"
+          />
+        </div>
+      </div>
+
+      <!-- External & Streaming links -->
+      <div>
+        <div class="font-bold mt-3">External & Streaming links</div>
+        <div class="flex flex-wrap mt-2">
+          <link-span
+            v-for="link in Media.externalLinks"
+            v-bind:key="link.site"
+            :title="link.site"
+            :url="link.url"
+          />
+        </div>
+      </div>
+
+      <!-- Ranking -->
+      <div class="font-bold mt-3 flex items-center">Rankings</div>
       <div class="flex flex-wrap">
         <div
           v-for="ranking in Media.rankings ? Media.rankings : []"
-          v-bind:key="ranking"
+          v-bind:key="ranking.type + ranking.rank"
           class="w-full max-w-full lg:w-[32.5%] flex flex-wrap"
         >
           <span
@@ -162,15 +275,13 @@
       </div>
 
       <!-- Relations -->
-      <div class="relative flex py-5 items-center">
-        <div class="flex-grow border-t border-blue-400"></div>
-        <span class="flex-shrink mx-4 text-blue-400">Relations</span>
-        <div class="flex-grow border-t border-blue-400"></div>
-      </div>
+      <div class="font-bold mt-3 flex items-center">Relations</div>
       <div class="flex flex-wrap">
         <div
-          v-for="media in Media.relations.edges ? Media.relations.edges : []"
-          v-bind:key="media.node.title.romaji"
+          v-for="(media, index) in Media.relations.edges
+            ? Media.relations.edges
+            : []"
+          v-bind:key="index"
           class="
             ml-2
             mt-3
@@ -226,11 +337,7 @@
       </div>
 
       <!-- Characters -->
-      <div class="relative flex py-5 items-center">
-        <div class="flex-grow border-t border-blue-400"></div>
-        <span class="flex-shrink mx-4 text-blue-400">Characters</span>
-        <div class="flex-grow border-t border-blue-400"></div>
-      </div>
+      <div class="font-bold mt-3 flex items-center">Characters</div>
       <div v-if="Media.characters.edges.length" class="flex flex-wrap w-full">
         <div
           v-for="index in (0, Media.characters.edges.length - 1)"
@@ -279,12 +386,8 @@
             "
           >
             <div class="max-h-full">
-              <h2
-                class="text-gray-900 font-bold text-lg"
-              >
-                {{
-                  Media.characters.edges[index].node.name.full
-                }}
+              <h2 class="text-gray-900 font-bold text-lg">
+                {{ Media.characters.edges[index].node.name.full }}
               </h2>
               <p class="text-center text-sm text-gray-600 my-2">
                 {{ Media.characters.edges[index].role }}
@@ -306,19 +409,15 @@
               leading-normal
             "
           >
-            <div class="max-h-full" v-if="Media.characters.edges[index].voiceActors[0]">
-              <h2
-               
-                class="text-gray-900 font-bold text-lg"
-              >
-                {{
-                  Media.characters.edges[index].voiceActors[0].name.full
-                }}
+            <div
+              class="max-h-full"
+              v-if="Media.characters.edges[index].voiceActors[0]"
+            >
+              <h2 class="text-gray-900 font-bold text-lg">
+                {{ Media.characters.edges[index].voiceActors[0].name.full }}
               </h2>
               <p class="text-center text-sm text-gray-600 my-2">
-                {{
-                  Media.characters.edges[index].voiceActors[0].language
-                }}
+                {{ Media.characters.edges[index].voiceActors[0].language }}
               </p>
             </div>
           </div>
@@ -347,15 +446,11 @@
       </div>
 
       <!-- Staff -->
-      <div class="relative flex py-5 items-center">
-        <div class="flex-grow border-t border-blue-400"></div>
-        <span class="flex-shrink mx-4 text-blue-400">Staff</span>
-        <div class="flex-grow border-t border-blue-400"></div>
-      </div>
+      <div class="font-bold mt-3 flex items-center">Staff</div>
       <div class="flex flex-wrap">
         <div
-          v-for="media in Media.staff.edges"
-          v-bind:key="media.node.id"
+          v-for="(media, index) in Media.staff.edges"
+          v-bind:key="media.node.id + index"
           class="
             ml-2
             mt-3
@@ -411,11 +506,7 @@
       </div>
 
       <!-- Watch -->
-      <div class="relative flex py-5 items-center">
-        <div class="flex-grow border-t border-blue-400"></div>
-        <span class="flex-shrink mx-4 text-blue-400">Watch</span>
-        <div class="flex-grow border-t border-blue-400"></div>
-      </div>
+      <div class="font-bold mt-3 flex items-center">Trailer</div>
       <iframe
         v-if="!Media.trailer"
         class="custom-video"
@@ -457,11 +548,46 @@
         </iframe>
       </div>
 
+      <!-- Recommendations -->
+      <div>
+        <div class="font-bold mt-3 flex items-center">Recommendations</div>
+        <div class="flex flex-wrap">
+          <a
+            v-bind:href="`/media/${media.node.mediaRecommendation.id}`"
+            v-for="media in Media.recommendations.edges"
+            v-bind:key="media.node.id"
+            class="
+              cursor-pointer
+              lg:mx-[0.8%]
+              my-3
+              rounded
+              w-full
+              mx-[1%]
+              lg:w-[12.5%]
+              relative
+              hover:no-underline
+            "
+          >
+            <media-container-media-page
+              :image="media.node.mediaRecommendation.coverImage.large"
+              :title="media.node.mediaRecommendation.title.romaji"
+              :id="media.node.id"
+              :rating="media.node.rating"
+            />
+          </a>
+        </div>
+      </div>
+
       <!-- Reviews -->
-      <div class="relative flex py-5 items-center">
-        <div class="flex-grow border-t border-blue-400"></div>
-        <span class="flex-shrink mx-4 text-blue-400">Reviews</span>
-        <div class="flex-grow border-t border-blue-400"></div>
+      <div class="font-bold mt-3 flex items-center">Reviews</div>
+      <div class="flex flex-wrap">
+        <review-box
+          v-for="review in reviews"
+          v-bind:key="review.node.id"
+          :avatar="review.node.user.avatar.medium"
+          :summary="review.node.summary"
+          :rating="review.node.rating"
+        />
       </div>
     </div>
   </div>
@@ -469,16 +595,21 @@
 
 <script>
 import gql from "graphql-tag";
-import PageLoading from "./PageLoading.vue";
+import TagSpan from "./TagSpan.vue";
+import LinkSpan from "./LinkSpan.vue";
+import MediaContainer from "./MediaContainer.vue";
+import MediaContainerMediaPage from "./MediaContainerMediaPage.vue";
 
 const query = gql`
   query Media($id: Int) {
     Media(id: $id) {
       id
       title {
+        english
         romaji
         native
       }
+      synonyms
       bannerImage
       coverImage {
         extraLarge
@@ -493,12 +624,24 @@ const query = gql`
       season
       popularity
       favourites
-      studios(isMain: true){
+      studios {
         edges {
           node {
             name
           }
+          isMain
         }
+      }
+      source
+      hashtag
+      genres
+      tags {
+        name
+        rank
+      }
+      externalLinks {
+        url
+        site
       }
       characters {
         edges {
@@ -519,13 +662,6 @@ const query = gql`
             image {
               large
             }
-          }
-        }
-      }
-      reviews {
-        edges {
-          node {
-            rating
           }
         }
       }
@@ -569,15 +705,50 @@ const query = gql`
           role
         }
       }
+      recommendations(sort: RATING_DESC, page: 1, perPage: 7) {
+        edges {
+          node {
+            rating
+            id
+
+            mediaRecommendation {
+              id
+              title {
+                romaji
+              }
+              coverImage {
+                large
+              }
+            }
+          }
+        }
+      }
+      reviews(limit: 2, sort: RATING_DESC) {
+        edges {
+          node {
+            id
+            rating
+            user {
+              name
+              avatar {
+                medium
+              }
+            }
+            summary
+          }
+        }
+      }
     }
   }
 `;
 
 export default {
-  data(){
-    return{
+  components: { TagSpan, LinkSpan, MediaContainer, MediaContainerMediaPage },
+  data() {
+    return {
       pageIsLoading: true,
-    }
+      reviews: [],
+    };
   },
   apollo: {
     Media: {
@@ -589,8 +760,33 @@ export default {
       },
     },
   },
-  mounted(){
-    this.pageIsLoading = false; 
-  }
+  methods: {
+    handleRenderIntegerMonth(month) {
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return months[month - 1];
+    },
+
+    handleCapitalizeString(string) {
+      string = string?.toLowerCase();
+      return string?.charAt(0).toUpperCase() + string?.slice(1);
+    },
+  },
+  mounted() {
+    this.pageIsLoading = false;
+    this.reviews = this.Media.reviews?.edges.filter((node, index) => index < 4);
+  },
 };
 </script>
