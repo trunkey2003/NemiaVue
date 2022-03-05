@@ -719,13 +719,28 @@
           <div class="font-bold text-white text-lg">TOP 100 ANIME</div>
           <a
             class="font-bold text-gray-400 text-sm ml-auto leading-6"
-            href="/upcoming"
           >
             View All
           </a>
         </div>
         <div class="w-full py-5 lg:px-72">
-          <top-anime-box v-for="media in top100Anime" v-bind:key="media.id"/>
+          <top-anime-box
+            v-for="(media,index) in top100Anime"
+            v-bind:key="media.id"
+            :title="media.title.romaji"
+            :genres="media.genres"
+            :color="media.coverImage.color"
+            :averageScore="media.averageScore"
+            :popularity="media.popularity"
+            :format="media.format"
+            :episodes="media.episodes"
+            :duration="media.duration"
+            :season="media.season"
+            :year="media.startDate.year"
+            :status="media.status"
+            :image="media.coverImage.medium"
+            :rank="index+1"
+          />
         </div>
       </div>
     </div>
@@ -888,28 +903,29 @@ const upcomingNextSeason = gql`
 `;
 
 const top100Anime = gql`
-  query Page($searchTop100Anime: [MediaSort]) {
+query Page($searchTop100Anime: [MediaSort], $searchStatusIn: [MediaStatus]) {
     Page(page: 1, perPage: 10) {
-      media(sort: $searchTop100Anime) {
-        seasonYear
+      media(sort: $searchTop100Anime, status_in: $searchStatusIn) {
+        season
         startDate {
           year
         }
+      	status
         trending
         id
         title {
           romaji
         }
         coverImage {
-          large
+          medium
+          color
         }
         genres
-        tags {
-          name
-        }
         format
-        episodes
+      	episodes
+        duration
         averageScore
+      	popularity
       }
     }
   }
@@ -1172,15 +1188,16 @@ export default {
       },
       update: (data) => data.Page.media,
     },
-    top100Anime:{
+    top100Anime: {
       query: top100Anime,
-      variables(){
+      variables() {
         return {
-          searchTop100Anime: "SCORE_DESC"
+          searchTop100Anime: ["SCORE_DESC", "STATUS_DESC"],
+          searchStatusIn: ["FINISHED", "RELEASING"],
         };
       },
       update: (data) => data.Page.media,
-    }
+    },
   },
 };
 </script>
