@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-show="pageIsLoading">
+      <page-loading />
+    </div>
     <div class="alert-error-box" v-if="showError">
       <div class="relative px-4 w-full h-full md:h-auto">
         <!-- Modal content -->
@@ -184,6 +187,7 @@ export default {
       user: null,
       classActive: "hidden",
       msg: "",
+      pageIsLoading: true,
     };
   },
   methods: {
@@ -224,6 +228,7 @@ export default {
       }
     );
     this.user = data.onAccess;
+    this.pageIsLoading = false;
   },
 };
 </script>

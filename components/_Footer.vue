@@ -2,7 +2,7 @@
 <footer class="text-center bg-gray-900 text-white">
   <div class="container px-6 pt-6">
     <div class="flex justify-center mb-6">
-      <a href="https://www.facebook.com/trunkeyy" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+      <a href="https://www.facebook.com/trunkeyy" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase bg-black hover:opacity-50 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
@@ -19,7 +19,7 @@
         </svg>
       </a>
 
-      <a href="https://twitter.com/hoquanglam" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+      <a href="https://twitter.com/hoquanglam" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase bg-black hover:opacity-50 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
@@ -36,7 +36,7 @@
         </svg>
       </a>
 
-      <a href="#!" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+      <a href="#!" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase bg-black hover:opacity-50 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
@@ -53,7 +53,7 @@
         </svg>
       </a>
 
-      <a href="https://www.instagram.com/trunkeyy" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+      <a href="https://www.instagram.com/trunkeyy" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase bg-black hover:opacity-50 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
@@ -70,7 +70,7 @@
         </svg>
       </a>
 
-      <a href="#!" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+      <a href="#!" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase bg-black hover:opacity-50 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
@@ -87,7 +87,7 @@
         </svg>
       </a>
 
-      <a href="https://github.com/trunkey2003" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+      <a href="https://github.com/trunkey2003" type="button" class="rounded-full border-2 border-white text-white leading-normal uppercase bg-black hover:opacity-50 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"

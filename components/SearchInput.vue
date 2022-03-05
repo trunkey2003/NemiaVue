@@ -118,6 +118,8 @@
         <svg
           id="advancedFilterButton"
           class="
+            hidden
+            md:block
             p-1
             h-10
             w-10

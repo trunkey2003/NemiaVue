@@ -72,7 +72,8 @@
             ${classActive}
             absolute
             z-10
-            w-full
+            w-[50vw]
+            md:w-full
             bg-white
             opacity-90
             shadow-lg

@@ -1,8 +1,5 @@
 <template>
   <div class="app">
-    <div v-show="pageIsLoading">
-      <page-loading />
-    </div>
     <SearchInput
       :_search="search"
       @update-search="updateFilterApollo"
@@ -42,12 +39,12 @@
         (searchDurationGreater != 0 && searchDurationGreater != null) ||
         (searchDurationLesser != 170 && searchDurationLesser != null) ||
         searchAverageScoreGreater != 0 ||
-        searchIsAdult || $route.name == 'index'
+        searchIsAdult
       "
     >
       <div
         v-if="medias.length || dataLoading"
-        class="flex flex-wrap py-10 px-72"
+        class="flex flex-wrap py-10 lg:px-72"
       >
         <a
           :href="`media/${media.id}`"
@@ -66,9 +63,11 @@
           "
           class="
             cursor-pointer
-            lg:mx-[0.8%] lg:my-3
+            lg:mx-[0.8%] my-3
             rounded
-            w-[15%]
+            w-full
+            mx-[1%]
+            lg:w-[15%]
             relative
             hover:no-underline
           "
@@ -83,9 +82,10 @@
             hidden
             lg:block
             cursor-pointer
-            max-w-[15%]
+            w-[31%]
+            mx-[1%]
             md:max-w-[100%]
-            lg:max-w-[15%] lg:mx-[0.8%] lg:my-3
+            lg:w-[15%] lg:mx-[0.8%] my-3
             w-full
           "
         >
@@ -447,12 +447,12 @@
 
       <!-- <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div> -->
     </div>
-    <div v-else-if="searchSortTrend">
-      <div id="trending-now">
-        <div class="px-72 pt-10 flex w-full">
-          <div class="font-bold text-white text-lg">TRENDING NOW</div>
+    <div v-else-if="searchSortTrend || searchUpcoming">
+      <div id="home">
+        <div class="lg:px-72 pt-10 flex w-full max-w-full">
+          <div class="font-bold text-white text-lg">{{(searchSortTrend == 'TRENDING_DESC')? 'TRENDING' : (searchSortTrend == 'POPULARITY_DESC')? 'POPULAR THIS SEASON' : 'UPCOMING NEXT SEASON'}}</div>
         </div>
-        <div class="flex flex-wrap py-2 px-72">
+        <div class="flex flex-wrap py-2 lg:px-72 ">
           <a
             :href="`media/${media.id}`"
             v-for="media in medias"
@@ -470,100 +470,103 @@
             "
             class="
               cursor-pointer
-              lg:mx-[0.8%] lg:my-3
+              lg:mx-[0.8%] my-3
               rounded
-              w-[15%]
+              w-[100%]
+              mx-[1%]
               relative
+              lg:w-[15%]
               hover:no-underline
             "
           >
             <media-container :media="media" />
             <media-detail-box :media="media" />
           </a>
-        </div>
-      </div>
-      <div
-        v-if="medias.length || dataLoading"
-        class="flex flex-wrap py-10 px-72"
-      >
-        <div
-          v-for="index in (1, 6)"
-          v-bind:key="'loading-' + index"
-          class="
-            hidden
-            lg:block
-            cursor-pointer
-            max-w-[15%]
-            md:max-w-[100%]
-            lg:max-w-[15%] lg:mx-[0.8%] lg:my-3
-            w-full
-          "
-        >
           <div
-            v-if="dataLoading"
-            class="h-80 hover:opacity-80 bg-gray-600 animate-pulse bg-center"
-          ></div>
-        </div>
-
-        <button
-          v-if="dataLoading"
-          type="button"
-          class="
-            inline-flex
-            lg:hidden
-            items-center
-            mt-3
-            mx-auto
-            px-8
-            py-2
-            font-semibold
-            leading-6
-            text-sm
-            shadow
-            rounded-md
-            text-white
-            bg-blue-400
-            hover:bg-blue-800
-            transition
-            ease-in-out
-            duration-150
-            cursor-not-allowed
-          "
-          disabled=""
-        >
-          <svg
-            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
+            v-for="index in (1, 6)"
+            v-bind:key="'loading-' + index"
+            class="
+              hidden
+              lg:block
+              cursor-pointer
+              w-[31%]
+              mx-[1%]
+              md:max-w-[100%]
+              lg:w-[15%] lg:mx-[0.8%] lg:my-3
+              w-full
+            "
           >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            ></circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-          Processing...
-        </button>
+            <div
+              v-if="dataLoading"
+              class="h-80 hover:opacity-80 bg-gray-600 animate-pulse bg-center"
+            ></div>
+          </div>
+
+          <button
+            v-if="dataLoading"
+            type="button"
+            class="
+              inline-flex
+              lg:hidden
+              items-center
+              mt-3
+              mx-auto
+              px-8
+              py-2
+              font-semibold
+              leading-6
+              text-sm
+              shadow
+              rounded-md
+              text-white
+              bg-blue-400
+              hover:bg-blue-800
+              transition
+              ease-in-out
+              duration-150
+              cursor-not-allowed
+            "
+            disabled=""
+          >
+            <svg
+              class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            Processing...
+          </button>
+        </div>
       </div>
     </div>
+
+    <!-- Default Home page -->
     <div v-else class="mx-auto w-full min-h-screen bg-gray-900 bg-opacity-80">
       <div id="trending-now">
-        <div class="px-72 pt-10 flex w-full">
+        <div class="lg:px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">TRENDING NOW</div>
-          <a class="font-bold text-gray-400 text-sm ml-auto leading-6" href="/trending">
+          <a
+            class="font-bold text-gray-400 text-sm ml-auto leading-6"
+            href="/trending"
+          >
             View All
           </a>
         </div>
-        <div class="flex flex-wrap py-2 px-72">
+        <div class="flex flex-wrap py-2 lg:px-72 ">
           <a
             :href="`media/${media.id}`"
             v-for="media in trendingNow"
@@ -583,7 +586,9 @@
               cursor-pointer
               lg:mx-[0.8%] lg:my-3
               rounded
-              w-[15%]
+              w-[31%]
+              mx-[1%]
+              lg:w-[15%]
               relative
               hover:no-underline
             "
@@ -594,13 +599,13 @@
         </div>
       </div>
       <div id="popular-this-season">
-        <div class="px-72 pt-10 flex w-full">
+        <div class="lg:px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">POPULAR THIS SEASON</div>
-          <div class="font-bold text-gray-400 text-sm ml-auto leading-6">
+          <a class="font-bold text-gray-400 text-sm ml-auto leading-6" href="/popular">
             View All
-          </div>
+          </a>
         </div>
-        <div class="flex flex-wrap py-2 px-72">
+        <div class="flex flex-wrap py-2 lg:px-72 ">
           <a
             :href="`media/${media.id}`"
             v-for="media in popularThisSeason"
@@ -620,7 +625,9 @@
               cursor-pointer
               lg:mx-[0.8%] lg:my-3
               rounded
-              w-[15%]
+              w-[31%]
+              mx-[1%]
+              lg:w-[15%]
               relative
               hover:no-underline
             "
@@ -631,13 +638,13 @@
         </div>
       </div>
       <div id="upcoming-next-season">
-        <div class="px-72 pt-10 flex w-full">
+        <div class="lg:px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">UPCOMING NEXT SEASON</div>
-          <div class="font-bold text-gray-400 text-sm ml-auto leading-6">
+          <a class="font-bold text-gray-400 text-sm ml-auto leading-6" href="/upcoming">
             View All
-          </div>
+          </a>
         </div>
-        <div class="flex flex-wrap py-2 px-72">
+        <div class="flex flex-wrap py-2 lg:px-72 ">
           <a
             :href="`media/${media.id}`"
             v-for="media in upcomingNextSeason"
@@ -657,7 +664,9 @@
               cursor-pointer
               lg:mx-[0.8%] lg:py-0
               rounded
-              w-[15%]
+              w-[31%]
+              mx-[1%]
+              lg:w-[15%]
               relative
               hover:no-underline
             "
@@ -855,7 +864,8 @@ export default {
       searchDurationLesser: null,
       searchIsAdult: false,
       searchAverageScoreGreater: 0,
-      searchSortTrend: (this.$route.name == 'trending')? "TRENDING_DESC" : null,
+      searchSortTrend: this.handleSearchSortTrend(this.$route.name),
+      searchUpcoming: (this.$route.name == 'upcoming')? true : false,
     };
     return vars;
   },
@@ -892,10 +902,10 @@ export default {
           this.searchAverageScoreGreater != 0 ||
           this.searchIsAdult
         )
+        && !this.searchSortTrend && !this.searchUpcoming
       )
         return;
 
-      //warn : this line ran even return;
       var home = document.getElementById("home");
       if (
         window.scrollY + 1000 >= home.scrollHeight &&
@@ -934,6 +944,7 @@ export default {
 
     updateFilterApollo(search, varName) {
       this.searchSortTrend = null;
+      this.searchUpcoming = null;
       this.currentDataFlow++;
       let dataFlow = this.currentDataFlow;
       this.stopFetchingNewData = true;
@@ -948,6 +959,14 @@ export default {
         this.stopFetchingNewData = false;
       }, 2000);
     },
+
+    handleSearchSortTrend(routeName){
+      switch (routeName) {
+        case "trending": return "TRENDING_DESC";
+        case "popular": return "POPULARITY_DESC";
+        default: return null;
+      }
+    }
   },
 
   beforeMount() {
@@ -980,10 +999,13 @@ export default {
           search: this.search,
           searchGenre: this.searchGenre,
           searchMediaTag: this.searchMediaTag,
-          searchYear: this.searchYear,
+          searchYear: (this.searchUpcoming)? '2022' : this.searchYear,
+          searchSeason: (this.searchUpcoming)? 'SPRING' : null,
           searchFormat: this.searchFormat,
           searchStatus: this.searchStatus,
-          searchSort: (this.searchSortTrend)? this.searchSortTrend : this.searchSort,
+          searchSort: this.searchSortTrend
+            ? this.searchSortTrend
+            : this.searchSort,
           searchCountryOfOrigin: this.searchCountryOfOrigin,
           searchSource: this.searchSource,
           searchStartDateGreater:
@@ -1018,7 +1040,7 @@ export default {
           searchAverageScoreGreater:
             this.searchAverageScoreGreater != 0
               ? this.searchAverageScoreGreater
-              : null,
+              : null, 
         };
         Object.keys(vars).forEach((key) => {
           if (
@@ -1064,7 +1086,7 @@ export default {
         };
       },
       update: (data) => data.Page.media,
-    }
+    },
   },
 };
 </script>
