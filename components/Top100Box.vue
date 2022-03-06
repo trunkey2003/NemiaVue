@@ -17,11 +17,13 @@
               v-bind:key="genre"
               v-bind:href="`/?searchGenre=${genre}`"
             >
-              <span
-                class="mx-1 py-[2px] px-2 rounded-xl text-black text-sm hover:opacity-70"
-                v-bind:style="{ background: color }"
-                >{{ genre }}</span
+              <div class="rounded mx-1 bg-black">
+              <div
+                class="rounded px-2 py-[0.2rem] text-sm hover:opacity-80"
+                v-bind:style="{ background: color + '40', color: color }"
+                >{{ genre }}</div
               >
+              </div>
             </a>
           </div>
         </div>

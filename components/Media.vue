@@ -287,7 +287,7 @@
             lg:h-32 lg:w-[32%]
             w-[47.5%]
             lg:flex
-            border-2 border-sky-500
+            border-3 border-sky-500
             hover:bg-gray-300
             cursor-pointer
             rounded-lg
@@ -348,7 +348,7 @@
             lg:h-32 lg:w-[32%]
             w-[47.5%]
             lg:flex
-            border-2 border-sky-500
+            border-3 border-sky-500
             hover:bg-gray-300
             cursor-pointer
             rounded
@@ -450,7 +450,7 @@
             lg:h-32 lg:w-[32%]
             w-[47.5%]
             lg:flex
-            border-2 border-sky-500
+            border-3 border-sky-500
             hover:bg-gray-300
             cursor-pointer
             rounded

@@ -454,7 +454,7 @@
       <!-- <div v-if="!search && !searchGenre && !searchMediaTag && !searchYear && !searchFormat && !searchStatus"><PageNav /></div> -->
     </div>
     <div v-else-if="searchSortTrend || searchUpcoming">
-      <div id="home">
+      <div id="home" class="w-full min-h-screen bg-gray-900 bg-opacity-80">
         <div class="lg:px-72 pt-10 flex w-full max-w-full">
           <div class="font-bold text-white text-lg">
             {{
@@ -714,7 +714,7 @@
         </div>
       </div>
       <!-- TOP 100 -->
-      <div id="Top 100" class="hidden lg:block">
+      <div id="Top-100-Desktop" class="hidden lg:block">
         <div class="lg:px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">TOP 100 ANIME</div>
           <a
@@ -743,6 +743,26 @@
             :id="media.id"
           />
         </div>
+      </div>
+      <div id="Top-100-Mobile" class="lg:hidden">
+          <div class="lg:px-72 pt-10 flex w-full">
+          <div class="font-bold text-white text-lg">TOP 100 ANIME</div>
+          <a
+            class="font-bold text-gray-400 text-sm ml-auto leading-6"
+          >
+            View All
+          </a>
+          </div>
+          <div class="flex flex-wrap mt-2">
+            <a class="w-full my-3 relative" v-for="(media,index) in top100Anime" v-bind:key="media.id">
+              <div id="rank-badge" class="absolute top-[-1rem] w-full z-10">
+                <div class="w-12 h-12 mx-auto bg-black rounded-full">
+                <div class="flex items-center justify-center w-12 h-12 font-bold bg-blue-500 mx-auto rounded-full" v-bind:style="{ background: media.coverImage.color + '50', color: media.coverImage.color }">#{{index+1}}</div>
+                </div>
+              </div>
+              <media-container :image="media.coverImage.large" :id="media.id" :title="media.title.romaji"/>
+            </a>
+          </div>
       </div>
     </div>
   </div>
@@ -918,6 +938,7 @@ query Page($searchTop100Anime: [MediaSort], $searchStatusIn: [MediaStatus]) {
           romaji
         }
         coverImage {
+          large
           medium
           color
         }
