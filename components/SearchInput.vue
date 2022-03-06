@@ -751,7 +751,7 @@
           bg-blue-600
           rounded-full
         "
-        >{{ searchSource
+        >{{ handleOnRenderUnderScore(searchSource)
         }}<svg
           @click="() => handleOnChangeSearchSource('Any')"
           xmlns="http://www.w3.org/2000/svg"
