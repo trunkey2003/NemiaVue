@@ -316,7 +316,7 @@
                       aria-label="Close"
                     ></button>
                   </div>
-                  <div class="modal-body">Do you really want to sign out</div>
+                  <div class="modal-body">Do you really want to sign out ?</div>
                   <div class="modal-footer">
                     <button
                       type="button"
