@@ -714,7 +714,7 @@
         </div>
       </div>
       <!-- TOP 100 -->
-      <div id="Top 100">
+      <div id="Top 100" class="hidden lg:block">
         <div class="lg:px-72 pt-10 flex w-full">
           <div class="font-bold text-white text-lg">TOP 100 ANIME</div>
           <a
@@ -724,7 +724,7 @@
           </a>
         </div>
         <div class="w-full py-5 lg:px-72">
-          <top-anime-box
+          <top-100-box
             v-for="(media,index) in top100Anime"
             v-bind:key="media.id"
             :title="media.title.romaji"
@@ -740,6 +740,7 @@
             :status="media.status"
             :image="media.coverImage.medium"
             :rank="index+1"
+            :id="media.id"
           />
         </div>
       </div>
