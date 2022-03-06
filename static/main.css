@@ -204,6 +204,7 @@ ul {
     padding: 1vh;
     width: 20vw;
     height: 20vh;
+    animation: custom-fade 0.7s ease;
   }
 }
 

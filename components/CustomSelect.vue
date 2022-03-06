@@ -75,7 +75,6 @@
             w-[50vw]
             md:w-full
             bg-white
-            opacity-90
             shadow-lg
             max-h-56
             rounded-md
