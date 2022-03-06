@@ -25,8 +25,8 @@
           opacity-50
         "
       />
+      <!-- :href="`?search=${search}&searchGenre=${searchGenre}&searchMediaTag=${searchMediaTag}&searchYear=${searchYear}&searchFormat=${searchFormat}&searchStatus=${searchStatus}`" -->
       <a
-        :href="`?search=${search}&searchGenre=${searchGenre}&searchMediaTag=${searchMediaTag}&searchYear=${searchYear}&searchFormat=${searchFormat}&searchStatus=${searchStatus}`"
         ><svg
           xmlns="http://www.w3.org/2000/svg"
           class="w-6 h-6 mx-2 text-cyan-600"
@@ -505,7 +505,7 @@
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-x"
+          class="bi bi-x hover:cursor-pointer hover:fill-gray-400"
           viewBox="0 0 16 16"
         >
           <path
@@ -541,7 +541,7 @@
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-x"
+          class="bi bi-x hover:cursor-pointer hover:fill-gray-400"
           viewBox="0 0 16 16"
         >
           <path
@@ -577,7 +577,7 @@
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-x"
+          class="bi bi-x hover:cursor-pointer hover:fill-gray-400"
           viewBox="0 0 16 16"
         >
           <path
@@ -613,7 +613,7 @@
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-x"
+          class="bi bi-x hover:cursor-pointer hover:fill-gray-400"
           viewBox="0 0 16 16"
         >
           <path
@@ -648,7 +648,7 @@
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
-          fill="currentColor"
+          fill="currentColor hover:cursor-pointer hover:fill-gray-400"
           class="bi bi-x"
           viewBox="0 0 16 16"
         >
@@ -685,7 +685,7 @@
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
-          fill="currentColor"
+          fill="currentColor hover:cursor-pointer hover:fill-gray-400"
           class="bi bi-x"
           viewBox="0 0 16 16"
         >
@@ -721,7 +721,7 @@
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
-          fill="currentColor"
+          fill="currentColor hover:cursor-pointer hover:fill-gray-400"
           class="bi bi-x"
           viewBox="0 0 16 16"
         >
@@ -757,7 +757,7 @@
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
-          fill="currentColor"
+          fill="currentColor hover:cursor-pointer hover:fill-gray-400"
           class="bi bi-x"
           viewBox="0 0 16 16"
         >

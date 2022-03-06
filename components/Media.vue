@@ -5,22 +5,21 @@
     </div>
     <div
       id="meida"
-      class="container mx-auto w-full min-h-screen bg-gray-100 rounded-t-2xl"
+      class="container mx-auto w-full min-h-screen bg-gray-100 rounded-t-2xl pb-4"
     >
       <img v-bind:src="Media.bannerImage" />
       <div
         class="
-          ml-2
+          lg:mr-2
           mt-3
-          max-w-sm
           lg:h-96 lg:w-full
-          md:w-full
+          w-full
           lg:max-w-full lg:flex
         "
       >
         <div
           class="
-            md:w-full
+            w-full
             h-96
             lg:w-1/5 lg:h-auto
             flex-none
@@ -39,12 +38,13 @@
             border-r border-b border-l border-gray-400
             lg:border-l-0 lg:border-t lg:border-gray-400
             bg-white
-            rounded-b
-            lg:rounded-b-none lg:rounded-r
+            rounded
             p-4
             flex flex-col
             justify-between
             leading-normal
+            w-full
+            lg:w-[80%]
           "
         >
           <div class="max-h-full">
@@ -68,7 +68,7 @@
         </div>
       </div>
 
-      <div class="w-full p-4 mt-4 flex flex-wrap bg-gray-200">
+      <div class="w-full p-4 mt-4 flex flex-wrap bg-gray-200 rounded-lg">
         <div class="w-[100%] lg:w-[25%] py-2">
           <div class="font-bold">Format</div>
           <div>{{ Media.format }}</div>
@@ -160,7 +160,7 @@
       </div>
 
       <!-- Tags -->
-      <div class="mt-3">
+      <div class="mt-3" v-if="Media.tags">
         <div class="font-bold">Tags</div>
         <div class="mt-2 flex flex-wrap">
           <tag-span
@@ -174,7 +174,7 @@
 
       <!-- External & Streaming links -->
       <div>
-        <div class="font-bold mt-3">External & Streaming links</div>
+        <div class="font-bold mt-3" v-if="Media.externalLinks && Media.externalLinks.length"> External & Streaming links</div>
         <div class="flex flex-wrap mt-2">
           <link-span
             v-for="link in Media.externalLinks"
@@ -186,7 +186,7 @@
       </div>
 
       <!-- Ranking -->
-      <div class="font-bold mt-3 flex items-center">Rankings</div>
+      <div class="font-bold mt-3 flex items-center" v-if="Media.rankings && Media.rankings.length">Rankings</div>
       <div class="flex flex-wrap">
         <div
           v-for="ranking in Media.rankings ? Media.rankings : []"
@@ -245,8 +245,8 @@
               uppercase
               rounded
               text-[#ef3038]
-              bg-red-300
-              hover:bg-red-400
+              bg-red-200
+              hover:bg-red-300
               uppercase
               last:mr-0
               mr-1
@@ -275,13 +275,12 @@
       </div>
 
       <!-- Relations -->
-      <div class="font-bold mt-3 flex items-center">Relations</div>
+      <div class="font-bold mt-3 flex items-center" v-if="Media.relations.edges && Media.relations.edges.length">Relations</div>
       <div class="flex flex-wrap">
-        <div
-          v-for="(media, index) in Media.relations.edges
-            ? Media.relations.edges
-            : []"
+        <a
+          v-for="(media, index) in Media.relations.edges"
           v-bind:key="index"
+          v-bind:href="`/media/${media.node.id}`"
           class="
             ml-2
             mt-3
@@ -291,6 +290,7 @@
             border-2 border-sky-500
             hover:bg-gray-300
             cursor-pointer
+            rounded-lg
           "
         >
           <div
@@ -333,11 +333,11 @@
               </p>
             </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <!-- Characters -->
-      <div class="font-bold mt-3 flex items-center">Characters</div>
+      <div class="font-bold mt-3 flex items-center" v-if="Media.characters.edges && Media.characters.edges.length">Characters</div>
       <div v-if="Media.characters.edges.length" class="flex flex-wrap w-full">
         <div
           v-for="index in (0, Media.characters.edges.length - 1)"
@@ -351,6 +351,7 @@
             border-2 border-sky-500
             hover:bg-gray-300
             cursor-pointer
+            rounded
           "
         >
           <div
@@ -360,8 +361,6 @@
               lg:w-1/5 lg:h-auto
               flex-none
               bg-cover
-              rounded-t
-              lg:rounded-t-none lg:rounded-l
               text-center
               overflow-hidden
             "
@@ -377,8 +376,6 @@
               lg:w-[80%] lg:border-b
               border-gray-400
               lg:border-gray-400
-              rounded-b
-              lg:rounded-b-none lg:rounded-r
               p-1
               flex flex-col
               justify-between
@@ -401,8 +398,6 @@
               lg:w-[80%] lg:border-b
               border-gray-400
               lg:border-gray-400
-              rounded-b
-              lg:rounded-b-none lg:rounded-r
               p-1
               flex flex-col
               justify-between
@@ -428,8 +423,6 @@
               lg:w-1/5 lg:h-auto
               flex-none
               bg-cover
-              rounded-t
-              lg:rounded-t-none lg:rounded-l
               text-center
               overflow-hidden
             "
@@ -446,7 +439,7 @@
       </div>
 
       <!-- Staff -->
-      <div class="font-bold mt-3 flex items-center">Staff</div>
+      <div class="font-bold mt-3 flex items-center" v-if="Media.staff.edges && Media.staff.edges.length">Staff</div>
       <div class="flex flex-wrap">
         <div
           v-for="(media, index) in Media.staff.edges"
@@ -460,6 +453,7 @@
             border-2 border-sky-500
             hover:bg-gray-300
             cursor-pointer
+            rounded
           "
         >
           <div
@@ -469,8 +463,6 @@
               lg:w-1/5 lg:h-auto
               flex-none
               bg-cover
-              rounded-t
-              lg:rounded-t-none lg:rounded-l
               text-center
               overflow-hidden
             "
@@ -485,8 +477,6 @@
               lg:w-[80%] lg:border-b
               border-gray-400
               lg:border-gray-400
-              rounded-b
-              lg:rounded-b-none lg:rounded-r
               p-1
               flex flex-col
               justify-between
@@ -505,7 +495,7 @@
         </div>
       </div>
 
-      <!-- Watch -->
+      <!-- Trailer -->
       <div class="font-bold mt-3 flex items-center">Trailer</div>
       <iframe
         v-if="!Media.trailer"
@@ -550,7 +540,13 @@
 
       <!-- Recommendations -->
       <div>
-        <div class="font-bold mt-3 flex items-center">Recommendations</div>
+        <div class="flex mt-3" v-if="Media.recommendations.edges && Media.recommendations.edges.length">
+          <div class="font-bold flex items-center">Recommendations</div>
+          <a class="font-bold text-gray-400 text-sm ml-auto leading-6">
+            View All Recommendations
+          </a>
+        </div>
+
         <div class="flex flex-wrap">
           <a
             v-bind:href="`/media/${media.node.mediaRecommendation.id}`"
@@ -579,7 +575,7 @@
       </div>
 
       <!-- Reviews -->
-      <div class="font-bold mt-3 flex items-center">Reviews</div>
+      <div class="font-bold mt-3 flex items-center" v-if="reviews && reviews.length">Reviews</div>
       <div class="flex flex-wrap">
         <review-box
           v-for="review in reviews"
@@ -668,6 +664,7 @@ const query = gql`
       relations {
         edges {
           node {
+            id
             type
             title {
               romaji
@@ -710,7 +707,6 @@ const query = gql`
           node {
             rating
             id
-
             mediaRecommendation {
               id
               title {
