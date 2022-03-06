@@ -365,7 +365,7 @@ export default {
     signOut() {
       this.handlePageLoading(true);
       this.$axios
-        .get(`${process.env.SERVER}/api/user/signout`, {
+        .get(`${process.env.NUXT_ENV_SERVER}/api/user/signout`, {
           withCredentials: true,
         })
         .then(() => (window.location.href = "/"))
@@ -389,7 +389,7 @@ export default {
   },
   beforeMount() {
     this.$axios
-      .get(`${process.env.SERVER}/api/user/trunkey`, {
+      .get(`${process.env.NUXT_ENV_SERVER}/api/user/trunkey`, {
         withCredentials: true,
       })
       .then(({ data }) => (this.user = data.onAccess))

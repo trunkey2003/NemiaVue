@@ -171,13 +171,13 @@ export default {
       };
       this.$emit("loading", true);
       this.$axios
-        .$post(`${process.env.SERVER}/api/user/signup`, body)
+        .$post(`${process.env.NUXT_ENV_SERVER}/api/user/signup`, body)
         .then((data) => {
           this.$emit("success", "Congratulations, your account has been successfully created.");
           if (autoLogin)
           this.$axios
             .$post(
-              `${process.env.SERVER}/api/user/login`,
+              `${process.env.NUXT_ENV_SERVER}/api/user/login`,
               body,
               { withCredentials: true }
             )

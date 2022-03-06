@@ -148,7 +148,7 @@ export default {
       };
       this.$emit("loading", true);
       this.$axios
-        .$post(`${process.env.SERVER}/api/user/login`, body, { withCredentials: true })
+        .$post(`${process.env.NUXT_ENV_SERVER}/api/user/login`, body, { withCredentials: true })
         .then((data) => {
           this.$emit("success", "Signed In");
           console.log(data);

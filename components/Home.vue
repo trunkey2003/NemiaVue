@@ -1101,7 +1101,7 @@ export default {
   mounted() {
     this.medias = this.allMedia.media;
     this.$axios
-      .get(`${process.env.SERVER}/api/user/trunkey`, {
+      .get(`${process.env.NUXT_ENV_SERVER}/api/user/trunkey`, {
         withCredentials: true,
       })
       .finally(() => (this.pageIsLoading = false));
