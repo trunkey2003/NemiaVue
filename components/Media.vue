@@ -459,7 +459,7 @@
                     <div class="max-w-full truncate">
                       {{ Media.characters.edges[index].node.name.full }}
                     </div>
-                    <div class="absolute bottom-[1rem] max-w-full truncate">
+                    <div class="absolute max-w-[50px] bottom-[1rem] max-w-full truncate">
                       {{
                         handleCapitalizeString(
                           Media.characters.edges[index].role
@@ -473,7 +473,7 @@
                         Media.characters.edges[index].voiceActors[0].name.full
                       }}
                     </div>
-                    <div v-if="Media.characters.edges[index].voiceActors && Media.characters.edges[index].voiceActors.length" class="absolute bottom-[1rem] max-w-full truncate">
+                    <div v-if="Media.characters.edges[index].voiceActors && Media.characters.edges[index].voiceActors.length" class="absolute max-w-[50px] bottom-[1rem] max-w-full truncate">
                       {{
                         handleCapitalizeString(
                           Media.characters.edges[index].voiceActors[0].language
