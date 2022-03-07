@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="`mt-1 relative ${width} mx-2 select z-40`">
+    <div v-bind:class="`mt-1 relative ${width} mx-2 select z-10`">
         <h1 class="text-white py-1 text-sm lg:text-md font-bold">{{searchTitle}}</h1>
         <button
           v-bind:id="searchTitle"

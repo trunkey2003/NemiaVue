@@ -1,29 +1,189 @@
 <template>
-  <div>
+  <div class="Roboto">
     <div v-show="pageIsLoading">
       <page-loading />
     </div>
     <div
       id="meida"
-      class="container mx-auto w-full min-h-screen bg-gray-100 rounded-t-2xl pb-4"
+      class="mx-auto w-full min-h-screen bg-[#edf1f5] rounded-t-2xl pb-4"
     >
-      <img v-bind:src="Media.bannerImage" />
       <div
-        class="
-          lg:mr-2
-          mt-3
-          lg:h-96 lg:w-full
-          w-full
-          lg:max-w-full lg:flex
-        "
-      >
+        class="w-full h-[350px] bg-cover"
+        v-bind:style="{
+          backgroundImage: 'url(' + Media.bannerImage + ')',
+        }"
+      ></div>
+      <div class="">
+        <div class="flex h-[250px] pl-[300px] pr-[300px] bg-white">
+          <div class="w-[18%] relative">
+            <div
+              class="
+                absolute
+                top-[-7.8rem]
+                left-0
+                h-[304px]
+                w-[215px]
+                flex-none
+                bg-cover
+                overflow-hidden
+              "
+              v-bind:style="{
+                backgroundImage: 'url(' + Media.coverImage.extraLarge + ')',
+              }"
+            ></div>
+            <div
+              class="
+                absolute
+                w-[165px]
+                h-[35px]
+                bg-[#3db4f2]
+                bottom-[1rem]
+                text-white
+                leading-[35px]
+                rounded
+                flex
+              "
+            >
+              <div class="pl-9 text-[14px]">Add to List</div>
+              <div
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  ml-auto
+                  h-[35px]
+                  w-[35px]
+                  bg-gray-100 bg-opacity-25
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  class="w-[14px] h-[14px] fill-gray-300"
+                >
+                  <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                  <path
+                    d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div
+              class="
+                absolute
+                w-[35px]
+                h-[35px]
+                bg-[#EC294B]
+                bottom-[1rem]
+                right-[1.3rem]
+                rounded
+              "
+            >
+              <div class="w-full flex items-center justify-center mt-[10.5px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-[14px] h[14px] fill-white mx-auto"
+                  viewBox="0 0 512 512"
+                >
+                  <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                  <path
+                    d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 .0003 232.4 .0003 190.9L0 190.9z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="w-[82%] px-7 pt-4 mb-4 relative text-[#5C728A]">
+            <div class="text-[19px] font-[400] h-[28.5px]">
+              {{ Media.title.romaji }}
+            </div>
+            <div
+              class="text-[14px] font-[400] py-[15px] pr-[100px]"
+              v-html="Media.description"
+            >
+              {{ Media.description }}
+            </div>
+            <div class="absolute bottom-[-1rem] right-[100px]">
+              <a class="p-[15px] mx-[25px] text-[13px]">Overview</a>
+              <a class="p-[15px] mx-[25px] text-[13px]">Watch</a>
+              <a class="p-[15px] mx-[25px] text-[13px]">Characters</a>
+              <a class="p-[15px] mx-[25px] text-[13px]">Staff</a>
+              <a class="p-[15px] mx-[25px] text-[13px]">Stats</a>
+              <a class="p-[15px] mx-[25px] text-[13px]">Social</a>
+            </div>
+          </div>
+        </div>
+        <div class="flex min-h-[1000px] pl-[300px] pr-[300px] mt-4">
+          <div class="w-[20%] h-[1000px] bg-red-200">
+            <div
+              class="
+                w-[80%]
+                h-[35px]
+                leading-[35px]
+                bg-white
+                my-3
+                text-center
+              "
+            >
+              Hello
+            </div>
+            <div
+              class="
+                w-[80%]
+                h-[35px]
+                leading-[35px]
+                bg-white
+                my-3
+                text-center
+              "
+            >
+              Hello
+            </div>
+            <div class="w-[80%] h-[500px] leading-[35px] bg-white my-3">
+              Hello
+            </div>
+          </div>
+          <div class="w-[80%] h-[1000px] bg-blue-200">
+            <!-- Realations -->
+            <div
+              class="font-semibold ml-[1%] mt-3 flex items-center text-[14px]"
+              v-if="Media.relations.edges && Media.relations.edges.length"
+            >
+              Relations
+            </div>
+            <div class="mt-2 flex flex-wrap w-full">
+              <div class="flex w-[31%] mx-auto bg-white h-[115px]"></div>
+              <div class="flex w-[31%] mx-auto bg-white h-[115px]"></div>
+              <div class="flex w-[31%] mx-auto bg-white h-[115px]"></div>
+            </div>
+            <!-- Realations -->
+            <div
+              class="font-semibold ml-[1%] mt-3 flex items-center text-[14px]"
+              v-if="Media.relations.edges && Media.relations.edges.length"
+            >
+              Characters
+            </div>
+            <div class="mt-1 flex flex-wrap w-full">
+              <div class="flex w-[31%] mt-3 mx-auto bg-white h-[115px]"></div>
+              <div class="flex w-[31%] mt-3 mx-auto bg-white h-[115px]"></div>
+              <div class="flex w-[31%] mt-3 mx-auto bg-white h-[115px]"></div>
+              <div class="flex w-[31%] mt-3 mx-auto bg-white h-[115px]"></div>
+              <div class="flex w-[31%] mt-3 mx-auto bg-white h-[115px]"></div>
+              <div class="flex w-[31%] mt-3 mx-auto bg-white h-[115px]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="lg:mr-2 mt-3 lg:h-96 lg:w-full w-full lg:max-w-full lg:flex">
         <div
           class="
             w-full
             h-96
             lg:w-1/5 lg:h-auto
             flex-none
-            bg-cover
+            bg-contain
             rounded-t
             lg:rounded-t-none lg:rounded-l
             text-center
@@ -66,7 +226,7 @@
             </p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="w-full p-4 mt-4 flex flex-wrap bg-gray-200 rounded-lg">
         <div class="w-[100%] lg:w-[25%] py-2">
@@ -174,7 +334,12 @@
 
       <!-- External & Streaming links -->
       <div>
-        <div class="font-bold mt-3" v-if="Media.externalLinks && Media.externalLinks.length"> External & Streaming links</div>
+        <div
+          class="font-bold mt-3"
+          v-if="Media.externalLinks && Media.externalLinks.length"
+        >
+          External & Streaming links
+        </div>
         <div class="flex flex-wrap mt-2">
           <link-span
             v-for="link in Media.externalLinks"
@@ -186,7 +351,12 @@
       </div>
 
       <!-- Ranking -->
-      <div class="font-bold mt-3 flex items-center" v-if="Media.rankings && Media.rankings.length">Rankings</div>
+      <div
+        class="font-bold mt-3 flex items-center"
+        v-if="Media.rankings && Media.rankings.length"
+      >
+        Rankings
+      </div>
       <div class="flex flex-wrap">
         <div
           v-for="ranking in Media.rankings ? Media.rankings : []"
@@ -275,7 +445,12 @@
       </div>
 
       <!-- Relations -->
-      <div class="font-bold mt-3 flex items-center" v-if="Media.relations.edges && Media.relations.edges.length">Relations</div>
+      <div
+        class="font-bold mt-3 flex items-center"
+        v-if="Media.relations.edges && Media.relations.edges.length"
+      >
+        Relations
+      </div>
       <div class="flex flex-wrap">
         <a
           v-for="(media, index) in Media.relations.edges"
@@ -337,7 +512,12 @@
       </div>
 
       <!-- Characters -->
-      <div class="font-bold mt-3 flex items-center" v-if="Media.characters.edges && Media.characters.edges.length">Characters</div>
+      <div
+        class="font-bold mt-3 flex items-center"
+        v-if="Media.characters.edges && Media.characters.edges.length"
+      >
+        Characters
+      </div>
       <div v-if="Media.characters.edges.length" class="flex flex-wrap w-full">
         <div
           v-for="index in (0, Media.characters.edges.length - 1)"
@@ -439,7 +619,12 @@
       </div>
 
       <!-- Staff -->
-      <div class="font-bold mt-3 flex items-center" v-if="Media.staff.edges && Media.staff.edges.length">Staff</div>
+      <div
+        class="font-bold mt-3 flex items-center"
+        v-if="Media.staff.edges && Media.staff.edges.length"
+      >
+        Staff
+      </div>
       <div class="flex flex-wrap">
         <div
           v-for="(media, index) in Media.staff.edges"
@@ -540,7 +725,12 @@
 
       <!-- Recommendations -->
       <div>
-        <div class="flex mt-3" v-if="Media.recommendations.edges && Media.recommendations.edges.length">
+        <div
+          class="flex mt-3"
+          v-if="
+            Media.recommendations.edges && Media.recommendations.edges.length
+          "
+        >
           <div class="font-bold flex items-center">Recommendations</div>
           <a class="font-bold text-gray-400 text-sm ml-auto leading-6">
             View All Recommendations
@@ -575,7 +765,12 @@
       </div>
 
       <!-- Reviews -->
-      <div class="font-bold mt-3 flex items-center" v-if="reviews && reviews.length">Reviews</div>
+      <div
+        class="font-bold mt-3 flex items-center"
+        v-if="reviews && reviews.length"
+      >
+        Reviews
+      </div>
       <div class="flex flex-wrap">
         <review-box
           v-for="review in reviews"
@@ -588,6 +783,12 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.Roboto {
+  font-family: "Roboto" !important;
+}
+</style>
 
 <script>
 import gql from "graphql-tag";

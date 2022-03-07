@@ -1,24 +1,29 @@
 <template>
   <div>
-    <button
-      type="button"
-      id="signUpBtn"
-      class="
-        px-4
-        py-1
-        my-3
-        lg:my-0
-        bg-gradient-to-r
-        from-green-400
-        to-blue-500
-        hover:from-pink-500 hover:to-yellow-500
-        text-white text-lg
-      "
-      data-bs-toggle="modal"
-      data-bs-target="#signUpModal"
-    >
-      Sign Up
-    </button>
+    <div class="container-button">
+      <div class="vertical-center">
+        <button
+          type="button"
+          id="signUpBtn"
+          class="
+            px-[15px]
+            py-[6px]
+            rounded-lg
+            flex
+            items-center
+            justify-center
+            text-[#E5E7EA]
+            text-[14px]
+            font-semibold
+            bg-[#3577FF]
+          "
+          data-bs-toggle="modal"
+          data-bs-target="#signUpModal"
+        >
+          <div class="mb-1">Sign Up</div>
+        </button>
+      </div>
+    </div>
     <div
       class="fade custom-modal-01 modal"
       id="signUpModal"
@@ -147,6 +152,20 @@
   </div>
 </template>
 
+<style scoped>
+.container-button {
+  height: 68px;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+</style>
+
 <script>
 export default {
   data() {
@@ -159,7 +178,7 @@ export default {
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
-      const autoLogin = document.getElementById('autoLogin').checked;
+      const autoLogin = document.getElementById("autoLogin").checked;
       if (e.target.password.value != e.target.confirmPassword.value) {
         this.$emit("error", "Confirm password doesn't match");
         return;
@@ -173,23 +192,24 @@ export default {
       this.$axios
         .$post(`${process.env.NUXT_ENV_SERVER}/api/user/signup`, body)
         .then((data) => {
-          this.$emit("success", "Congratulations, your account has been successfully created.");
+          this.$emit(
+            "success",
+            "Congratulations, your account has been successfully created."
+          );
           if (autoLogin)
-          this.$axios
-            .$post(
-              `${process.env.NUXT_ENV_SERVER}/api/user/login`,
-              body,
-              { withCredentials: true }
-            )
-            .then((data) => {
-              console.log(data);
-              window.location.href = "/";
-            })
-            .catch((err) =>{
-              this.$emit("error", "Internal Server error");
-              console.log(err);
-            })
-            .finally(() => this.$emit("loading", false));
+            this.$axios
+              .$post(`${process.env.NUXT_ENV_SERVER}/api/user/login`, body, {
+                withCredentials: true,
+              })
+              .then((data) => {
+                console.log(data);
+                window.location.href = "/";
+              })
+              .catch((err) => {
+                this.$emit("error", "Internal Server error");
+                console.log(err);
+              })
+              .finally(() => this.$emit("loading", false));
           console.log(data);
           document.getElementById("close-sign-up-modal").click();
         })

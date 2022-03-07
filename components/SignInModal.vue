@@ -1,23 +1,21 @@
 <template>
-  <div>
+  <div class="ml-[50px]">
     <button
       type="button"
       id="signInButton"
       class="
-        px-4
-        py-1
-        my-3
-        lg:my-0
-        bg-gradient-to-r
+        h-full
+        leading-[68px]
         from-green-400
         to-blue-500
-        hover:from-pink-500 hover:to-yellow-500
-        text-white text-lg
+        text-[#E5E7EA]
+        text-[14px]
+        font-semibold
       "
       data-bs-toggle="modal"
       data-bs-target="#signInModal"
     >
-      Sign In
+      Login
     </button>
     <div
       class="fade custom-modal-01 modal"

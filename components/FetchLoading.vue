@@ -33,6 +33,12 @@
   </div>
 </template>
 
+<style scoped>
+.custom-z-index{
+  z-index: 999999;
+}
+</style>
+
 <script>
 export default {
   name: "Footer",

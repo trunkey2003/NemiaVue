@@ -181,37 +181,27 @@
     </div>
     <nav
       class="
-        bg-gray-400
+        absolute
+        top-0
+        w-full
+        z-30
         border-gray-200
-        px-2
-        sm:px-4
-        py-2
-        rounded
-        dark:bg-gray-900
-        bg-opacity-80
+        bg-gray-900 bg-opacity-50
+        max-h-[68px]
       "
     >
-      <div
-        class="container flex flex-wrap justify-between items-center mx-auto"
-      >
+      <div class="flex flex-wrap items-center lg:mx-[450px]">
         <a href="/" class="flex hover:opacity-80 hover:no-underline">
-          <img src="/nemia.png" class="w-10 h-10" />
-          <span
-            class="
-              self-center
-              text-3xl
-              font-semibold
-              whitespace-nowrap
-              dark:text-white
-            "
-            >emia</span
-          >
+          <img
+            class="w-[50px] h-[50px]"
+            src="https://anilist.co/img/icons/icon.svg"
+          />
         </a>
         <button
           data-collapse-toggle="mobile-menu"
           type="button"
           @click="myToogle"
-          v-bind:class="`inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600`"
+          v-bind:class="`hidden inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600`"
           aria-controls="mobile-menu-2"
           aria-expanded="false"
         >
@@ -248,21 +238,24 @@
           <ul
             v-if="!user"
             class="
+              text-[#E5E7EA]
               flex
-              w-full
-              justify-between
-              md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium
+              ml-[74%]
+              md:flex-row md:space-x-10 md:mt-0 md:text-sm md:font-medium
             "
           >
+            <li class="font-semibold leading-[68px] text-[14px]">Browse</li>
+            <li class="font-semibold leading-[68px] text-[14px]">Social</li>
+            <li class="font-semibold leading-[68px] text-[14px]">Forum</li>
             <li>
-              <sign-up-modal
+              <sign-in-modal
                 @error="handleLoginError"
                 @success="handleShowSuccess"
                 @loading="handlePageLoading"
               />
             </li>
             <li>
-              <sign-in-modal
+              <sign-up-modal
                 @error="handleLoginError"
                 @success="handleShowSuccess"
                 @loading="handlePageLoading"
@@ -292,7 +285,8 @@
                 hover:from-pink-500 hover:to-yellow-500
                 text-white
               "
-              data-bs-toggle="modal" data-bs-target="#exampleModal"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
             >
               Sign Out
             </button>
@@ -306,9 +300,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                      Sign Out
-                    </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Sign Out</h5>
                     <button
                       type="button"
                       class="btn-close"
@@ -325,7 +317,11 @@
                     >
                       Close
                     </button>
-                    <button type="button" class="btn btn-primary" @click="signOut()">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="signOut()"
+                    >
                       Sign Out
                     </button>
                   </div>
@@ -338,6 +334,9 @@
     </nav>
   </div>
 </template>
+
+<style scoped>
+</style>
 
 <script>
 import PageLoading from "./PageLoading.vue";
@@ -388,12 +387,14 @@ export default {
     },
   },
   beforeMount() {
-    this.$axios
-      .get(`${process.env.NUXT_ENV_SERVER}/api/user/trunkey`, {
-        withCredentials: true,
-      })
-      .then(({ data }) => (this.user = data.onAccess))
-      .finally(() => (this.pageIsLoading = false));
+    // console.log(this.$route.name);
+    // this.$axios
+    //   .get(`${process.env.NUXT_ENV_SERVER}/api/user/trunkey`, {
+    //     withCredentials: true,
+    //   })
+    //   .then(({ data }) => (this.user = data.onAccess))
+    //   .finally(() => (this.pageIsLoading = false));
+    this.pageIsLoading = false;
   },
 };
 </script>
