@@ -19,7 +19,7 @@
             >
               <div class="rounded mx-1 bg-black">
               <div
-                class="rounded px-2 py-[0.2rem] text-sm hover:opacity-80"
+                class="rounded px-1 py-[0.1rem] text-[10px] hover:opacity-80"
                 v-bind:style="{ background: color + '40', color: color }"
                 >{{ genre }}</div
               >
