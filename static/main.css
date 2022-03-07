@@ -39,9 +39,8 @@
     
 }
 .custom-video{
-    margin: auto;
-    width: 70vw;
-    height: calc(70vw*9/16);
+    width: 521px;
+    height: 230px;
 }
 
 .app{
@@ -258,5 +257,10 @@ ul {
 .modal{
   z-index: 60;
 }
+
+.custom-diretion{
+  direction: rtl;
+}
+
 
 

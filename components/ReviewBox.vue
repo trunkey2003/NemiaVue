@@ -1,10 +1,11 @@
 <template>
   <div class="flex p-3 w-full lg:w-[50%]">
     <img
-      class="h-[50px] w-[50px]"
+      class="h-[50px] w-[50px] rounded"
       v-bind:src="avatar"
     />
-    <div class="ml-3 w-full p-4 text-center bg-white relative rounded">
+    <div class="ml-4 w-full p-4 text-center bg-white relative rounded">
+      <div class="triangle-left absolute top-5 left-[-9px]"></div>
       {{summary}}
       <div class="absolute bottom-0 right-5 flex">
         <svg class="w-4 h-4 mr-1 fill-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -17,6 +18,16 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.triangle-left {
+	width: 0;
+	height: 0;
+	border-top: 5px solid transparent;
+	border-right: 10px solid rgb(255, 255, 255);
+	border-bottom: 5px solid transparent;
+}
+</style>
 
 <script>
 export default {

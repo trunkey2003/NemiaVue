@@ -180,15 +180,15 @@
       <fetch-loading />
     </div>
     <nav
-      class="
-        absolute
-        top-0
+      :class="`
+        ${classNav}
         w-full
         z-30
         border-gray-200
-        bg-gray-900 bg-opacity-50
+        bg-gray-900
+        hover:bg-opacity-100
         max-h-[68px]
-      "
+        `"
     >
       <div class="flex flex-wrap items-center lg:mx-[450px]">
         <a href="/" class="flex hover:opacity-80 hover:no-underline">
@@ -354,6 +354,7 @@ export default {
       classActive: "hidden",
       msg: "",
       pageIsLoading: true,
+      classNav: "",
     };
   },
   methods: {
@@ -386,8 +387,10 @@ export default {
       this.showSuccess = msg;
     },
   },
+  created(){
+    if(this.$route.name == 'media-id') this.classNav = `absolute top-0 bg-opacity-50`;
+  },
   beforeMount() {
-    // console.log(this.$route.name);
     // this.$axios
     //   .get(`${process.env.NUXT_ENV_SERVER}/api/user/trunkey`, {
     //     withCredentials: true,
@@ -396,5 +399,7 @@ export default {
     //   .finally(() => (this.pageIsLoading = false));
     this.pageIsLoading = false;
   },
+  mounted(){
+  }
 };
 </script>

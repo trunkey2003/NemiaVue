@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div class="container-button">
+    <div class="container-button relative">
       <div class="vertical-center">
         <button
           type="button"
           id="signUpBtn"
           class="
-            px-[15px]
-            py-[6px]
+            w-[80px]
+            h-[36px]
+            leading-[36px]
             rounded-lg
             flex
             items-center
