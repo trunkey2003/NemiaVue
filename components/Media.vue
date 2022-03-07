@@ -445,7 +445,7 @@
               >
                 <a
                   v-bind:href="`/media/${``}`"
-                  class="min-w-[85px] min-h-[115px] bg-cover bg-no-repeat"
+                  class="min-w-[85px] min-h-[115px] max-w-[85px] max-h-[115px] bg-cover bg-no-repeat"
                   v-bind:style="{
                     backgroundImage:
                       'url(' +
@@ -454,12 +454,12 @@
                   }"
                 >
                 </a>
-                <div class="flex w-full p-2 relative">
+                <div class="flex max-w-full w-full truncate p-2 relative">
                   <div class="w-[50%]">
-                    <div>
+                    <div class="max-w-full truncate">
                       {{ Media.characters.edges[index].node.name.full }}
                     </div>
-                    <div class="absolute bottom-[1rem]">
+                    <div class="absolute bottom-[1rem] max-w-full truncate">
                       {{
                         handleCapitalizeString(
                           Media.characters.edges[index].role
@@ -468,12 +468,12 @@
                     </div>
                   </div>
                   <div class="w-[50%] custom-diretion">
-                    <div v-if="Media.characters.edges[index].voiceActors && Media.characters.edges[index].voiceActors.length">
+                    <div v-if="Media.characters.edges[index].voiceActors && Media.characters.edges[index].voiceActors.length" class="max-w-full truncate">
                       {{
                         Media.characters.edges[index].voiceActors[0].name.full
                       }}
                     </div>
-                    <div v-if="Media.characters.edges[index].voiceActors && Media.characters.edges[index].voiceActors.length" class="absolute bottom-[1rem]">
+                    <div v-if="Media.characters.edges[index].voiceActors && Media.characters.edges[index].voiceActors.length" class="absolute bottom-[1rem] max-w-full truncate">
                       {{
                         handleCapitalizeString(
                           Media.characters.edges[index].voiceActors[0].language
@@ -487,6 +487,7 @@
                   v-bind:href="`/media/${``}`"
                   class="
                     min-w-[85px] min-h-[115px]
+                    max-w-[85px] max-h-[115px]
                     ml-auto
                     bg-cover bg-no-repeat
                   "
@@ -539,7 +540,7 @@
                       absolute
                       bottom-[1rem]
                       max-h-[50px]
-                      w-[200px]
+                      w-[150px]
                       truncate
                     "
                   >
