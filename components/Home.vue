@@ -44,7 +44,7 @@
     >
       <div
         v-if="medias.length || dataLoading"
-        class="flex flex-wrap py-10 lg:px-72"
+        class="flex flex-wrap py-10 lg:px-[10vw]"
       >
         <a
           :href="`media/${media.id}`"
@@ -455,7 +455,7 @@
     </div>
     <div v-else-if="searchSortTrend || searchUpcoming">
       <div id="home" class="w-full min-h-screen bg-gray-900 bg-opacity-80">
-        <div class="lg:px-72 pt-10 flex w-full max-w-full">
+        <div class="lg:px-[10vw] pt-10 flex w-full max-w-full">
           <div class="font-bold text-white text-lg">
             {{
               searchSortTrend == "TRENDING_DESC"
@@ -466,7 +466,7 @@
             }}
           </div>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72">
+        <div class="flex flex-wrap py-2 lg:px-[10vw]">
           <a
             :href="`media/${media.id}`"
             v-for="media in medias"
@@ -576,7 +576,7 @@
     <!-- Default Home page -->
     <div v-else class="mx-auto w-full min-h-screen bg-gray-900 bg-opacity-80">
       <div id="trending-now">
-        <div class="lg:px-72 pt-10 flex w-full">
+        <div class="lg:px-[10vw] pt-10 flex w-full">
           <div class="font-bold text-white text-lg">TRENDING NOW</div>
           <a
             class="font-bold text-gray-400 text-sm ml-auto leading-6"
@@ -585,7 +585,7 @@
             View All
           </a>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72">
+        <div class="flex flex-wrap py-2 lg:px-[10vw]">
           <a
             :href="`media/${media.id}`"
             v-for="media in trendingNow"
@@ -622,7 +622,7 @@
         </div>
       </div>
       <div id="popular-this-season">
-        <div class="lg:px-72 pt-10 flex w-full">
+        <div class="lg:px-[10vw] pt-10 flex w-full">
           <div class="font-bold text-white text-lg">POPULAR THIS SEASON</div>
           <a
             class="font-bold text-gray-400 text-sm ml-auto leading-6"
@@ -631,7 +631,7 @@
             View All
           </a>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72">
+        <div class="flex flex-wrap py-2 lg:px-[10vw]">
           <a
             :href="`media/${media.id}`"
             v-for="media in popularThisSeason"
@@ -668,7 +668,7 @@
         </div>
       </div>
       <div id="upcoming-next-season">
-        <div class="lg:px-72 pt-10 flex w-full">
+        <div class="lg:px-[10vw] pt-10 flex w-full">
           <div class="font-bold text-white text-lg">UPCOMING NEXT SEASON</div>
           <a
             class="font-bold text-gray-400 text-sm ml-auto leading-6"
@@ -677,7 +677,7 @@
             View All
           </a>
         </div>
-        <div class="flex flex-wrap py-2 lg:px-72">
+        <div class="flex flex-wrap py-2 lg:px-[10vw]">
           <a
             :href="`media/${media.id}`"
             v-for="media in upcomingNextSeason"
@@ -715,7 +715,7 @@
       </div>
       <!-- TOP 100 -->
       <div id="Top-100-Desktop" class="hidden lg:block">
-        <div class="lg:px-72 pt-10 flex w-full">
+        <div class="lg:px-[10vw] pt-10 flex w-full">
           <div class="font-bold text-white text-lg">TOP 100 ANIME</div>
           <a
             class="font-bold text-gray-400 text-sm ml-auto leading-6"
@@ -723,7 +723,7 @@
             View All
           </a>
         </div>
-        <div class="w-full py-5 lg:px-72">
+        <div class="w-full py-5 lg:px-[10vw]">
           <top-100-box
             v-for="(media,index) in top100Anime"
             v-bind:key="media.id"
@@ -745,7 +745,7 @@
         </div>
       </div>
       <div id="Top-100-Mobile" class="lg:hidden">
-          <div class="lg:px-72 pt-10 flex w-full">
+          <div class="lg:px-[10vw] pt-10 flex w-full">
           <div class="font-bold text-white text-lg">TOP 100 ANIME</div>
           <a
             class="font-bold text-gray-400 text-sm ml-auto leading-6"
@@ -1053,13 +1053,13 @@ export default {
     handleMouseOver(e) {
       if (!parseInt(e.target.id)) return;
       const box = document.getElementById("box-" + e.target.id);
-      box.classList.remove("hidden");
+      box.classList.add("xl:block");
     },
 
     handleMouseLeave(e) {
       if (!parseInt(e.target.id)) return;
       const box = document.getElementById("box-" + e.target.id);
-      box.classList.add("hidden");
+      box.classList.remove("xl:block");
     },
 
     updateFilterApollo(search, varName) {

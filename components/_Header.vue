@@ -187,10 +187,11 @@
         border-gray-200
         bg-gray-900
         hover:bg-opacity-100
+        min-h-[68px]
         max-h-[68px]
         `"
     >
-      <div class="flex flex-wrap items-center lg:mx-[450px]">
+      <div class="flex flex-wrap items-center lg:mx-[10vw] xl:mx-[15vw] 2xl:mx-[23vw]">
         <a href="/" class="flex hover:opacity-80 hover:no-underline">
           <img
             class="w-[50px] h-[50px]"

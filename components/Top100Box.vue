@@ -1,6 +1,6 @@
 <template>
   <div class="w-full flex mt-3">
-    <div class="w-[5%] text-white h-[110px] flex items-center justify-center">
+    <div class="w-[5%] font-bold text-[#8BA0B2] text-[24px] text-white h-[110px] flex items-center justify-center">
       #{{ rank }}
     </div>
     <div class="w-[95%] h-[110px] bg-white rounded flex p-[5px]">
