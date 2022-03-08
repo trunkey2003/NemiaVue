@@ -684,8 +684,8 @@
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
-          fill="currentColor hover:cursor-pointer hover:fill-gray-400"
-          class="bi bi-x"
+          fill=""
+          class="bi bi-x fill-white hover:cursor-pointer hover:fill-gray-400"
           viewBox="0 0 16 16"
         >
           <path
@@ -720,8 +720,8 @@
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
-          fill="currentColor hover:cursor-pointer hover:fill-gray-400"
-          class="bi bi-x"
+          fill="currentColor"
+          class="bi bi-x fill-white hover:cursor-pointer hover:fill-gray-400"
           viewBox="0 0 16 16"
         >
           <path
@@ -757,7 +757,7 @@
           width="16"
           height="16"
           fill="currentColor hover:cursor-pointer hover:fill-gray-400"
-          class="bi bi-x"
+          class="bi bi-x fill-white hover:cursor-pointer hover:fill-gray-400"
           viewBox="0 0 16 16"
         >
           <path

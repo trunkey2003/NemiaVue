@@ -543,7 +543,7 @@
                 </a>
                 <div class="flex max-w-full w-full truncate p-2 relative">
                   <div class="w-[50%]">
-                    <div class="max-w-full truncate">
+                    <div class="max-w-full max-h-[50px] truncate">
                       {{ Media.characters.edges[index].node.name.full }}
                     </div>
                     <div
@@ -568,7 +568,7 @@
                         Media.characters.edges[index].voiceActors &&
                         Media.characters.edges[index].voiceActors.length
                       "
-                      class="max-w-full truncate"
+                      class="max-w-full max-h-[50px]"
                     >
                       {{
                         Media.characters.edges[index].voiceActors[0].name.full
@@ -804,7 +804,7 @@
             class="w-[80%]"
           >
             <div
-              class="mt-1 flex flex-wrap w-full text-[12px]"
+              class="mt-1 flex flex-wrap w-full text-[10px]"
               v-if="Media.characters.edges.length"
             >
               <div
@@ -838,14 +838,13 @@
                 </a>
                 <div class="flex max-w-full w-full truncate p-2 relative">
                   <div class="w-[50%]">
-                    <div class="max-w-full truncate">
+                    <div class="max-w-full">
                       {{ Media.characters.edges[index].node.name.full }}
                     </div>
                     <div
                       class="
                         absolute
                         max-w-full
-                        truncate
                         bottom-[1rem]
                         max-w-full
                       "
@@ -863,7 +862,7 @@
                         Media.characters.edges[index].voiceActors &&
                         Media.characters.edges[index].voiceActors.length
                       "
-                      class="max-w-full truncate"
+                      class="max-w-full"
                     >
                       {{
                         Media.characters.edges[index].voiceActors[0].name.full
@@ -874,7 +873,7 @@
                         Media.characters.edges[index].voiceActors &&
                         Media.characters.edges[index].voiceActors.length
                       "
-                      class="absolute bottom-[1rem] max-w-full truncate"
+                      class="absolute bottom-[1rem] max-w-full"
                     >
                       {{
                         handleCapitalizeString(
