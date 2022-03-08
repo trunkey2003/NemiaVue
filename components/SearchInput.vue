@@ -107,7 +107,6 @@
           'RELEASING',
           'NOT_YET_RELEASED',
           'CANCELLED',
-          'SPECIAL',
           'HIATUS',
         ]"
         :handleSelectOnChange="handleOnChangeSearchStatus"

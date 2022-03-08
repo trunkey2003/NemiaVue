@@ -89,18 +89,81 @@
               {{ Media.title.romaji }}
             </div>
             <div
-              class="text-[14px] font-[400] py-[30px] pr-[100px] mb-[15px]"
-              v-html="Media.description"
+              :class="`text-[14px] font-[400] py-[10px] pr-[100px] mb-[50px] ${classHeight} overflow-hidden relative`"
             >
-              {{ Media.description }}
+              <div v-html="Media.description">{{ Media.description }}</div>
+              <div v-if="classHeight == 'h-[150px]'" class="absolute bottom-[0px] w-full h-[25px] pr-[100px] custom-bg font-bold flex items-end" @click="classHeight = `min-h-[150px]`">
+                <div class="h-[20px] w-full text-center text-transparent hover:text-[#9299A1] hover:cursor-pointer">Read more</div>
+              </div>
             </div>
+            
             <div class="absolute bottom-[-1rem] w-[50vw] text-right">
-              <a class="p-[15px] mx-[10px] 2xl:mx-[25px] text-[13px]">Overview</a>
-              <a class="p-[15px] mx-[10px] 2xl:mx-[25px] text-[13px]">Watch</a>
-              <a class="p-[15px] mx-[10px] 2xl:mx-[25px] text-[13px]">Characters</a>
-              <a class="p-[15px] mx-[10px] 2xl:mx-[25px] text-[13px]">Staff</a>
-              <a class="p-[15px] mx-[10px] 2xl:mx-[25px] text-[13px]">Stats</a>
-              <a class="p-[15px] mx-[10px] 2xl:mx-[25px] text-[13px]">Social</a>
+              <a
+                class="
+                  p-[15px]
+                  mx-[10px]
+                  2xl:mx-[25px]
+                  text-[13px]
+                  hover:cursor-pointer
+                "
+                @click="() => (showTab = 'overview')"
+                >Overview</a
+              >
+              <a
+                class="
+                  p-[15px]
+                  mx-[10px]
+                  2xl:mx-[25px]
+                  text-[13px]
+                  hover:cursor-pointer
+                "
+                @click="() => (showTab = 'watch')"
+                >Watch</a
+              >
+              <a
+                class="
+                  p-[15px]
+                  mx-[10px]
+                  2xl:mx-[25px]
+                  text-[13px]
+                  hover:cursor-pointer
+                "
+                @click="() => (showTab = 'characters')"
+                >Characters</a
+              >
+              <a
+                class="
+                  p-[15px]
+                  mx-[10px]
+                  2xl:mx-[25px]
+                  text-[13px]
+                  hover:cursor-pointer
+                "
+                @click="() => (showTab = 'staff')"
+                >Staff</a
+              >
+              <a
+                class="
+                  p-[15px]
+                  mx-[10px]
+                  2xl:mx-[25px]
+                  text-[13px]
+                  hover:cursor-pointer
+                "
+                @click="() => (showTab = 'stats')"
+                >Stats</a
+              >
+              <a
+                class="
+                  p-[15px]
+                  mx-[10px]
+                  2xl:mx-[25px]
+                  text-[13px]
+                  hover:cursor-pointer
+                "
+                @click="() => (showTab = 'social')"
+                >Social</a
+              >
             </div>
           </div>
         </div>
@@ -317,7 +380,7 @@
                   flex
                 "
               >
-                <div class="text-[#5C728A] text-[13px]">{{ tag.name }}</div>
+                <a :href="`/?searchMediaTag=${tag.name}`" class="text-[#5C728A] text-[13px]">{{ tag.name }}</a>
                 <div class="ml-auto text-[#9299A1] text-[12px]">
                   {{ tag.rank }}%
                 </div>
@@ -343,7 +406,7 @@
                   flex
                 "
               >
-                <a :href="link.url" class="text-[#9299A1] text-[12px] mr-2">
+                <a class="text-[#9299A1] text-[12px] mr-2">
                   <svg
                     v-if="link.site == `Twitter`"
                     xmlns="http://www.w3.org/2000/svg"
@@ -380,11 +443,11 @@
                     />
                   </svg>
                 </a>
-                <div class="text-[#5C728A] text-[13px]">{{ link.site }}</div>
+                <a :href="link.url" class="text-[#5C728A] text-[13px]">{{ link.site }}</a>
               </div>
             </div>
           </div>
-          <div class="w-[80%]">
+          <div id="overview" v-if="showTab == `overview`" class="w-[80%]">
             <!-- Realations -->
             <div
               class="
@@ -414,11 +477,19 @@
                 >
                 </a>
                 <div class="text-[12px] p-2 relative w-full">
-                  <a class="text-[#3DB4F2] font-semibold text-[12px]">{{handleCapitalizeString(media.relationType)}}</a>
+                  <a class="text-[#3DB4F2] font-semibold text-[12px]">{{
+                    handleCapitalizeString(media.relationType)
+                  }}</a>
                   <div class="mt-1">
-                    {{media.node.title.romaji}}
+                    {{ media.node.title.romaji }}
                   </div>
-                  <div class="absolute bottom-[1rem]">{{handleCapitalizeString(media.node.type + ' · ' + media.node.status)}}</div>
+                  <div class="absolute bottom-[1rem]">
+                    {{
+                      handleCapitalizeString(
+                        media.node.type + " · " + media.node.status
+                      )
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -438,7 +509,7 @@
               Characters
             </div>
             <div
-              class="mt-1 flex flex-wrap w-full text-[12px]"
+              class="mt-1 flex flex-wrap w-full text-[10px]"
               v-if="Media.characters.edges.length"
             >
               <div
@@ -447,13 +518,19 @@
                   ? Media.characters.edges.length
                   : Media.characters.edges.length - 1)"
                 v-bind:key="index"
-                class="flex w-[49%] max-w-[49%] mx-[0.5%] 2xl:w-[31%] 2xl:max-w-[33%] 2xl:mx-[1%] my-2 bg-white"
+                class="
+                  flex
+                  w-[49%]
+                  max-w-[49%]
+                  mx-[0.5%]
+                  2xl:w-[31%] 2xl:max-w-[33%] 2xl:mx-[1%]
+                  my-2
+                  bg-white
+                "
               >
                 <a
-                  v-bind:href="`/media/${``}`"
                   class="
                     min-w-[60px] min-h-[80px]
-                    2xl:min-w-[85px] 2xl:min-h-[115px]
                     bg-cover bg-no-repeat
                   "
                   v-bind:style="{
@@ -502,12 +579,7 @@
                         Media.characters.edges[index].voiceActors &&
                         Media.characters.edges[index].voiceActors.length
                       "
-                      class="
-                        absolute
-                        bottom-[1rem]
-                        max-w-full
-                        truncate
-                      "
+                      class="absolute bottom-[1rem] max-w-full truncate"
                     >
                       {{
                         handleCapitalizeString(
@@ -522,10 +594,8 @@
                     Media.characters.edges[index].voiceActors &&
                     Media.characters.edges[index].voiceActors.length
                   "
-                  v-bind:href="`/media/${``}`"
                   class="
                     min-w-[60px] min-h-[80px]
-                    2xl:min-w-[85px] 2xl:min-h-[115px]
                     ml-auto
                     bg-cover bg-no-repeat
                   "
@@ -561,7 +631,15 @@
               <div
                 v-for="(media, index) in Media.staff.edges"
                 v-bind:key="media.node.id + index"
-                class="flex w-[49%] max-w-[49%] mx-[0.5%] 2xl:w-[31%] 2xl:max-w-[33%] 2xl:mx-[1%] my-2 bg-white"
+                class="
+                  flex
+                  w-[49%]
+                  max-w-[49%]
+                  mx-[0.5%]
+                  2xl:w-[31%] 2xl:max-w-[33%] 2xl:mx-[1%]
+                  my-2
+                  bg-white
+                "
               >
                 <a
                   v-bind:href="`/media/${media.node.id}`"
@@ -572,7 +650,6 @@
                 >
                 </a>
                 <div class="text-[12px] p-2 relative">
-                  <a>Source</a>
                   <div class="mt-1">
                     {{ media.node.name.full }}
                   </div>
@@ -718,6 +795,167 @@
               </div>
             </div>
           </div>
+          <div id="watch" v-else-if="showTab == `watch`" class="w-[80%]">
+            watch
+          </div>
+          <div
+            id="characters"
+            v-else-if="showTab == `characters`"
+            class="w-[80%]"
+          >
+            <div
+              class="mt-1 flex flex-wrap w-full text-[12px]"
+              v-if="Media.characters.edges.length"
+            >
+              <div
+                v-for="index in (0,
+                Media.characters.edges.length - 1 == 0
+                  ? Media.characters.edges.length
+                  : Media.characters.edges.length - 1)"
+                v-bind:key="index"
+                class="
+                  flex
+                  w-[49%]
+                  max-w-[49%]
+                  mx-[0.5%]
+                  2xl:w-[31%] 2xl:max-w-[33%] 2xl:mx-[1%]
+                  my-2
+                  bg-white
+                "
+              >
+                <a
+                  class="
+                    min-w-[60px] min-h-[80px]
+                    bg-cover bg-no-repeat
+                  "
+                  v-bind:style="{
+                    backgroundImage:
+                      'url(' +
+                      Media.characters.edges[index].node.image.large +
+                      ')',
+                  }"
+                >
+                </a>
+                <div class="flex max-w-full w-full truncate p-2 relative">
+                  <div class="w-[50%]">
+                    <div class="max-w-full truncate">
+                      {{ Media.characters.edges[index].node.name.full }}
+                    </div>
+                    <div
+                      class="
+                        absolute
+                        max-w-full
+                        truncate
+                        bottom-[1rem]
+                        max-w-full
+                      "
+                    >
+                      {{
+                        handleCapitalizeString(
+                          Media.characters.edges[index].role
+                        )
+                      }}
+                    </div>
+                  </div>
+                  <div class="w-[50%] custom-diretion">
+                    <div
+                      v-if="
+                        Media.characters.edges[index].voiceActors &&
+                        Media.characters.edges[index].voiceActors.length
+                      "
+                      class="max-w-full truncate"
+                    >
+                      {{
+                        Media.characters.edges[index].voiceActors[0].name.full
+                      }}
+                    </div>
+                    <div
+                      v-if="
+                        Media.characters.edges[index].voiceActors &&
+                        Media.characters.edges[index].voiceActors.length
+                      "
+                      class="absolute bottom-[1rem] max-w-full truncate"
+                    >
+                      {{
+                        handleCapitalizeString(
+                          Media.characters.edges[index].voiceActors[0].language
+                        )
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <a
+                  v-if="
+                    Media.characters.edges[index].voiceActors &&
+                    Media.characters.edges[index].voiceActors.length
+                  "
+                  class="
+                    min-w-[60px] min-h-[80px]
+                    ml-auto
+                    bg-cover bg-no-repeat
+                  "
+                  v-bind:style="{
+                    backgroundImage:
+                      'url(' +
+                      Media.characters.edges[index].voiceActors[0].image.large +
+                      ')',
+                  }"
+                >
+                </a>
+              </div>
+            </div>
+          </div>
+          <div id="staff" v-else-if="showTab == `staff`" class="w-[80%]">
+            <div
+              class="mt-1 flex flex-wrap w-full"
+              v-if="Media.staff.edges && Media.staff.edges.length"
+            >
+              <div
+                v-for="(media, index) in Media.staff.edges"
+                v-bind:key="media.node.id + index"
+                class="
+                  flex
+                  w-[49%]
+                  max-w-[49%]
+                  mx-[0.5%]
+                  2xl:w-[31%] 2xl:max-w-[33%] 2xl:mx-[1%]
+                  my-2
+                  bg-white
+                "
+              >
+                <a
+                  v-bind:href="`/media/${media.node.id}`"
+                  class="min-w-[85px] min-h-[115px] bg-cover bg-no-repeat"
+                  v-bind:style="{
+                    backgroundImage: 'url(' + media.node.image.large + ')',
+                  }"
+                >
+                </a>
+                <div class="text-[12px] p-2 relative">
+                  <div class="mt-1">
+                    {{ media.node.name.full }}
+                  </div>
+                  <div
+                    class="
+                      absolute
+                      bottom-[1rem]
+                      max-h-[50px]
+                      w-[150px]
+                      truncate
+                    "
+                  >
+                    {{ media.role }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="stats" v-else-if="showTab == `stats`" class="w-[80%]">
+            stats
+          </div>
+          <div id="social" v-else-if="showTab == `social`" class="w-[80%]">
+            social
+          </div>
         </div>
       </div>
 
@@ -778,7 +1016,11 @@
 
 <style scoped>
 .Roboto {
-  font-family: "Roboto",-apple-system,BlinkMacSystemFont,Segoe UI,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif !important;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+}
+.custom-bg:hover{
+  background : rgba(255, 255, 255, 0.596);
 }
 </style>
 
@@ -938,8 +1180,10 @@ export default {
   components: { TagSpan, LinkSpan, MediaContainer, MediaContainerMediaPage },
   data() {
     return {
+      showTab: "overview",
       pageIsLoading: true,
       reviews: [],
+      classHeight: 'h-[150px]'
     };
   },
   apollo: {
@@ -973,7 +1217,7 @@ export default {
 
     handleCapitalizeString(string) {
       if (!string) return;
-      string = string?.replace('_', ' ');
+      string = string?.replace("_", " ");
       string = string?.toLowerCase();
       return string?.charAt(0).toUpperCase() + string?.slice(1);
     },
