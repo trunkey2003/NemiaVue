@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="pageIsLoading">
+    <div v-show="pageIsLoading" class="relative w-full">
       <page-loading />
     </div>
     <div class="alert-error-box" v-if="showError">
@@ -392,12 +392,12 @@ export default {
     if(this.$route.name == 'media-id') this.classNav = `absolute top-0 bg-opacity-50`;
   },
   beforeMount() {
-    // this.$axios
-    //   .get(`${process.env.NUXT_ENV_SERVER}/api/user/trunkey`, {
-    //     withCredentials: true,
-    //   })
-    //   .then(({ data }) => (this.user = data.onAccess))
-    //   .finally(() => (this.pageIsLoading = false));
+    this.$axios
+      .get(`${process.env.NUXT_ENV_SERVER}/api/user/trunkey`, {
+        withCredentials: true,
+      })
+      .then(({ data }) => (this.user = data.onAccess))
+      .finally(() => (this.pageIsLoading = false));
     this.pageIsLoading = false;
   },
   mounted(){

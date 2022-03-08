@@ -5,7 +5,7 @@
       items-center
       justify-center
       text-sky-400 font-semibold text-6xl
-      min-w-full
+      min-w-[100vw]
       h-screen
       fixed
       top-0
