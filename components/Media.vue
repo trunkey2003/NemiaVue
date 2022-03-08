@@ -91,12 +91,37 @@
             <div
               :class="`text-[14px] font-[400] py-[10px] pr-[100px] mb-[50px] ${classHeight} overflow-hidden relative`"
             >
-              <div v-html="Media.description">{{ Media.description }}</div>
-              <div v-if="classHeight == 'h-[150px]'" class="absolute bottom-[0px] w-full h-[25px] pr-[100px] custom-bg font-bold flex items-end" @click="classHeight = `min-h-[150px]`">
-                <div class="h-[20px] w-full text-center text-transparent hover:text-[#9299A1] hover:cursor-pointer">Read more</div>
+              <div id="description" v-html="Media.description">
+                {{ Media.description }}
+              </div>
+              <div
+                v-if="classHeight == 'h-[150px]' && isOverflow"
+                class="
+                  absolute
+                  bottom-[0px]
+                  w-full
+                  h-[25px]
+                  pr-[100px]
+                  custom-bg
+                  font-bold
+                  flex
+                  items-end
+                "
+                @click="classHeight = `min-h-[150px]`"
+              >
+                <div
+                  class="
+                    h-[20px]
+                    w-full
+                    text-center text-transparent
+                    hover:text-[#9299A1] hover:cursor-pointer
+                  "
+                >
+                  Read more
+                </div>
               </div>
             </div>
-            
+
             <div class="absolute bottom-[-1rem] w-[50vw] text-right">
               <a
                 class="
@@ -380,7 +405,11 @@
                   flex
                 "
               >
-                <a :href="`/?searchMediaTag=${tag.name}`" class="text-[#5C728A] text-[13px]">{{ tag.name }}</a>
+                <a
+                  :href="`/?searchMediaTag=${tag.name}`"
+                  class="text-[#5C728A] text-[13px]"
+                  >{{ tag.name }}</a
+                >
                 <div class="ml-auto text-[#9299A1] text-[12px]">
                   {{ tag.rank }}%
                 </div>
@@ -443,7 +472,9 @@
                     />
                   </svg>
                 </a>
-                <a :href="link.url" class="text-[#5C728A] text-[13px]">{{ link.site }}</a>
+                <a :href="link.url" class="text-[#5C728A] text-[13px]">{{
+                  link.site
+                }}</a>
               </div>
             </div>
           </div>
@@ -481,9 +512,11 @@
                     handleCapitalizeString(media.relationType)
                   }}</a>
                   <div class="mt-1">
-                    {{ media.node.title.romaji }}
+                    <a v-bind:href="`/media/${media.node.id}`">
+                      {{ media.node.title.romaji }}
+                    </a>
                   </div>
-                  <div class="absolute bottom-[1rem]">
+                  <div class="absolute bottom-[1rem] text-[#9299A1]">
                     {{
                       handleCapitalizeString(
                         media.node.type + " · " + media.node.status
@@ -529,10 +562,7 @@
                 "
               >
                 <a
-                  class="
-                    min-w-[60px] min-h-[80px]
-                    bg-cover bg-no-repeat
-                  "
+                  class="min-w-[60px] min-h-[80px] bg-cover bg-no-repeat"
                   v-bind:style="{
                     backgroundImage:
                       'url(' +
@@ -642,7 +672,6 @@
                 "
               >
                 <a
-                  v-bind:href="`/media/${media.node.id}`"
                   class="min-w-[85px] min-h-[115px] bg-cover bg-no-repeat"
                   v-bind:style="{
                     backgroundImage: 'url(' + media.node.image.large + ')',
@@ -795,7 +824,11 @@
               </div>
             </div>
           </div>
-          <div id="watch" v-else-if="showTab == `watch`" class="w-[80%]">
+          <div
+            id="watch"
+            v-else-if="showTab == `watch`"
+            class="w-[80%] text-center"
+          >
             watch
           </div>
           <div
@@ -824,10 +857,7 @@
                 "
               >
                 <a
-                  class="
-                    min-w-[60px] min-h-[80px]
-                    bg-cover bg-no-repeat
-                  "
+                  class="min-w-[60px] min-h-[80px] bg-cover bg-no-repeat"
                   v-bind:style="{
                     backgroundImage:
                       'url(' +
@@ -841,14 +871,7 @@
                     <div class="max-w-full">
                       {{ Media.characters.edges[index].node.name.full }}
                     </div>
-                    <div
-                      class="
-                        absolute
-                        max-w-full
-                        bottom-[1rem]
-                        max-w-full
-                      "
-                    >
+                    <div class="absolute max-w-full bottom-[1rem] max-w-full">
                       {{
                         handleCapitalizeString(
                           Media.characters.edges[index].role
@@ -923,7 +946,6 @@
                 "
               >
                 <a
-                  v-bind:href="`/media/${media.node.id}`"
                   class="min-w-[85px] min-h-[115px] bg-cover bg-no-repeat"
                   v-bind:style="{
                     backgroundImage: 'url(' + media.node.image.large + ')',
@@ -949,10 +971,18 @@
               </div>
             </div>
           </div>
-          <div id="stats" v-else-if="showTab == `stats`" class="w-[80%]">
+          <div
+            id="stats"
+            v-else-if="showTab == `stats`"
+            class="w-[80%] text-center"
+          >
             stats
           </div>
-          <div id="social" v-else-if="showTab == `social`" class="w-[80%]">
+          <div
+            id="social"
+            v-else-if="showTab == `social`"
+            class="w-[80%] text-center"
+          >
             social
           </div>
         </div>
@@ -1018,8 +1048,8 @@
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 }
-.custom-bg:hover{
-  background : rgba(255, 255, 255, 0.596);
+.custom-bg:hover {
+  background: rgba(255, 255, 255, 0.596);
 }
 </style>
 
@@ -1182,7 +1212,8 @@ export default {
       showTab: "overview",
       pageIsLoading: true,
       reviews: [],
-      classHeight: 'h-[150px]'
+      classHeight: "h-[150px]",
+      isOverflow: false,
     };
   },
   apollo: {
@@ -1224,6 +1255,8 @@ export default {
   mounted() {
     this.pageIsLoading = false;
     this.reviews = this.Media.reviews?.edges.filter((node, index) => index < 4);
+    if (document.getElementById("description").offsetHeight > 150)
+      this.isOverflow = true;
   },
 };
 </script>
